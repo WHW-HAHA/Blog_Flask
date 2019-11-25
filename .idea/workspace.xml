@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c71b3b64-2caa-4089-af6e-9ffcd3df407d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Blog_Flask.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Blog_Flask.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mine/flaskblog.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/templates/layout.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,8 +59,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Mine/flaskblog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="38" column="41" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+            <state relative-caret-position="400">
+              <caret line="36" column="47" selection-start-line="36" selection-start-column="47" selection-end-line="36" selection-end-column="47" />
               <folding>
                 <element signature="e#0#66#0" expanded="true" />
               </folding>
@@ -272,8 +268,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Mine/flaskblog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="38" column="41" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+        <state relative-caret-position="400">
+          <caret line="36" column="47" selection-start-line="36" selection-start-column="47" selection-end-line="36" selection-end-column="47" />
           <folding>
             <element signature="e#0#66#0" expanded="true" />
           </folding>
