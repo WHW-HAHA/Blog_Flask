@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request
-from Mine.flaskblog import app, db, bcrypt
-from Mine.flaskblog.forms import RegistrationForm, LoginForm
-from Mine.flaskblog.models import User, Post
+from flaskblog import app, db, bcrypt
+from flaskblog.forms import RegistrationForm, LoginForm
+from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -35,7 +35,7 @@ def about():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if current_user.is_autheticated:
+    if current_user.is_authenticated:
         return redirect(url_for('home')) # name "home" is the name of ??
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -50,7 +50,7 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    if current_user.is_autheticated:
+    if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
@@ -72,6 +72,6 @@ def logout():
     return redirect(url_for('home'))
 
 @app.route('/account')
-@login_required  # name of the method
+@login_required  # name of the method, the account page only accessable when user is log-in already
 def account():
     return render_template('account.html', title = 'Account')
