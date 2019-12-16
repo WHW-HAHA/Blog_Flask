@@ -1,5 +1,5 @@
 from datetime import datetime
-from flaskblog import db, login_manager
+from flaskblog import db, login_manager # these are already initiated in __init__.py
 from flask_login import UserMixin
 
 
