@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c71b3b64-2caa-4089-af6e-9ffcd3df407d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Mine/flaskblog/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mine/flaskblog/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mine/flaskblog/routes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mine/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Blog_Flask.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Blog_Flask.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Example/05-Package-Structure/flaskblog/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Example/05-Package-Structure/flaskblog/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/flaskblog.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/site.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/static/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/static/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mine/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/Mine/flaskblog/templates/register.html" afterDir="false" />
-    </list>
+    <list default="true" id="c71b3b64-2caa-4089-af6e-9ffcd3df407d" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,11 +72,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="100" />
-    <option name="y" value="-27" />
-    <option name="width" value="979" />
-    <option name="height" value="1090" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-8" />
+    <option name="y" value="-4" />
+    <option name="width" value="977" />
+    <option name="height" value="1088" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -182,10 +164,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
+    <frame x="-6" y="-46" width="781" height="870" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14398943" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.29261744" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
