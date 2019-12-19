@@ -1,10 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskblog.models import User
-# Step 7
+# Step 8
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -17,7 +17,7 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign Up')
 
     def validate_username(self, username):
-        user = User.query.filter_by(username = username.date).first() # .first()?? 
+        user = User.query.filter_by(username = username.date).first() # .first() return the first match
         if user:
             raise ValidationError('That username is taken. Please choose a different one.')
     
@@ -53,4 +53,12 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email = email.data).first()
             if user: # if the new user name already existed in the DB
                 raise ValidationError('The email address is taken. Please take a new one.')
+
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()]) # Title is always required
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Post')
+
+
+
 
