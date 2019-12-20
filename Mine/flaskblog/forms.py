@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
+from flask_mail import Mail
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskblog.models import User
@@ -46,7 +47,6 @@ class UpdateAccountForm(FlaskForm):
             if user: # if the new user name already existed in the DB
                 raise ValidationError('The username is taken. Please take a new one.')
 
-
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email = email.data).first()
@@ -57,6 +57,22 @@ class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()]) # Title is always required
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email', validatiors = [DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email = email.data).first()
+        if user is None:
+            raise ValidationError('There is no account with that email. You must register first.')
+
+class ResetPasswrdForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    comfirm_password = PasswordField('Confirm Password', validators= [DataRequired(), EqualTo('password')]) # password in string format
+    submit = SubmitField('Reset Password')
+
+
 
 
 
