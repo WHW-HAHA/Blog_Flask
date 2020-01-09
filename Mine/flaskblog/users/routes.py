@@ -9,7 +9,7 @@ Naming standard:
     name of a instantiation: abcd_abcd
 """
 
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, RequestResetForm, \
     ResetPasswordForm
