@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+    <div class = "row">
+        {% for showcase in showcase %}
+        <div class="col-md-4">
+            <p><a href="/">{{showcase.by_user}}</a></p> <!--AUTHOR is the back reference of post table and user table-->
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock content %}
