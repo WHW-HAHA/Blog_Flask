@@ -12,6 +12,8 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #5f788a;
 }
 
+
+<!-- Navgation bar settings  -->
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }
@@ -23,6 +25,37 @@ h1, h2, h3, h4, h5, h6 {
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
 }
+
+.col-md-6{
+overflow: hidden
+}
+
+.divcss5{ width:300px; height:50px; line-height:25px; overflow:hidden}
+
+
+/# search bar #/
+.site-header input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.site-hearder .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.site-header .search-container button: hover {
+  background: #ccc;
+}
+
 
 .content-section {
   background: #ffffff;
@@ -41,7 +74,7 @@ a.article-title:hover {
   text-decoration: none;
 }
 
-.article-content {
+.article-1 {
   white-space: pre-line;
 }
 
@@ -50,6 +83,7 @@ a.article-title:hover {
   width: 65px;
   margin-right: 16px;
 }
+
 
 .article-metadata {
   padding-bottom: 1px;
