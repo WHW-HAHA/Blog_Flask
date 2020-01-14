@@ -49,7 +49,8 @@ class Comment(db.model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     # The comment is one to one relates to user, the input of foreignkey should be lowercase
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    belongsto = db.Column(db.Integer, db.ForeignKey('post.id'), nullable = False)
 
 # Adminstritor's post
 class Post(db.Model):
@@ -60,7 +61,8 @@ class Post(db.Model):
     fakecontent = db.Column(db.Text, nullable=False)
     # the documents should be stored on the domain or cloud, and then be accessed by the address
     content = db.Column(db.string, nullable = False)
-    # add payments fields latter
+    comment = db.relationship('Comment', backref = 'comments')
+    # add payments field latter
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
