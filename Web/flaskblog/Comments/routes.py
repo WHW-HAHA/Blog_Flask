@@ -11,27 +11,32 @@ Naming standard:
 
 from flask import  render_template, url_for, flash, redirect, Blueprint
 from flaskblog.comments.forms import CommentForm
-from flaskblog.NewModels import Comment
+from flaskblog.NewModels import Comment, Post
 from flask_login import current_user
 from flaskblog import db
+from flaskblog.posts.routes import posts
 from flask_restful import request
 
 
 comments = Blueprint('comments',__name__)
 
+
 # if I still need a special template for this?
-def new_comment():
+@posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+def new_comment(post_id):
+    # post id is needed, as the comment points to the post
+    post = Post.query.get_or_404(id)
     form = CommentForm()
     if form.validate_on_submit():
         # No date needed, as the moment now will be used
         if current_user.is_active:
-            post = Comment(content = form.content.data, author = current_user)
+            post = Comment(content = form.content.data, author = current_user._get_current_object(), belongsto = post)
         else:
-            post = Comment(content = form.content.data, auther = 'AnonymousUser')
+            post = Comment(content = form.content.data, auther = 'AnonymousUser', belongsto = post)
         db.session.add(post)
         db.session.commit()
         flash('Your new comment has been created!', 'success')
         # 返回当前的url, 并且更新评论
-        return render_template('', form = form, legend = 'New Comment', title = '')
+        return redirect(url_for('post.post', commentform = form,  ),)
 
 
