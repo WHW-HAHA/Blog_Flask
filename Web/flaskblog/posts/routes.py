@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from flaskblog import db
-from flaskblog.models import Post，Comment
+from flaskblog.NewModels import Post, Comment
 from flaskblog.posts.forms import PostForm
 from flakblog.comments.forms import CommentForm
 
@@ -29,15 +29,18 @@ def new_post():
 def post(post_id):
     # first to get the post
     post = Post.query.get_or_404(post_id)
-    if post
-    get_comments(post)
+    if post:
+        comment_list = get_comments(post_id)
+        return render_template('main.post', title=post.title, post=post, comment_list = comment_list)
+    else:
+        abort(403)
 
-    return render_template('post.html', title=post.title, post=post)
 
 def get_comments(post_id):
     post = Post.query.get_or_404(post_id)
     comment_list = post.comment
     return comment_list
+
 
 def make_comments(post_id):
     form = CommentForm()
@@ -49,6 +52,7 @@ def make_comments(post_id):
         db.session.add(comment)
         db.session.commit()
     flash('Your comment has been accepted successfully!')
+
 
 @posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
