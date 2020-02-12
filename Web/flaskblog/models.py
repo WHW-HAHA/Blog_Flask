@@ -66,10 +66,17 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
-    price = db.Column(db.Float, nullable = False, default = 0)
+    price = db.Column(db.Integer, nullable = False, default = 0)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('Category', back_populates = 'posts')
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(30), unique = True)
+    post = db.relationship('Post', back_populates = 'category')
 
 
 
