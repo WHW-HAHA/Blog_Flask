@@ -19,13 +19,38 @@ from Webapp.extensions import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+'''
+instance
 
+class Author(db.Model):
+    __tablename__ = 'info_author'
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    # 一的一方，relationship为Author 添加article属性，Author_obj.article内容是以Author_obj.id == Article.author_id的一组Article对象
+    # backref（反向引用） 则为Article添加author属性，Article_obj.author内容是以Article.author_id == Author_obj.id 的Author_obj
+    article = db.relationship("Article",backref='author',lazy='dynamic')
+    """
+    lazy: 指定sqlalchemy数据库什么时候加载数据
+        select: 就是访问到属性的时候，就会全部加载该属性的数据
+        joined: 对关联的两个表使用联接
+        subquery: 与joined类似，但使用子子查询
+        dynamic: 不加载记录，但提供加载记录的查询，也就是生成query对象
+    """
+
+
+class Article(db.Model):
+    __tablename__ = "info_article"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(20),nullable=False)
+    # 多的一方，author_id 的取值范围只能在info_author.id的范围内
+    author_id = db.Column(db.Integer,db.ForeignKey('info_author.id'))
+
+ 
+'''
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
 
 # Administrator class
 class Admin(db.Model, UserMixin):
@@ -76,23 +101,36 @@ class Deal(db.Model):
     # link the deal to the item
     item = db.relationship('Post')
 
+# post 和 category 实际为多对多，应该创建关联表进行连接
+post_category_collections = db.Table("post_category_collections",
+                                     db.Cloumn('post_id', db.Integer, db.ForeignKey("post.id")),
+                                     db.Column('category_id', db.Integer, db.ForeignKey("category.id")))
 
 class Post(db.Model):
+    __tablename__ = 'post'
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer, nullable = False, default = 0)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    category = db.relationship('Category', back_populates = 'posts')
+    category = db.relationship("Category", secondary= post_category_collections, backref = "post", lazy = 'dynamic')
+
+    # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    # # foreignkey 是外键，连接多的一侧，此处post为多侧
+    # category = db.relationship('Category', back_populates = 'posts')
+    # # relationship 使得post具有category属性，
+    # # back_populate 使得category类可以获得所有的所属posts, 属性名posts和Category中posts一样
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
 
+
 class Category(db.Model):
+    __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30), unique = True)
-    post = db.relationship('Post', back_populates = 'category')
+    # posts = db.relationship('Post', back_populates = 'category')
 
 
 
