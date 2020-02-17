@@ -29,4 +29,4 @@ def fake_admin():
     db.session.add(admin)
     db.session.commit()
 
-def fake_post():
+def fake_posts():
