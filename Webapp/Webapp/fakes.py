@@ -29,29 +29,47 @@ def fake_admin():
     db.session.add(admin)
     db.session.commit()
 
+def fake_user():
+
+
 def fake_category():
     categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4",]
     for Name in categeory_list:
         categeory = Category( name = Name )
-
         db.session.add(categeory)
-        db.session.commit()
+    db.session.commit()
 
 def fake_posts(count = 50):
-    categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4",]
     for i in range(count):
         post = Post( title = fake.sentence(),
                      content = fake.text(500),
                      date_posted = fake.date_of_birth(),
                      price = fake.random_int(0, 100),
-                     # still missing the category
-                     category = random.choice(categeory_list)
                      )
+        # still missing the category
+        for j in range(random.randint(1,5)):
+            categeory = Category.query.get(random.randint(1, Category.query.count()))
+            if categeory not in post.categories:
+                post.categories.append(categeory)
         db.session.add(post)
-        db.session.commit()
+    db.session.commit()
+
+def fake_deal(count = 10):
+    for i in range(count):
+        deal = Deal( time = fake.)
+
 
 
 """
+class Deal(db.Model):
+    # 1 user to multi deals
+    id = db.Column(db.Integer, primary_key = True)
+    time = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    # link the deal to the user who makes the deal
+    by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # link the deal to the item
+    item = db.relationship('Post')
+
 
 class Category(db.Model):
     __tablename__ = 'category'

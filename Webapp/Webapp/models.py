@@ -74,7 +74,6 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
 
-    posts = db.relationship('Post', backref='author', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
@@ -114,7 +113,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer, nullable = False, default = 0)
-    category = db.relationship("Category", secondary= post_category_collections, backref = "post", lazy = 'dynamic')
+    categories = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
 
     # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     # # foreignkey 是外键，连接多的一侧，此处post为多侧
@@ -130,6 +129,8 @@ class Category(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30), unique = True)
+    posts = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
+
     # posts = db.relationship('Post', back_populates = 'category')
 
 
