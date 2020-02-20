@@ -12,6 +12,7 @@ Naming standard:
 """
 import logging
 import os
+import click
 
 from Webapp.settings import config
 from flask import Flask, render_template, request
@@ -29,7 +30,6 @@ def create_app(config_name = None):
     # register application
     register_extensions(app)
     register_blueprint(app)
-
     return app
 
 def register_extensions(app):
@@ -41,5 +41,34 @@ def register_extensions(app):
 
 def register_blueprint(app):
     pass
+
+
+def forge():
+    ''' Create fake data '''
+    from Webapp.fakes import fake_admin,fake_user, fake_category, fake_deal, fake_post
+
+    db.drop_all()
+    db.create_all()
+
+    click.echo('Generating the administrator...')
+    fake_admin()
+
+    click.echo('Generating users')
+    fake_user()
+
+    # click.echo('Generating %d categories...' % category)
+    click.echo('Generating categories...')
+    fake_category()
+
+    click.echo('Generating del')
+
+    click.echo('Generating posts...' )
+    fake_post()
+
+    click.echo('Generating deals')
+    fake_deal()
+
+    click.echo('Done.')
+
 
 

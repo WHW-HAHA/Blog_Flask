@@ -58,7 +58,7 @@ def fake_category():
     db.session.commit()
 
 
-def fake_posts(count = 50):
+def fake_post(count = 50):
     for i in range(count):
         post = Post( title = fake.sentence(),
                      content = fake.text(500),
