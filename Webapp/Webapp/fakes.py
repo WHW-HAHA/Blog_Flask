@@ -17,6 +17,8 @@ from faker import Faker
 from Webapp import db
 from Webapp.models import Admin, Category, Post, Deal, User
 
+# 建立1侧的模型，虚拟数据可以之后从多侧生成
+
 fake = Faker()
 
 def fake_admin():
@@ -29,7 +31,23 @@ def fake_admin():
     db.session.add(admin)
     db.session.commit()
 
-def fake_user():
+def fake_user(count = 50):
+    for i in range(count):
+        user = User(username = fake.name(),
+                    email = fake.email(),
+                    password = 'Whw8409040',)
+        db.session.add(user)
+    db.session.commit()
+
+"""
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=True, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    # Relationship enable to visit deals by user.deal, with including back_ref, enable to call fetch the user by their deal.by
+    deals = db.relationship('Deal', backref = 'by', lazy = 'dynamic')
+"""
 
 
 def fake_category():
@@ -38,6 +56,7 @@ def fake_category():
         categeory = Category( name = Name )
         db.session.add(categeory)
     db.session.commit()
+
 
 def fake_posts(count = 50):
     for i in range(count):
@@ -54,37 +73,11 @@ def fake_posts(count = 50):
         db.session.add(post)
     db.session.commit()
 
+
 def fake_deal(count = 10):
     for i in range(count):
-        deal = Deal( time = fake.)
-
-
-
-"""
-class Deal(db.Model):
-    # 1 user to multi deals
-    id = db.Column(db.Integer, primary_key = True)
-    time = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
-    # link the deal to the user who makes the deal
-    by = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # link the deal to the item
-    item = db.relationship('Post')
-
-
-class Category(db.Model):
-    __tablename__ = 'category'
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(30), unique = True)
-    # posts = db.relationship('Post', back_populates = 'category')
-
-
-class Post(db.Model):
-    __tablename__ = 'post'
-
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    price = db.Column(db.Integer, nullable = False, default = 0)
-    category = db.relationship("Category", secondary= post_category_collections, backref = "post", lazy = 'dynamic')
-"""
+        deal = Deal( time = fake.birthday(),
+                     by_id = User.query().get(random.randint(1, User.query().count())),
+                     posts = Post.query().get(random.randint(1, Post.query().count())))
+        db.sesion.add(deal)
+    db.session.commit()

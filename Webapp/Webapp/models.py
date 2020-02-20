@@ -71,10 +71,12 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(20), nullable=True, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    # Relationship enable to visit deals by user.deal, with including back_ref, enable to call fetch the user by their deal.by
+    deals = db.relationship('Deal', backref = 'by', lazy = 'dynamic')
 
-
+    @staticmethod
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
@@ -96,9 +98,10 @@ class Deal(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     time = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     # link the deal to the user who makes the deal
-    by = db.Column(db.Integer, db.ForeignKey('user.id'))
+    by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # link the deal to the item
-    item = db.relationship('Post')
+    posts = db.relationship('Post', backref = 'deals', lazy = 'dynamic')
+
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
 post_category_collections = db.Table("post_category_collections",
