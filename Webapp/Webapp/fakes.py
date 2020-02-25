@@ -64,11 +64,6 @@ def fake_post(count = 50):
                      date_posted = fake.date_of_birth(),
                      price = fake.random_int(0, 100),
                      )
-        # still missing the category
-        for j in range(random.randint(1,5)):
-            categeory = Category.query.get(random.randint(1, Category.query.count()))
-            if categeory not in post.categories:
-                post.categoies.append(categeory)
         db.session.add(post)
     db.session.commit()
 
@@ -76,8 +71,6 @@ def fake_post(count = 50):
 def fake_deal(count = 10):
     for i in range(count):
         deal = Deal( time = fake.date_of_birth(),
-                     by_id = User.query().get(random.randint(1, User.query().count())),
-                     item_id = Post.query().get(random.randint(1, Post.query().count())),
                      )
-        db.sesion.add(deal)
+        db.session.add(deal)
     db.session.commit()

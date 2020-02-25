@@ -114,7 +114,9 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer, nullable = False, default = 0)
+
     category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
+
     deal = db.relationship('Deal', backref = 'item', lazy = 'dynamic')
 
     # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
