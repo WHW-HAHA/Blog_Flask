@@ -45,7 +45,6 @@ class Article(db.Model):
     # 多的一方，author_id 的取值范围只能在info_author.id的范围内
     author_id = db.Column(db.Integer,db.ForeignKey('info_author.id'))
 
- 
 '''
 
 @login_manager.user_loader
@@ -71,7 +70,6 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=True, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     # Relationship enable to visit deals by user.deal, with including back_ref, enable to call fetch the user by their deal.by
     deals = db.relationship('Deal', backref = 'by', lazy = 'dynamic')
@@ -100,12 +98,12 @@ class Deal(db.Model):
     # link the deal to the user who makes the deal
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # link the deal to the item
-    posts = db.relationship('Post', backref = 'deals', lazy = 'dynamic')
+    item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
 post_category_collections = db.Table("post_category_collections",
-                                     db.Cloumn('post_id', db.Integer, db.ForeignKey("post.id")),
+                                     db.Column('post_id', db.Integer, db.ForeignKey("post.id")),
                                      db.Column('category_id', db.Integer, db.ForeignKey("category.id")))
 
 class Post(db.Model):
@@ -116,7 +114,8 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     price = db.Column(db.Integer, nullable = False, default = 0)
-    categories = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
+    category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
+    deal = db.relationship('Deal', backref = 'item', lazy = 'dynamic')
 
     # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     # # foreignkey 是外键，连接多的一侧，此处post为多侧
@@ -132,7 +131,7 @@ class Category(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30), unique = True)
-    posts = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
+    post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
 
     # posts = db.relationship('Post', back_populates = 'category')
 

@@ -13,7 +13,6 @@ Naming standard:
 
 import random
 from faker import Faker
-
 from Webapp import db
 from Webapp.models import Admin, Category, Post, Deal, User
 
@@ -69,15 +68,16 @@ def fake_post(count = 50):
         for j in range(random.randint(1,5)):
             categeory = Category.query.get(random.randint(1, Category.query.count()))
             if categeory not in post.categories:
-                post.categories.append(categeory)
+                post.categoies.append(categeory)
         db.session.add(post)
     db.session.commit()
 
 
 def fake_deal(count = 10):
     for i in range(count):
-        deal = Deal( time = fake.birthday(),
+        deal = Deal( time = fake.date_of_birth(),
                      by_id = User.query().get(random.randint(1, User.query().count())),
-                     posts = Post.query().get(random.randint(1, Post.query().count())))
+                     item_id = Post.query().get(random.randint(1, Post.query().count())),
+                     )
         db.sesion.add(deal)
     db.session.commit()

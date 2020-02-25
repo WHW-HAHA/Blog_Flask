@@ -1,6 +1,6 @@
 """
 Hanwei Wang
-Time: 20-2-2020 10:32
+Time: 24-2-2020 8:27
 Contact: hanwei_wang_94@outlook.com
 Naming standard:
     name of a class: AbcdAbcd
@@ -10,14 +10,8 @@ Naming standard:
     # in English is the comments
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
+from Webapp import simply_create_app
 
-import os
-from dotenv import load_dotenv
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
-
-from Webapp import create_app
-
-app = create_app(None)
+if __name__== '__main__':
+    app = simply_create_app()
+    app.run(debug = True)
