@@ -1,6 +1,6 @@
 """
 Hanwei Wang
-Time: 13-2-2020 10:19
+Time: 26-2-2020 15:49
 Contact: hanwei_wang_94@outlook.com
 Naming standard:
     name of a class: AbcdAbcd
@@ -13,4 +13,4 @@ Naming standard:
 
 from flask import Blueprint
 
-post_bp = Blueprint('post', __name__)
+webapp_bp = Blueprint('webapp', __name__)

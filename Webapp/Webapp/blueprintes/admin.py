@@ -10,3 +10,7 @@ Naming standard:
     # in English is the comments
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
+
+from flask import Blueprint
+
+admin_bp = Blueprint('admin', __name__)

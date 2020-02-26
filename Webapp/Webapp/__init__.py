@@ -17,14 +17,22 @@ import click
 from Webapp.settings import config
 from flask import Flask, render_template, request
 from Webapp.extensions import bootstrap, db, mail, login_manager
-from flask_sqlalchemy import SQLAlchemy
+from Webapp.blueprintes.admin import admin_bp
+from Webapp.blueprintes.post import post_bp
+from Webapp.blueprintes.user import user_bp
+from Webapp.blueprintes.webapp import webapp_bp
+
+
+
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
     db.init_app(app)
+
     rigister_command(app)
+    register_blueprint(app)
     return app
 
 
@@ -46,8 +54,13 @@ def create_app():
 #     db.init_app(app)
 #     login_manager.init_app(app)
 #
-# def register_blueprint(app):
-#     pass
+
+def register_blueprint(app):
+    app.register_bluerint(webapp_bp)
+    app.register_bluerint(admin_bp, url_prefix = '/admin')
+    app.register_bluerint(post_bp, url_prefix='/post')
+    app.register_bluerint(user_bp, url_prefix='/user')
+
 
 def rigister_command(app):
     @app.cli.command()

@@ -1,6 +1,6 @@
 """
 Hanwei Wang
-Time: 13-2-2020 10:19
+Time: 26-2-2020 15:38
 Contact: hanwei_wang_94@outlook.com
 Naming standard:
     name of a class: AbcdAbcd
@@ -10,7 +10,6 @@ Naming standard:
     # in English is the comments
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
-
 from flask import Blueprint
 
-post_bp = Blueprint('post', __name__)
+user_bp = Blueprint('user', __name__)

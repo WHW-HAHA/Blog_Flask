@@ -29,31 +29,22 @@ class Author(db.Model):
     # 一的一方，relationship为Author 添加article属性，Author_obj.article内容是以Author_obj.id == Article.author_id的一组Article对象
     # backref（反向引用） 则为Article添加author属性，Article_obj.author内容是以Article.author_id == Author_obj.id 的Author_obj
     article = db.relationship("Article",backref='author',lazy='dynamic')
-    """
+    
+    关系表， db.relationship() 在多侧和一侧都可以建立但是同时建立时， backref会有命名冲突
+    
     lazy: 指定sqlalchemy数据库什么时候加载数据
         select: 就是访问到属性的时候，就会全部加载该属性的数据
         joined: 对关联的两个表使用联接
         subquery: 与joined类似，但使用子子查询
         dynamic: 不加载记录，但提供加载记录的查询，也就是生成query对象
-    """
-
-
-class Article(db.Model):
-    __tablename__ = "info_article"
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(20),nullable=False)
-    # 多的一方，author_id 的取值范围只能在info_author.id的范围内
-    author_id = db.Column(db.Integer,db.ForeignKey('info_author.id'))
-
-# 3
-    关系表， db.relationship() 在多侧和一侧都可以建立但是同时建立时， backref会有命名冲突
     
-# 4
+    class Article(db.Model):
+        __tablename__ = "info_article"
+        id = db.Column(db.Integer, primary_key=True)
+        title = db.Column(db.String(20),nullable=False)
+        # 多的一方，author_id 的取值范围只能在info_author.id的范围内
+        author_id = db.Column(db.Integer,db.ForeignKey('info_author.id'))
 '''
-
-
-
-
 
 @login_manager.user_loader
 def load_user(user_id):
