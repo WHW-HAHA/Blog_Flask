@@ -45,7 +45,15 @@ class Article(db.Model):
     # 多的一方，author_id 的取值范围只能在info_author.id的范围内
     author_id = db.Column(db.Integer,db.ForeignKey('info_author.id'))
 
+# 3
+    关系表， db.relationship() 在多侧和一侧都可以建立但是同时建立时， backref会有命名冲突
+    
+# 4
 '''
+
+
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -72,7 +80,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     # Relationship enable to visit deals by user.deal, with including back_ref, enable to call fetch the user by their deal.by
-    deals = db.relationship('Deal', backref = 'by', lazy = 'dynamic')
+    # deals = db.relationship('Deal', backref = 'by')
 
     @staticmethod
     def get_reset_token(self, expires_sec=1800):
@@ -95,10 +103,17 @@ class Deal(db.Model):
     # 1 user to multi deals
     id = db.Column(db.Integer, primary_key = True)
     time = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+
+    # 建立关系索引
     # link the deal to the user who makes the deal
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # link the deal to the item
     item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    # 建立关系表
+    item = db.relationship('Post', backref = 'deals', )
+    by = db.relationship('User', backref = 'deals', )
+
 
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
@@ -117,7 +132,7 @@ class Post(db.Model):
 
     category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
 
-    deal = db.relationship('Deal', backref = 'item', lazy = 'dynamic')
+    # deals = db.relationship('Deal', backref = 'item')
 
     # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     # # foreignkey 是外键，连接多的一侧，此处post为多侧
@@ -134,8 +149,10 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30), unique = True)
     post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
-
     # posts = db.relationship('Post', back_populates = 'category')
+    '''
+    
+    '''
 
 
 

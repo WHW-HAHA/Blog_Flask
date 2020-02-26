@@ -71,6 +71,8 @@ def fake_post(count = 50):
 def fake_deal(count = 10):
     for i in range(count):
         deal = Deal( time = fake.date_of_birth(),
+                     by = User.query.get(random.randint(1, User.query.count())),
+                     item = Post.query.get(random.randint(1, Post.query.count()))
                      )
         db.session.add(deal)
     db.session.commit()
