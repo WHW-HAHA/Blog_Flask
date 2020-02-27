@@ -30,9 +30,23 @@ class Author(db.Model):
     # backref（反向引用） 则为Article添加author属性，Article_obj.author内容是以Article.author_id == Author_obj.id 的Author_obj
     article = db.relationship("Article",backref='author',lazy='dynamic')
     
-    关系表， db.relationship() 在多侧和一侧都可以建立但是同时建立时， backref会有命名冲突
+
+#2 关系表， db.relationship() 在多侧和一侧都可以建立但是同时建立时， 
     
-    lazy: 指定sqlalchemy数据库什么时候加载数据
+    backref意味着可以从多端访问一端，
+    class Father(..): 
+    children = relationship( 'Child', backref='parent' )
+    
+    然而从一端定义的关系表是正向访问，不需要backref
+    class Father(..): 
+        id = Column(..)
+        children = relationship('Child')
+
+    class Child(..):
+        father_id = Column( Integer, ForeignKey('father.id') )
+    
+    
+#3 lazy: 指定sqlalchemy数据库什么时候加载数据
         select: 就是访问到属性的时候，就会全部加载该属性的数据
         joined: 对关联的两个表使用联接
         subquery: 与joined类似，但使用子子查询
@@ -53,10 +67,13 @@ def load_user(user_id):
 # Administrator class
 class Admin(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(20))
+    superusername = db.Column(db.String(20))
     password_hash = db.Column(db.String(128))
-    post_title = db.Column(db.String(60))
-    post_sub_title = db.Column(db.String(100))
+    # relationships
+    posts = db.relationship('Post')
+    users = db.relationship('User')
+    deals = db.relationship('Deal')
+    categories = db.relationship('Category')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -70,41 +87,21 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    # Relationship enable to visit deals by user.deal, with including back_ref, enable to call fetch the user by their deal.by
-    # deals = db.relationship('Deal', backref = 'by')
+    # relationships
+    deals = db.relationship('Deal')
+    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
-    @staticmethod
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
-
-    @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
-        return User.query.get(user_id)
-
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 class Deal(db.Model):
     # 1 user to multi deals
     id = db.Column(db.Integer, primary_key = True)
     time = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
 
-    # 建立关系索引
     # link the deal to the user who makes the deal
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     # link the deal to the item
     item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-
-    # 建立关系表
-    item = db.relationship('Post', backref = 'deals', )
-    by = db.relationship('User', backref = 'deals', )
-
+    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
@@ -114,36 +111,24 @@ post_category_collections = db.Table("post_category_collections",
 
 class Post(db.Model):
     __tablename__ = 'post'
-
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    title = db.Column(db.String(20), nullable=False)
+    subtitle = db.Column(db.String(100), nullable = False)
     content = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable = False, default = 0)
-
+    #relationships
+    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
     category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
-
-    # deals = db.relationship('Deal', backref = 'item')
-
-    # category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
-    # # foreignkey 是外键，连接多的一侧，此处post为多侧
-    # category = db.relationship('Category', back_populates = 'posts')
-    # # relationship 使得post具有category属性，
-    # # back_populate 使得category类可以获得所有的所属posts, 属性名posts和Category中posts一样
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
-
+    deals = db.relationship('Deal')
 
 class Category(db.Model):
     __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30), unique = True)
+    description = db.Column(db.String(100), nullable = True)
+    #relationships
     post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
-    # posts = db.relationship('Post', back_populates = 'category')
-    '''
-    
-    '''
-
+    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
 

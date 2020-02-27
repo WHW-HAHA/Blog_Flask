@@ -22,17 +22,16 @@ from Webapp.blueprintes.post import post_bp
 from Webapp.blueprintes.user import user_bp
 from Webapp.blueprintes.webapp import webapp_bp
 
+def create_app(config_name = None):
+    if config_name is None:
+        config_name = os.getenv('FLASK_CONFIG', 'development')
 
-
-
-def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-    db.init_app(app)
+    app.config.from_object(config[config_name])
 
-    rigister_command(app)
-    register_blueprint(app)
+    register_extensions(app)
+    register_blueprints(app)
+    rigister_commands(app)
     return app
 
 
@@ -48,21 +47,19 @@ def create_app():
 #     register_blueprint(app)
 #     return app
 
-# def register_extensions(app):
-#     bootstrap.init_app(app)
-#     mail.init_app(app)
-#     db.init_app(app)
-#     login_manager.init_app(app)
-#
+def register_extensions(app):
+    bootstrap.init_app(app)
+    mail.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
 
-def register_blueprint(app):
-    app.register_bluerint(webapp_bp)
-    app.register_bluerint(admin_bp, url_prefix = '/admin')
-    app.register_bluerint(post_bp, url_prefix='/post')
-    app.register_bluerint(user_bp, url_prefix='/user')
+def register_blueprints(app):
+    app.register_blueprint(webapp_bp)
+    app.register_blueprint(admin_bp, url_prefix = '/admin')
+    app.register_blueprint(post_bp, url_prefix='/post')
+    app.register_blueprint(user_bp, url_prefix='/user')
 
-
-def rigister_command(app):
+def rigister_commands(app):
     @app.cli.command()
     def forge():
         ''' Create fake data '''

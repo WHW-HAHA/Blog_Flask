@@ -11,6 +11,10 @@ Naming standard:
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
 
+'''
+fake 数据只能从父类插入
+'''
+
 import random
 from faker import Faker
 from Webapp import db
@@ -20,46 +24,11 @@ from Webapp.models import Admin, Category, Post, Deal, User
 
 fake = Faker()
 
-def fake_admin():
-    admin = Admin(
-        username = 'admin',
-        post_title = 'TheFirstPost',
-        post_sub_title = 'SubtitleOfTheFirstPost',
-    )
-    admin.set_password('NotAPassword')
-    db.session.add(admin)
-    db.session.commit()
-
-def fake_user(count = 50):
-    for i in range(count):
-        user = User(username = fake.name(),
-                    email = fake.email(),
-                    password = 'Whw8409040',)
-        db.session.add(user)
-    db.session.commit()
-
-"""
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=True, default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
-    # Relationship enable to visit deals by user.deal, with including back_ref, enable to call fetch the user by their deal.by
-    deals = db.relationship('Deal', backref = 'by', lazy = 'dynamic')
-"""
-
-
-def fake_category():
-    categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4",]
-    for Name in categeory_list:
-        categeory = Category( name = Name )
-        db.session.add(categeory)
-    db.session.commit()
-
 
 def fake_post(count = 50):
     for i in range(count):
         post = Post( title = fake.sentence(),
+                     subtitle = fake.sentence(),
                      content = fake.text(500),
                      date_posted = fake.date_of_birth(),
                      price = fake.random_int(0, 100),
@@ -67,12 +36,57 @@ def fake_post(count = 50):
         db.session.add(post)
     db.session.commit()
 
+def fake_admin():
+    admin = Admin(
+            superusername = 'Hanwei_1',
+    )
+    admin.set_password('Whw844409040')
+    db.session.add(admin)
+    admin = Admin(
+            superusername = 'Hanwei_2',
+    )
+    admin.set_password('Whw844409040')
+    db.session.add(admin)
+    db.session.commit()
 
-def fake_deal(count = 10):
+def fake_user(count = 50):
+    for i in range(count):
+        user = User(username = fake.name(),
+                    email = fake.email(),
+                    password = 'Whw8409040',
+                    # admin = Admin.query.get(random.randint(1, 2)),
+                    )
+        db.session.add(user)
+    db.session.commit()
+
+def fake_deal(count = 100):
     for i in range(count):
         deal = Deal( time = fake.date_of_birth(),
-                     by = User.query.get(random.randint(1, User.query.count())),
-                     item = Post.query.get(random.randint(1, Post.query.count()))
+                     # by_id = User.query.get(random.randint(1, User.query.count())),
+                     # item_id = Post.query.get(random.randint(1, Post.query.count())),
+                     # admin=Admin.query.get(random.randint(1, 2))
                      )
         db.session.add(deal)
     db.session.commit()
+
+
+
+def fake_category():
+    categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4",]
+    for Name in categeory_list:
+        categeory = Category( name = Name,
+                              description = fake.sentence(),
+                              # admin = Admin.query.get(random.randint(1, 2))
+                              )
+        db.session.add(categeory)
+    db.session.commit()
+
+def insert_relationship():
+    pass
+
+
+
+
+
+
+
