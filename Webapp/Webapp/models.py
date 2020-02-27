@@ -27,17 +27,17 @@ class Author(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     # 一的一方，relationship为Author 添加article属性，Author_obj.article内容是以Author_obj.id == Article.author_id的一组Article对象
-    # backref（反向引用） 则为Article添加author属性，Article_obj.author内容是以Article.author_id == Author_obj.id 的Author_obj
-    article = db.relationship("Article",backref='author',lazy='dynamic')
+    # back_populates（反向引用） 则为Article添加author属性，Article_obj.author内容是以Article.author_id == Author_obj.id 的Author_obj
+    article = db.relationship("Article",back_populates='author',lazy='dynamic')
     
 
 #2 关系表， db.relationship() 在多侧和一侧都可以建立但是同时建立时， 
     
-    backref意味着可以从多端访问一端，
+    back_populates意味着可以从多端访问一端，
     class Father(..): 
-    children = relationship( 'Child', backref='parent' )
+    children = relationship( 'Child', back_populates='parent' )
     
-    然而从一端定义的关系表是正向访问，不需要backref
+    然而从一端定义的关系表是正向访问，不需要back_populates
     class Father(..): 
         id = Column(..)
         children = relationship('Child')
@@ -99,9 +99,13 @@ class Deal(db.Model):
 
     # link the deal to the user who makes the deal
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    by = db.relationship('User', back_populates = 'deals')
     # link the deal to the item
     item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    item = db.relationship('Post', back_populates = 'deals')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
+
+
 
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
