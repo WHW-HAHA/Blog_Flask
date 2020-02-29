@@ -14,16 +14,18 @@ from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 mail = Mail()
 login_manager = LoginManager()
+bcrypt = Bcrypt()
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    from Webapp.models import Admin
+    from Webapp.Webapp.models import Admin
     super_user = Admin.query.get(int(user_id))
     print('Administrator is {}'.format(super_user))
     return super_user

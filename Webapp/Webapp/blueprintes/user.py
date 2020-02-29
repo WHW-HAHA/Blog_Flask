@@ -12,10 +12,9 @@ Naming standard:
 """
 from flask import Blueprint, render_template, redirect, flash, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
-from Webapp.forms.user import RegistrationForm, LoginForm, UpdateAccountForm
-from Webapp.models import User
-from Webapp import db, bcrypt
-
+from Webapp.Webapp.forms.user import RegistrationForm, LoginForm, UpdateAccountForm
+from Webapp.Webapp.models import User
+from Webapp.Webapp import db, bcrypt
 user_bp = Blueprint('user', __name__)
 
 # redirect 重定向url
