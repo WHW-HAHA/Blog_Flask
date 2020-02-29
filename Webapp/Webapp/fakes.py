@@ -54,21 +54,18 @@ def fake_user(count = 50):
         user = User(username = fake.name(),
                     email = fake.email(),
                     password = 'Whw8409040',
-                    # admin = Admin.query.get(random.randint(1, 2)),
                     )
         db.session.add(user)
     db.session.commit()
 
 def fake_deal(count = 100):
     for i in range(count):
-        deal = Deal( time = fake.date_of_birth(),
-                     by_id = User.query.get(random.randint(1, User.query.count())),
-                     item_id = Post.query.get(random.randint(1, Post.query.count())),
-                     )
+        deal = Deal(time = fake.date_of_birth(),
+                    item = Post.query.get(random.randint(1, Post.query.count())),
+                    by = User.query.get(random.randint(1, User.query.count()))
+                    )
         db.session.add(deal)
     db.session.commit()
-
-
 
 def fake_category():
     categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4",]

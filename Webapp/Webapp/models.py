@@ -88,7 +88,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     # relationships
-    deals = db.relationship('Deal')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
 
@@ -99,14 +98,12 @@ class Deal(db.Model):
 
     # link the deal to the user who makes the deal
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    by = db.relationship('User', back_populates = 'deals')
+    by = db.relationship('User', backref = 'deals')
+
     # link the deal to the item
     item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    item = db.relationship('Post', back_populates = 'deals')
+    item = db.relationship('Post', backref = 'deals')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
-
-
-
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
 post_category_collections = db.Table("post_category_collections",
@@ -124,7 +121,6 @@ class Post(db.Model):
     #relationships
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
     category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
-    deals = db.relationship('Deal')
 
 class Category(db.Model):
     __tablename__ = 'category'
@@ -134,5 +130,3 @@ class Category(db.Model):
     #relationships
     post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
-
-
