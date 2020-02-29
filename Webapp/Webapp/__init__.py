@@ -22,6 +22,7 @@ from Webapp.blueprintes.post import post_bp
 from Webapp.blueprintes.user import user_bp
 from Webapp.blueprintes.webapp import webapp_bp
 
+
 def create_app(config_name = None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
