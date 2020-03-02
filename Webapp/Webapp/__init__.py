@@ -14,13 +14,13 @@ import logging
 import os
 import click
 
-from Webapp.Webapp.settings import config
+from Webapp.settings import config
 from flask import Flask, render_template, request
-from Webapp.Webapp.extensions import bootstrap, db, mail, login_manager, bcrypt
-from Webapp.Webapp.blueprintes.admin import admin_bp
-from Webapp.Webapp.blueprintes.post import post_bp
-from Webapp.Webapp.blueprintes.user import user_bp
-from Webapp.Webapp.blueprintes.webapp import webapp_bp
+from Webapp.extensions import bootstrap, db, mail, login_manager, bcrypt
+from Webapp.blueprintes.admin import admin_bp
+from Webapp.blueprintes.post import post_bp
+from Webapp.blueprintes.user import user_bp
+from Webapp.blueprintes.webapp import webapp_bp
 
 
 def create_app(config_name = None):
@@ -29,8 +29,6 @@ def create_app(config_name = None):
 
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-
-
 
     register_extensions(app)
     register_blueprints(app)

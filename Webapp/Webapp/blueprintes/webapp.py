@@ -12,7 +12,7 @@ Naming standard:
 """
 
 from flask import Blueprint, request, render_template
-from Webapp.Webapp.models import Post
+from Webapp.models import Post
 
 webapp_bp = Blueprint('webapp', __name__)
 

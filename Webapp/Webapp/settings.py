@@ -26,8 +26,6 @@ else:
 class BaseConfig(object):
     # SECRET_KEY = os.getenv('SECRET', 'dev key')
     SECRET_KEY = '5791628bb0b13ce0c676dfde280ba245'
-
-
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
@@ -37,6 +35,7 @@ class BaseConfig(object):
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'site.db')
+    DEBUG = True
 
 config = {
     'development': DevelopmentConfig

@@ -16,7 +16,7 @@ from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, ValidationError, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
-from Webapp.Webapp.models import User
+from Webapp.models import User
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(1, 30)])

@@ -22,3 +22,4 @@ if os.path.exists(dotenv_path):
 from Webapp.Webapp import create_app
 
 app = create_app()
+app.run(debug = True)

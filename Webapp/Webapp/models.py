@@ -14,7 +14,7 @@ Naming standard:
 from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
-from Webapp.Webapp.extensions import db, login_manager
+from Webapp.extensions import db, login_manager
 # werkzeug 路由模块
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
