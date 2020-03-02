@@ -42,7 +42,6 @@ def register():
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
-
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data)
@@ -55,10 +54,26 @@ def login():
 
 
 # put the user information and functionality all in account page
-@user_bp.route('/account', methods = ['GET', 'POST'])
-def account():
-    return redirect(url_for('user.account'))
 
+@user_bp.route('/account', methods = ['GET', 'POST'])
+@login_required()
+def account():
+    return redirect(url_for('user.acount'))
+
+
+@user_bp.route('/edit account', methods = ['GET', 'POST'])
+@login_required # the account page only accessible when ...
+def update_account():
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.newemail.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('user.account'))
+    else:
+        flash('The new email is not consistent, please check')
+        return redirect(url_for('user.account'))
 
 @user_bp.route('/logout', methods = ['GET', 'POST'])
 def logout():

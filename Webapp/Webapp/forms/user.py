@@ -35,7 +35,6 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('The email is already in use, please take another one!')
 
-
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -45,8 +44,8 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm():
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=1, max=30)])
-    email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+    new_email = StringField('New Email', validators=[DataRequired(), Email()])
+    new_email_again = StringField('New Email again', validators=[DataRequired(), EqualTo(new_email)])
     submit = SubmitField('Update')
 
     def validate_username(self, username):
