@@ -25,35 +25,25 @@ from Webapp.blueprintes.webapp import webapp_bp
 
 
 
-def create_app():
-    app = Flask(__name__)
-    app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-    db.init_app(app)
+def create_app(config_name):
+    if config_name is None:
+        config_name = os.getenv('FLASK_CONFIG', 'development')
+        print('The name of configurationd is {}'.format(config_name))
+    app = Flask('Webapp')
+    app.config.from_object(config[config_name])
 
-    rigister_command(app)
+    register_extensions(app)
     register_blueprint(app)
+    rigister_command(app)
     return app
 
 
-# def create_app(config_name = None):
-#     if config_name is None:
-#         config_name = os.getenv('FLASK_CONFIG', 'development') # get the name of development configuration
-#
-#     app = Flask('Webapp')
-#     app.config.from_object(config[config_name])
-#
-#     # register application
-#     register_extensions(app)
-#     register_blueprint(app)
-#     return app
+def register_extensions(app):
+    bootstrap.init_app(app)
+    mail.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
 
-# def register_extensions(app):
-#     bootstrap.init_app(app)
-#     mail.init_app(app)
-#     db.init_app(app)
-#     login_manager.init_app(app)
-#
 
 def register_blueprint(app):
     app.register_bluerint(webapp_bp)
