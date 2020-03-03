@@ -35,11 +35,13 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('The email is already in use, please take another one!')
 
+
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
 
 class UpdateAccountForm():
     username = StringField('Username',
