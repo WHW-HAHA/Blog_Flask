@@ -10,8 +10,16 @@ Naming standard:
     # in English is the comments
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
-from Webapp import simply_create_app
+import os
+from dotenv import load_dotenv
+
+# claim and use .env or .flaskenv as setting files
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+
+from Webapp import create_app
 
 if __name__== '__main__':
-    app = simply_create_app()
+    app = create_app()
     app.run(debug = True)

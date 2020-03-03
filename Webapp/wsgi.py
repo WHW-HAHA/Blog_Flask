@@ -19,6 +19,11 @@ dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
-from Webapp import create_app
+from Webapp.Webapp import create_app
 
+<<<<<<< HEAD
 app = create_app(config_name = None)
+=======
+app = create_app()
+app.run(debug = True)
+>>>>>>> 7b478a6132afc97eb21c44501ce8a5a0229ea26c

@@ -16,14 +16,18 @@ import click
 
 from Webapp.settings import config
 from flask import Flask, render_template, request
-from Webapp.extensions import bootstrap, db, mail, login_manager
+from Webapp.extensions import bootstrap, db, mail, login_manager, bcrypt
 from Webapp.blueprintes.admin import admin_bp
 from Webapp.blueprintes.post import post_bp
 from Webapp.blueprintes.user import user_bp
 from Webapp.blueprintes.webapp import webapp_bp
 
 
+def create_app(config_name = None):
+    if config_name is None:
+        config_name = os.getenv('FLASK_CONFIG', 'development')
 
+<<<<<<< HEAD
 
 def create_app(config_name):
     if config_name is None:
@@ -38,21 +42,48 @@ def create_app(config_name):
     return app
 
 
+=======
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
+
+    register_extensions(app)
+    register_blueprints(app)
+    rigister_commands(app)
+    return app
+
+
+# def create_app(config_name = None):
+#     if config_name is None:
+#         config_name = os.getenv('FLASK_CONFIG', 'development') # get the name of development configuration
+#
+#     app = Flask('Webapp')
+#     app.config.from_object(config[config_name])
+#
+#     # register application
+#     register_extensions(app)
+#     register_blueprint(app)
+#     return app
+
+>>>>>>> 7b478a6132afc97eb21c44501ce8a5a0229ea26c
 def register_extensions(app):
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+<<<<<<< HEAD
+
+=======
+    bcrypt.init_app(app)
+>>>>>>> 7b478a6132afc97eb21c44501ce8a5a0229ea26c
 
 
-def register_blueprint(app):
-    app.register_bluerint(webapp_bp)
-    app.register_bluerint(admin_bp, url_prefix = '/admin')
-    app.register_bluerint(post_bp, url_prefix='/post')
-    app.register_bluerint(user_bp, url_prefix='/user')
+def register_blueprints(app):
+    app.register_blueprint(webapp_bp)
+    app.register_blueprint(admin_bp, url_prefix = '/admin')
+    app.register_blueprint(post_bp, url_prefix='/post')
+    app.register_blueprint(user_bp, url_prefix='/user')
 
-
-def rigister_command(app):
+def rigister_commands(app):
     @app.cli.command()
     def forge():
         ''' Create fake data '''

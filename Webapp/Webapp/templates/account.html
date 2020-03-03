@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 class="mb-3">{{ user.username }}</h1>
+    <a class="mr-2" href="{{ url_for('user.update_account') }}">Edit Account</a>
+    {% for deal in deals %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('webapp.about') }}">Time of payment: {{ deal.time}}</a>
+              <a class="mr-2" href="{{ url_for('webapp.about') }}">Item be purchased: {{ deal.item_id}}</a>
+            </div>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
