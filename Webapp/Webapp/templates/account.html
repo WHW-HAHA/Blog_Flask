@@ -1,27 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1 class="mb-3">Deals {{ user.username }} ({{deals.total}})</h1>
-    {% for deal in deals.items %}
+    <h1 class="mb-3">{{ user.username }}</h1>
+    <a class="mr-2" href="{{ url_for('user.update_account') }}">Edit Account</a>
+    {% for deal in deals %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="{{ url_for('webapp.about') }}">Time of payment: {{ deal.time}}</a>
               <a class="mr-2" href="{{ url_for('webapp.about') }}">Item be purchased: {{ deal.item_id}}</a>
             </div>
-            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
-    {% endfor %}
-    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-      {% if page_num %}
-        {% if posts.page == page_num %}
-          <a class="btn btn-info mb-4" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
-        {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('users.user_posts', username=user.username, page=page_num) }}">{{ page_num }}</a>
-        {% endif %}
-      {% else %}
-        ...
-      {% endif %}
     {% endfor %}
 {% endblock content %}

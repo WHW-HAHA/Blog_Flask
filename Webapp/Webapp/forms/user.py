@@ -42,22 +42,11 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-
-class UpdateAccountForm():
-    username = StringField('Username',
-                           validators=[DataRequired(), Length(min=1, max=30)])
+class UpdateAccountForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=1, max=30)])
     new_email = StringField('New Email', validators=[DataRequired(), Email()])
-    new_email_again = StringField('New Email again', validators=[DataRequired(), EqualTo(new_email)])
+    new_email_again = StringField('New Email repeat', validators=[DataRequired(), EqualTo(new_email)])
     submit = SubmitField('Update')
 
-    def validate_username(self, username):
-        if username.data != current_user.usermame:
-            user = User.query.filter_by(username = username.data)
-            if user:
-                raise ValidationError('That username is taken. Please choose a different one.')
 
-    def validate_email(self, email):
-        if email.data != current_user.email:
-            user = User.query.filter_by(email=email.data).first()
-            if user:
-                raise ValidationError('That email is taken. Please choose a different one.')
+
