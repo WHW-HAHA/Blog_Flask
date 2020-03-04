@@ -21,9 +21,5 @@ if os.path.exists(dotenv_path):
 
 from Webapp.Webapp import create_app
 
-<<<<<<< HEAD
-app = create_app(config_name = None)
-=======
 app = create_app()
 app.run(debug = True)
->>>>>>> 7b478a6132afc97eb21c44501ce8a5a0229ea26c

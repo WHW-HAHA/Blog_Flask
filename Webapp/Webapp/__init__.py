@@ -27,22 +27,6 @@ def create_app(config_name = None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
-<<<<<<< HEAD
-
-def create_app(config_name):
-    if config_name is None:
-        config_name = os.getenv('FLASK_CONFIG', 'development')
-        print('The name of configurationd is {}'.format(config_name))
-    app = Flask('Webapp')
-    app.config.from_object(config[config_name])
-
-    register_extensions(app)
-    register_blueprint(app)
-    rigister_command(app)
-    return app
-
-
-=======
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
@@ -64,17 +48,12 @@ def create_app(config_name):
 #     register_blueprint(app)
 #     return app
 
->>>>>>> 7b478a6132afc97eb21c44501ce8a5a0229ea26c
 def register_extensions(app):
     bootstrap.init_app(app)
     mail.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-<<<<<<< HEAD
-
-=======
     bcrypt.init_app(app)
->>>>>>> 7b478a6132afc97eb21c44501ce8a5a0229ea26c
 
 
 def register_blueprints(app):
