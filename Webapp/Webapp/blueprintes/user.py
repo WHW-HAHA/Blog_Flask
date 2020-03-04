@@ -13,7 +13,7 @@ Naming standard:
 from flask import Blueprint, render_template, redirect, flash, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from Webapp.forms.user import RegistrationForm, LoginForm, UpdateAccountForm
-from Webapp.models import User, Deal
+from Webapp.models import User, Deal, Post
 from Webapp import db, bcrypt
 user_bp = Blueprint('user', __name__)
 
@@ -60,7 +60,14 @@ def login():
 @login_required
 def account():
     user = current_user
-    deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all()
+    deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
+    item_id = []
+    post_all = []
+    for deal in deals_all:
+        item_id.append(deal.item_id)
+        deal.price = Post.query.get(deal.item_id).price
+        deal.title = Post.query.get(deal.item_id).title
+
     return render_template('account.html', user = user, deals = deals_all)
 
 
@@ -69,20 +76,11 @@ def account():
 def update_account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        if form.newemail == form.newemail_agin:
-            user = User.query.filter_by(email = form.new_email).first()
-            if user:
-                flash('This email is already being used, please use a new one!', 'danger')
-                return redirect(url_for('user.account'))
-            else:
-                current_user.username = form.username.data
-                current_user.email = form.newe_mail.data
-                db.session.commit()
-                flash('Your account has been updated!', 'success')
-            return redirect(url_for('user.account'))
-        else:
-            flash('Two new email should be consistent, please check', 'dangerous')
-
+        current_user.username = form.username.data
+        current_user.email = form.new_email.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('user.account'))
     return render_template('edit_account.html', form = form)
 
 
