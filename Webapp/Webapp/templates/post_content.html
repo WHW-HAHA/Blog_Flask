@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block content %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href = "">{{post.title }}</a></h2>
+                <p class="article-content" >{{post.subtitle}}</p>
+                <p class="article-content" >{{post.content}}</p>
 
-</body>
-</html>
+          </div>
+        </article>
+{% endblock content %}
