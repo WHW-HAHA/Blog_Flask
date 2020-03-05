@@ -7,14 +7,15 @@
     {% for deal in deals %}
         <article class="media content-section">
           <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="">Time of payment: {{ deal.time}}</a>
-              <a class="mr-2" href="">Item be purchased: {{deal.item_id}}</a>
-              <a class="mr-2" href="">Title: {{ deal.title}}</a>
-              <a class="mr-2" href="">Price: {{deal.price}}</a>
+              <div class="article-metadata">
+                  <a class="mr-2" href="{{url_for('post.post', post_id = deal.item_id)}}">Title: {{ deal.title}}</a>
+                  <p>Time of payment: {{ deal.time}}</p>
+                <p>Item be purchased: {{deal.item_id}}</p>
+              <p>Price: {{deal.price}}</p>
 
             </div>
           </div>
         </article>
     {% endfor %}
+{% endblock %}
 

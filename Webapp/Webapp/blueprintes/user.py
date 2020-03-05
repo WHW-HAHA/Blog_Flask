@@ -56,19 +56,18 @@ def login():
 
 
 # put the user information and functionality all in account page
-@user_bp.route('/account', methods = ['GET'])
+@user_bp.route('/account/', methods = ['GET'])
 @login_required
 def account():
     user = current_user
     deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
     item_id = []
-    post_all = []
     for deal in deals_all:
         item_id.append(deal.item_id)
         deal.price = Post.query.get(deal.item_id).price
         deal.title = Post.query.get(deal.item_id).title
 
-    return render_template('account.html', user = user, deals = deals_all)
+    return render_template('account.html', title = user.username, user = user, deals = deals_all)
 
 
 @user_bp.route('/user/edit_account', methods = ['GET', 'POST'])

@@ -12,13 +12,11 @@ Naming standard:
 """
 
 from datetime import datetime
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from flask import current_app
 from Webapp.extensions import db, login_manager
 # werkzeug 路由模块
-from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
 '''
 instance
 
@@ -83,6 +81,7 @@ class Admin(db.Model, UserMixin):
 
 
 class User(db.Model, UserMixin):
+    __searchable__ = ['username']
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -113,6 +112,7 @@ post_category_collections = db.Table("post_category_collections",
 
 class Post(db.Model):
     __tablename__ = 'post'
+    __searchable__  =  ['title', 'subtitle', 'content']
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), nullable=False)
     subtitle = db.Column(db.String(100), nullable = False)

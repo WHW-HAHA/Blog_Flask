@@ -21,7 +21,7 @@ from Webapp.blueprintes.admin import admin_bp
 from Webapp.blueprintes.post import post_bp
 from Webapp.blueprintes.user import user_bp
 from Webapp.blueprintes.webapp import webapp_bp
-
+import flask_whooshalchemyplus
 
 def create_app(config_name = None):
     if config_name is None:
@@ -54,6 +54,8 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
+    # whoosh initialize app to enable db searchable
+    flask_whooshalchemyplus.init_app(app)
 
 
 def register_blueprints(app):

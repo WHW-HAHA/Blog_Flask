@@ -12,6 +12,7 @@ Naming standard:
 """
 import os
 import sys
+from whoosh.analysis import StemmingAnalyzer
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -32,6 +33,9 @@ class BaseConfig(object):
 
     CKEDITOR_ENABLE_CSRF = True
     CKEDITOR_FILE_UPLOADER = 'admin.upload_image'
+    # to enable the database to searchable
+    WHOOSH_BASE = basedir
+    WHOOSH_ANALYZER= StemmingAnalyzer() # might be optional
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'site.db')

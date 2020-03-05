@@ -12,7 +12,7 @@ Naming standard:
 """
 
 from flask import Blueprint, request, render_template
-from Webapp.models import Post
+from Webapp.models import Post, User
 
 webapp_bp = Blueprint('webapp', __name__)
 
@@ -27,3 +27,22 @@ def home():
 @webapp_bp.route("/about")
 def about():
     return render_template('about.html', title='About')
+
+
+@webapp_bp.route("/search")
+def search():
+    # get keyword variable from form in web page
+    # search in user
+    user_found = User.query.whoosh_search('Have').all()
+    print(user_found)
+    # search in posts
+    post_found = Post.query.whoosh_search('Have').all()
+    print(post_found)
+
+    if user_found or post_found:
+        return render_template('search_found.html', title = 'results of search', user = user_found, post = post_found)
+    else:
+        return render_template('search_nofound.html', title = 'no results have been found')
+
+
+
