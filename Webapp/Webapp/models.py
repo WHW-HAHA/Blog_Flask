@@ -86,7 +86,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    # image_file = db.Column(db.String(60), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(60), nullable=False, default='default profile.jpg')
     # relationships
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
@@ -119,6 +119,7 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable = False, default = 0)
+    image_file = db.Column(db.String, nullable = False, default = 'default post.jpg')
     #relationships
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
     category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
@@ -128,6 +129,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(30), unique = True)
     description = db.Column(db.String(100), nullable = True)
+    image_file = db.Column(db.String, nullable = False, default = 'default category.jpg')
     #relationships
     post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
