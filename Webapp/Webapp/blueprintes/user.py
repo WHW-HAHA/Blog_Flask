@@ -66,7 +66,7 @@ def account():
         item_id.append(deal.item_id)
         deal.price = Post.query.get(deal.item_id).price
         deal.title = Post.query.get(deal.item_id).title
-
+        deal.image_file = Post.query.get(deal.item_id).image_file
     return render_template('account.html', title = user.username, user = user, deals = deals_all)
 
 

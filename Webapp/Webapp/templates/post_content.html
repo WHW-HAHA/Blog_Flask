@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
         <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
               <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
@@ -8,7 +9,20 @@
             <h2><a class="article-title" href = "">{{post.title }}</a></h2>
                 <p class="article-content" >{{post.subtitle}}</p>
                 <p class="article-content" >{{post.content}}</p>
-
           </div>
         </article>
 {% endblock content %}
+
+{% block sidebar %}
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3>Buy this package?</h3>
+              <p class='text-muted'>Packages: </p>
+              <ul class="list-group">
+                  <li class="list-group-item list-group-item-light"><a href = "">Standard package (20 pics in 10 RMB)</a></li>
+                <li class="list-group-item list-group-item-light"><a href="">Advanced package (50 pics in 20 RMB)</a></li>
+                  <li class="list-group-item list-group-item-light"><a href="">Premium package (50 HD pics in 30 RMB )</a></li>
+              </ul>
+          </div>
+        </div>
+{% endblock sidebar %}

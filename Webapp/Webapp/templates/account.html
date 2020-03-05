@@ -1,21 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
     <h1 class="mb-3">{{ user.username }}</h1>
     <h2 class="mb-3">{{ user.email }}</h2>
-
     <a class="mr-2" href="{{ url_for('user.update_account') }}">Edit Account</a>
     {% for deal in deals %}
         <article class="media content-section">
           <div class="media-body">
               <div class="article-metadata">
-                  <a class="mr-2" href="{{url_for('post.post', post_id = deal.item_id)}}">Title: {{ deal.title}}</a>
                   <p>Time of payment: {{ deal.time}}</p>
-                <p>Item be purchased: {{deal.item_id}}</p>
+              </div>
+              <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + deal.image_file) }}">
+              <h3><a class="article-title" href="{{url_for('post.post', post_id = deal.item_id)}}">Title: {{ deal.title}}</a></h3>
               <p>Price: {{deal.price}}</p>
-
             </div>
-          </div>
         </article>
     {% endfor %}
 {% endblock %}
-

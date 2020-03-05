@@ -4,6 +4,7 @@
 {% block content %}
     {% for post in posts.items %}
         <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
               <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
@@ -27,3 +28,18 @@
       {% endif %}
     {% endfor %}
 {% endblock content %}
+
+{% block sidebar %}
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3>Our Sidebar</h3>
+              <p class='text-muted'>You can put any information here you'd like.></p>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light">Latest Posts</li>
+                <li class="list-group-item list-group-item-light">Announcements</li>
+                <li class="list-group-item list-group-item-light">Calendars</li>
+                <li class="list-group-item list-group-item-light">etc</li>
+              </ul>
+          </div>
+        </div>
+{% endblock sidebar %}
