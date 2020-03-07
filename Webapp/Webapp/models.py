@@ -122,7 +122,8 @@ class Post(db.Model):
     image_file = db.Column(db.String, nullable = False, default = 'default post.jpg')
     #relationships
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
-    category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
+    # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
+    category_id = db.Column(db.Integer, nullable = True, default = 'Unclassified')
 
 class Category(db.Model):
     __tablename__ = 'category'

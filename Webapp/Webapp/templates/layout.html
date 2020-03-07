@@ -32,7 +32,10 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{url_for('webapp.search')}}">Search</a>
+                <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="keyword">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
                 <a class="nav-item nav-link" href="{{ url_for('user.account') }}">Account</a>
                 <a class="nav-item nav-link" href="{{ url_for('user.logout') }}">Logout</a>
               {% else %}
@@ -40,7 +43,6 @@
                 <a class="nav-item nav-link" href="{{url_for('webapp.search')}}">Search</a>
                 <a class="nav-item nav-link" href="{{ url_for('user.login') }}">Login</a>
                 <a class="nav-item nav-link" href="{{ url_for('user.register') }}">Register</a>
-
               {% endif %}
             </div>
           </div>
@@ -48,6 +50,8 @@
       </nav>
     </header>
     <main role="main" class="container">
+      <div ></div>  
+
       <div class="row">
         <div class="col-md-8">
           {% with messages = get_flashed_messages(with_categories=true) %}

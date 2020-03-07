@@ -68,13 +68,16 @@ def fake_deal(count = 100):
     db.session.commit()
 
 def fake_category():
-    categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4",]
+    categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4", "Unclassified"]
     for Name in categeory_list:
         categeory = Category( name = Name,
                               description = fake.sentence(),
                               # admin = Admin.query.get(random.randint(1, 2))
                               )
         db.session.add(categeory)
+    db.session.commit()
+    for post in Post.query.all():
+        post.category_id = Category.query.get(random.randint(1, Category.query.count()))
     db.session.commit()
 
 def insert_relationship():

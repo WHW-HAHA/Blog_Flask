@@ -1,7 +1,6 @@
-
-</html>
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Sorry, no matched results are currently available</h1>
+    <h2>Sorry, no content about "{{keyword}}" has been found.</h2>
+
     <a href="{{ url_for('webapp.home') }}"> Back to home page</a>
 {% endblock content %}

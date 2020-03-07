@@ -78,3 +78,18 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+.card{
+    flex: 1 1 50%;
+    position: relative;
+    border: 11px solid #efefef;
+}
+
+.card-content{
+    padding: 0 0 30px;
+}
+
+.card-details{
+}
+
+

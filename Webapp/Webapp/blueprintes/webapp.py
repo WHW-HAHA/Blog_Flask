@@ -13,6 +13,7 @@ Naming standard:
 
 from flask import Blueprint, request, render_template
 from Webapp.models import Post, User
+from sqlalchemy import and_, or_
 
 webapp_bp = Blueprint('webapp', __name__)
 
@@ -29,20 +30,28 @@ def about():
     return render_template('about.html', title='About')
 
 
-@webapp_bp.route("/search")
+@webapp_bp.route("/search", methods = ['POST'])
 def search():
+    if request.method == 'POST':
     # get keyword variable from form in web page
     # search in user
-    user_found = User.query.whoosh_search('Have').all()
-    print(user_found)
-    # search in posts
-    post_found = Post.query.whoosh_search('Have').all()
-    print(post_found)
+        keyword = request.form.get('keyword')
+        print('Keyword is {}'.format(keyword))
+        user_found = User.query.filter(
+            User.username.like('%' + keyword + '%') if keyword is not None else '',).all()
+        # search in posts
+        page = request.args.get('page', 1, type=int)
+        post_found = Post.query.filter(or_(
+            Post.title.like('%' + keyword + '%') if keyword is not None else '',
+            Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
+            Post.content.like('%' + keyword + '%') if keyword is not None else ''))
+        post = post_found.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
 
-    if user_found or post_found:
-        return render_template('search_found.html', title = 'results of search', user = user_found, post = post_found)
-    else:
-        return render_template('search_nofound.html', title = 'no results have been found')
+        # highlight the keyword in result page
+        if user_found or post_found.all():
+            return render_template('search_found.html', title = 'results of search', user = user_found, posts = post)
+        else:
+            return render_template('search_nofound.html', title = 'no results have been found', keyword = keyword)
 
 
 

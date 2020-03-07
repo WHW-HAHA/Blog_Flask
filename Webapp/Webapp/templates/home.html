@@ -2,6 +2,7 @@
 
 {% extends "layout.html" %}
 {% block content %}
+    <h2>Add highlight keyword later </h2>
     {% for post in posts.items %}
         <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
