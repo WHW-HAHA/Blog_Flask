@@ -11,8 +11,8 @@ Naming standard:
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
 
-from flask import Blueprint, request, render_template
-from Webapp.models import Post, User
+from flask import Blueprint, request, render_template, flash
+from Webapp.models import Post, User, Category
 from sqlalchemy import and_, or_
 
 webapp_bp = Blueprint('webapp', __name__)
@@ -22,7 +22,8 @@ webapp_bp = Blueprint('webapp', __name__)
 def home():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template('home.html', posts=posts)
+    categories = Category.query.all()
+    return render_template('home.html', posts=posts, categories = categories)
 
 
 @webapp_bp.route("/about")

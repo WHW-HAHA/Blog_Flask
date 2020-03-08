@@ -120,6 +120,7 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable = False, default = 0)
     image_file = db.Column(db.String, nullable = False, default = 'default post.jpg')
+    likes = db.Column(db.Integer, nullable = True, default = 0)
     #relationships
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
     # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')

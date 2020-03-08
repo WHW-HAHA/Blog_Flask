@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+    <h2>Add highlight keyword later </h2>
+
     {% for user in user %}
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}">
         <h1 class="mb-3">{{ user.username }}</h1>

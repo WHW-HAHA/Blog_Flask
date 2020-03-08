@@ -49,24 +49,19 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="container">
-      <div ></div>  
 
+
+    <main role="main" class="container">
+      <div ></div>
       <div class="row">
-        <div class="col-md-8">
-          {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                  {{ message }}
-                </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
-          {% block content %}{% endblock %} <!-- where replace content with new content at main field-->
+        <div class="col-md-12">
+        {% block category%}{% endblock %}
+        </div>
+        <div class="col-md-8"> <!-- give 8/12 columns for main field -->
+            {% block content %}{% endblock %} <!-- where replace content with new content at main field-->
         </div>
           {% block sidebar %}{% endblock %}<!-- where replace content with new content at side field -->
-      </div>
+        </div>
     </main>
 
 

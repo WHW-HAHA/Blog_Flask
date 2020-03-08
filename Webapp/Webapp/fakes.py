@@ -32,6 +32,7 @@ def fake_post(count = 50):
                      content = fake.text(500),
                      date_posted = fake.date_of_birth(),
                      price = fake.random_int(0, 100),
+                     likes = fake.random_int(0, 100)
                      )
         db.session.add(post)
     db.session.commit()

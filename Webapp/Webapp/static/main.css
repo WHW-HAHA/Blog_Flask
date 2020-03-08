@@ -4,6 +4,8 @@ body {
   margin-top: 5rem;
 }
 
+
+
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
@@ -78,18 +80,3 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
-
-.card{
-    flex: 1 1 50%;
-    position: relative;
-    border: 11px solid #efefef;
-}
-
-.card-content{
-    padding: 0 0 30px;
-}
-
-.card-details{
-}
-
-

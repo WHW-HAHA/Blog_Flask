@@ -1,6 +1,6 @@
 """
 Hanwei Wang
-Time: 13-2-2020 10:19
+Time: 8-3-2020 15:07
 Contact: hanwei_wang_94@outlook.com
 Naming standard:
     name of a class: AbcdAbcd
@@ -14,14 +14,8 @@ Naming standard:
 from flask import Blueprint, render_template, flash
 from Webapp.models import Post, Category
 
-post_bp = Blueprint('post', __name__)
+category_bp = Blueprint('category', __name__)
 
-@post_bp.route("/post/<post_id>") # post_id 在这个route函数被调用时传入
-def post(post_id):
-    post = Post.query.get_or_404(post_id)
-    flash(post.category_id, 'success')
-    return render_template('post_content.html', title=post.title, post=post)
-
-
-
-
+@category_bp.route("/")
+def category():
+    pass
