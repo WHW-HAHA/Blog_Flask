@@ -130,5 +130,3 @@ class Category(db.Model):
     name = db.Column(db.String(30), unique = True)
     description = db.Column(db.String(100), nullable = True)
     image_file = db.Column(db.String, nullable = False, default = 'default category.jpg')
-    #relationships
-    # post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')

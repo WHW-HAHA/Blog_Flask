@@ -54,15 +54,17 @@ def fake_user(count = 50):
                     email = fake.email(),
                     password = 'Whw8409040',
                     )
-        user.like.append(Post.query.get(random.randint(1, Post.query.count())))
-        db.session.add(user)
-        print(user.like)
+        for j in range(random.randint(1, 5)):
+            post = Post.query.get(random.randint(1, Post.query.count()))
+            if post not in user.like:
+                user.like.append(post)
     db.session.commit()
 
 def fake_deal(count = 100):
     for i in range(count):
         deal = Deal(time = fake.date_of_birth(),
-                    by = User.query.get(random.randint(1, User.query.count()))
+                    by = User.query.get(random.randint(1, User.query.count())),
+                    what = Post.query.get(random.randint(1, Post.query.count()))
                     )
         db.session.add(deal)
     db.session.commit()
@@ -70,15 +72,16 @@ def fake_deal(count = 100):
 def fake_category():
     categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4", "Unclassified"]
     for Name in categeory_list:
-        categeory = Category( name = Name,
+        category = Category( name = Name,
                               description = fake.sentence(),
                               # admin = Admin.query.get(random.randint(1, 2))
                               )
-        db.session.add(categeory)
+        for j in range(random.randint(1, 3)):
+            post = Post.query.get(random.randint(1, Post.query.count()))
+            if post not in category.posts:
+                category.posts.append(post)
+        db.session.add(category)
     db.session.commit()
-
-def insert_relationship():
-    pass
 
 
 
