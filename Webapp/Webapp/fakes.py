@@ -76,12 +76,14 @@ def fake_category():
                               description = fake.sentence(),
                               # admin = Admin.query.get(random.randint(1, 2))
                               )
-        for j in range(random.randint(1, 3)):
-            post = Post.query.get(random.randint(1, Post.query.count()))
-            if post not in category.posts:
-                category.posts.append(post)
+        for post in Post.query.all():
+            for j in range(random.randint(1, 3)):
+                if post not in category.posts:
+                    category.posts.append(post)
         db.session.add(category)
     db.session.commit()
+
+
 
 
 

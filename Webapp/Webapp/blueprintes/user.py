@@ -60,7 +60,8 @@ def login():
 @login_required
 def account():
     user = current_user
-    deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
+    deals_all = user.deals
+    # deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
     item_id = []
     for deal in deals_all:
         item_id.append(deal.item_id)

@@ -4,6 +4,7 @@
     <h1 class="mb-3">{{ user.username }}</h1>
     <h2 class="mb-3">{{ user.email }}</h2>
     <a class="mr-2" href="{{ url_for('user.update_account') }}">Edit Account</a>
+
     {% for deal in deals %}
         <article class="media content-section">
           <div class="media-body">

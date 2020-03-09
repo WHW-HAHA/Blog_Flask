@@ -85,9 +85,6 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String, nullable=False, default='default profile.jpg')
     deals = db.relationship('Deal', backref = 'by')
 
-
-
-
 class Deal(db.Model):
     # 1 user to multi deals
     id = db.Column(db.Integer, primary_key = True)
