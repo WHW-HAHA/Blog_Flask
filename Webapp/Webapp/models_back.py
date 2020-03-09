@@ -68,10 +68,10 @@ class Admin(db.Model, UserMixin):
     superusername = db.Column(db.String(20))
     password_hash = db.Column(db.String(128))
     # relationships
-    posts = db.relationship('Post', backref = 'admin')
-    users = db.relationship('User', backref = 'admin')
-    deals = db.relationship('Deal', backref = 'admin')
-    categories = db.relationship('Category', backref = 'admin')
+    posts = db.relationship('Post')
+    users = db.relationship('User')
+    deals = db.relationship('Deal')
+    categories = db.relationship('Category')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -87,14 +87,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     image_file = db.Column(db.String, nullable=False, default='default profile.jpg')
-    # relationships with admin
+    # relationships
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
-    # relationships with admin
-    deals = db.relationship('Deal', backref = 'by')
-    # relationships with posts, by liking or following
-
-    like = db.relationship('Post', backref = 'like_by')
-
 
 
 class Deal(db.Model):
@@ -102,19 +96,19 @@ class Deal(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     time = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
 
+    # link the deal to the user who makes the deal
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    by = db.relationship('User', backref = 'deals')
+
+    # link the deal to the item
     item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    item = db.relationship('Post', backref = 'deals')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
 post_category_collections = db.Table("post_category_collections",
                                      db.Column('post_id', db.Integer, db.ForeignKey("post.id")),
                                      db.Column('category_id', db.Integer, db.ForeignKey("category.id")))
-
-# one user can like many posts and a post can be followed by many users
-post_user_colloections = db.Table('post_user_collections',
-                                  db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
-                                  db.Column('user_id', db.Integer, db.ForeignKey('user.id')))
 
 class Post(db.Model):
     __tablename__ = 'post'
@@ -126,13 +120,11 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable = False, default = 0)
     image_file = db.Column(db.String, nullable = False, default = 'default post.jpg')
+    likes = db.Column(db.Integer, nullable = True, default = 0)
     #relationships
-    deals = db.relationship('Deal', backref = 'what')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
     # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
-    # category_id = db.Column(db.Integer, nullable = True, default = 'Unclassified')
-    categories = db.relationship('Category', secondary = post_category_collections, backref= 'posts')
-
+    category_id = db.Column(db.Integer, nullable = True, default = 'Unclassified')
 
 class Category(db.Model):
     __tablename__ = 'category'
@@ -141,7 +133,5 @@ class Category(db.Model):
     description = db.Column(db.String(100), nullable = True)
     image_file = db.Column(db.String, nullable = False, default = 'default category.jpg')
     #relationships
-    # post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
-    posts = db.relationship()
-
+    post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
     admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
