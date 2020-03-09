@@ -34,6 +34,9 @@ def Forge(app):
         click.echo('Generating the administrator...')
         fake_admin()
 
+        click.echo('Generating posts...')
+        fake_post()
+
         click.echo('Generating users')
         fake_user()
 
@@ -41,10 +44,6 @@ def Forge(app):
         click.echo('Generating categories...')
         fake_category()
 
-        click.echo('Generating del')
-
-        click.echo('Generating posts...')
-        fake_post()
 
         click.echo('Generating deals')
         fake_deal()

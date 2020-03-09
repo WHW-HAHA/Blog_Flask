@@ -68,10 +68,6 @@ class Admin(db.Model, UserMixin):
     superusername = db.Column(db.String(20))
     password_hash = db.Column(db.String(128))
     # relationships
-    posts = db.relationship('Post', backref = 'admin')
-    users = db.relationship('User', backref = 'admin')
-    deals = db.relationship('Deal', backref = 'admin')
-    categories = db.relationship('Category', backref = 'admin')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -87,13 +83,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     image_file = db.Column(db.String, nullable=False, default='default profile.jpg')
-    # relationships with admin
-    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
-    # relationships with admin
     deals = db.relationship('Deal', backref = 'by')
-    # relationships with posts, by liking or following
 
-    like = db.relationship('Post', backref = 'like_by')
 
 
 
@@ -104,7 +95,6 @@ class Deal(db.Model):
 
     by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     item_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
 
 # post 和 category 实际为多对多，应该创建关联表进行连接
 post_category_collections = db.Table("post_category_collections",
@@ -128,10 +118,10 @@ class Post(db.Model):
     image_file = db.Column(db.String, nullable = False, default = 'default post.jpg')
     #relationships
     deals = db.relationship('Deal', backref = 'what')
-    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))
     # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
     # category_id = db.Column(db.Integer, nullable = True, default = 'Unclassified')
     categories = db.relationship('Category', secondary = post_category_collections, backref= 'posts')
+    likeby = db.relationship('User', secondary =post_user_colloections, backref = 'like')
 
 
 class Category(db.Model):
@@ -142,6 +132,3 @@ class Category(db.Model):
     image_file = db.Column(db.String, nullable = False, default = 'default category.jpg')
     #relationships
     # post_id = db.relationship("Post", secondary = post_category_collections, backref = 'categories', lazy = 'dynamic')
-    posts = db.relationship()
-
-    admin = db.Column(db.Integer, db.ForeignKey('admin.id'))

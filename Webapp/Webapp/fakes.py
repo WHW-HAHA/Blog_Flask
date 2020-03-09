@@ -32,10 +32,8 @@ def fake_post(count = 50):
                      content = fake.text(500),
                      date_posted = fake.date_of_birth(),
                      price = fake.random_int(0, 100),
-                     likes = fake.random_int(0, 100)
                      )
         db.session.add(post)
-    db.session.commit()
 
 def fake_admin():
     admin = Admin(
@@ -56,13 +54,14 @@ def fake_user(count = 50):
                     email = fake.email(),
                     password = 'Whw8409040',
                     )
+        user.like.append(Post.query.get(random.randint(1, Post.query.count())))
         db.session.add(user)
+        print(user.like)
     db.session.commit()
 
 def fake_deal(count = 100):
     for i in range(count):
         deal = Deal(time = fake.date_of_birth(),
-                    item = Post.query.get(random.randint(1, Post.query.count())),
                     by = User.query.get(random.randint(1, User.query.count()))
                     )
         db.session.add(deal)
@@ -76,9 +75,6 @@ def fake_category():
                               # admin = Admin.query.get(random.randint(1, 2))
                               )
         db.session.add(categeory)
-    db.session.commit()
-    for post in Post.query.all():
-        post.category_id = Category.query.get(random.randint(1, Category.query.count()))
     db.session.commit()
 
 def insert_relationship():
