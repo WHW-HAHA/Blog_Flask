@@ -16,7 +16,7 @@ import click
 
 from Webapp.settings import config
 from flask import Flask, render_template, request
-from Webapp.extensions import bootstrap, db, mail, login_manager, bcrypt
+from Webapp.extensions import bootstrap, db, mail, login_manager, bcrypt, weixin
 from Webapp.blueprintes.admin import admin_bp
 from Webapp.blueprintes.post import post_bp
 from Webapp.blueprintes.user import user_bp
@@ -54,6 +54,7 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     bcrypt.init_app(app)
+    weixin.init_app(app)
     # whoosh initialize app to enable db searchable
     flask_whooshalchemyplus.init_app(app)
 

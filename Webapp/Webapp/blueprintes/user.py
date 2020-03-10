@@ -39,6 +39,7 @@ def register():
         return redirect(url_for('user.login'))
     return render_template('register.html', title = 'Register', form = form)
 
+
 @user_bp.route('/login', methods = ['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -53,6 +54,11 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
+@user_bp.route('/weixin-login')
+def weixin_login():
+    pass
+
 
 
 # put the user information and functionality all in account page
