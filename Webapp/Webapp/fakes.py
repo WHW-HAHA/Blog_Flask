@@ -19,6 +19,7 @@ import random
 from faker import Faker
 from Webapp import db
 from Webapp.models import Admin, Category, Post, Deal, User
+from sqlalchemy import func
 
 # 建立1侧的模型，虚拟数据可以之后从多侧生成
 
@@ -59,6 +60,7 @@ def fake_user(count = 50):
             if post not in user.like:
                 user.like.append(post)
     db.session.commit()
+
 
 def fake_deal(count = 100):
     for i in range(count):

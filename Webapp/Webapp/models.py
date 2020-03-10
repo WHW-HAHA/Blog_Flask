@@ -119,6 +119,10 @@ class Post(db.Model):
     # category_id = db.Column(db.Integer, nullable = True, default = 'Unclassified')
     categories = db.relationship('Category', secondary = post_category_collections, backref= 'posts')
     likeby = db.relationship('User', secondary =post_user_colloections, backref = 'like')
+    total_like = db.Column(db.Integer, nullable = True, default = 0)
+
+
+
 
 
 class Category(db.Model):

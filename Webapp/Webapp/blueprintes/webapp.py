@@ -21,6 +21,8 @@ webapp_bp = Blueprint('webapp', __name__)
 @webapp_bp.route("/home")
 def home():
     page = request.args.get('page', 1, type=int)
+    for post in Post.query.all():
+        post.total_likes = len(list(post.likeby))
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     categories = Category.query.all()
     return render_template('home.html', posts=posts, categories = categories)
