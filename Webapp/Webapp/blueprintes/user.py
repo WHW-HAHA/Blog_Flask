@@ -10,11 +10,16 @@ Naming standard:
     # in English is the comments
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
-from flask import Blueprint, render_template, redirect, flash, url_for, request
+from flask import Blueprint, render_template, redirect, flash, url_for, session, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from Webapp.forms.user import RegistrationForm, LoginForm, UpdateAccountForm
 from Webapp.models import User, Deal, Post
 from Webapp import db, bcrypt
+import re
+import time
+import requests
+from bs4 import BeautifulSoup
+
 user_bp = Blueprint('user', __name__)
 
 
@@ -55,9 +60,26 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
+def xml_parse(text):
+    result = {}
+    soup = BeautifulSoup(text, 'html.parse')
+    tag_list = soup.find(name= 'error').find_all()
+    for tag in tag_list:
+        result[tag.name] = tag.text
+    return result
+
 @user_bp.route('/weixin-login')
 def weixin_login():
-    pass
+    ctime = int(time.time() * 1000)
+    qcode_url = "https://login.wx2.qq.com/jslogin?appid=wx782c26e4c19acffb&redirect_uri=https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&fun=new&lang=zh_CN&_={0}".format(ctime)
+    rep = requests.get(url = qcode_url)
+    qcode = re.findall('uuid = "(.*)";', rep.text)[0]
+    # get the qcode
+    session['qcode'] = qcode # session used to store some sensitive and temporary info
+    return render_template('weixin_login.html', qcode = qcode)
+
+
+
 
 
 
