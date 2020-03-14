@@ -10,17 +10,24 @@ Naming standard:
     # in English is the comments
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
-from flask import Blueprint, render_template, redirect, flash, url_for, session, jsonify
+from flask import Blueprint, render_template, redirect, flash, url_for, session, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from Webapp.forms.user import RegistrationForm, LoginForm, UpdateAccountForm
 from Webapp.models import User, Deal, Post
 from Webapp import db, bcrypt
 import re
 import time
+from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
+from weixin.login import WeixinLogin
+
 
 user_bp = Blueprint('user', __name__)
+
+app_id = ''
+app_secret = ''
+wx_login = WeixinLogin(app_id, app_secret)
 
 
 # redirect 重定向url
@@ -60,28 +67,13 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-def xml_parse(text):
-    result = {}
-    soup = BeautifulSoup(text, 'html.parse')
-    tag_list = soup.find(name= 'error').find_all()
-    for tag in tag_list:
-        result[tag.name] = tag.text
-    return result
-
-@user_bp.route('/weixin-login')
-def weixin_login():
-    ctime = int(time.time() * 1000)
-    qcode_url = "https://login.wx2.qq.com/jslogin?appid=wx782c26e4c19acffb&redirect_uri=https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&fun=new&lang=zh_CN&_={0}".format(ctime)
-    rep = requests.get(url = qcode_url)
-    qcode = re.findall('uuid = "(.*)";', rep.text)[0]
-    # get the qcode
-    session['qcode'] = qcode # session used to store some sensitive and temporary info
-    return render_template('weixin_login.html', qcode = qcode)
-
-
-
-
-
+def xml_parser(text):
+    dic = {}
+    soup = BeautifulSoup(text, 'html.parser')
+    div = soup.find(name='error')
+    for item in div.find_all(recursive=False):
+        dic[item.name] = item.text
+    return dic
 
 # put the user information and functionality all in account page
 @user_bp.route('/account/', methods = ['GET'])
@@ -116,6 +108,97 @@ def update_account():
 def logout():
     logout_user()
     return redirect(url_for('webapp.home'))
+
+@user_bp.route('/weixin-login')
+def weixin_login():
+    """登陆跳转地址"""
+    openid = request.cookies.get("openid")
+    next = request.args.get("next") or request.referrer or "/",
+    if openid:
+        return redirect(next)
+
+    callback = url_for("user.authorized", next=next, _external=True)
+    url = wx_login.authorize(callback, "snsapi_base")
+    return redirect(url)
+
+@user_bp.route("/authorized")
+def authorized():
+
+    code = request.args.get("code")
+    if not code:
+        return "ERR_INVALID_CODE", 400
+    next = request.args.get("next", "/")
+    data = wx_login.access_token(code)
+    openid = data.openid
+    resp = redirect(next)
+    expires = datetime.now() + timedelta(days=1)
+    resp.set_cookie("openid", openid, expires=expires)
+    return resp
+
+
+@user_bp.route('check/weixin-login')
+def check_login():
+    """
+    发送GET请求检测是否已经扫码、登录
+    https://login.wx.qq.com/cgi-bin/mmwebwx-bin/login?loginicon=true&uuid=QbeUOBatKw==&tip=0&r=-1036255891&_=1525749595604
+    :return:
+    """
+    response = {'code': 408}
+    qcode = session.get('qcode')
+    ctime = str(int(time.time() * 1000))
+    check_url = "https://login.wx.qq.com/cgi-bin/mmwebwx-bin/login?loginicon=true&uuid={0}&tip=0&r=-1036255891&_={1}".format(
+        qcode, ctime)
+    ret = requests.get(check_url)
+    print("ret.text~~~~~~~", ret.text)
+    if "code=201" in ret.text:
+        # 扫码成功
+        src = re.findall("userAvatar = '(.*)';", ret.text)[0]
+        response['code'] = 201
+        response['src'] = src
+    elif 'code=200' in ret.text:
+        # 确认登录
+        print("code=200~~~~~~~", ret.text)
+        redirect_uri = re.findall('redirect_uri="(.*)";', ret.text)[0]
+        # 向redirect_uri地址发送请求，获取凭证相关信息
+        redirect_uri = redirect_uri + "&fun=new&version=v2"
+        ticket_ret = requests.get(redirect_uri)
+        ticket_dict = xml_parser(ticket_ret.text)
+        session['ticket_dict'] = ticket_dict
+        response['code'] = 200
+    return jsonify(response)
+
+@user_bp.route('/weixin_account')
+def index():
+    """
+    用户数据的初始化
+    https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=-1039465096&lang=zh_CN&pass_ticket=q9TOX4RI4VmNiHXW9dUUl1oMzoQK2X2f3H3kn0VYm5YGNwUMO2THYMznv8DSXqp0
+    :return:
+    """
+    ticket_dict = session.get('ticket_dict')
+    init_url = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=-1039465096&lang=zh_CN&pass_ticket={0}".format(
+        ticket_dict.get('pass_ticket'))
+
+    data_dict = {
+        "BaseRequest": {
+            "DeviceID": "e750865687999321",
+            "Sid": ticket_dict.get('wxsid'),
+            "Uin": ticket_dict.get('wxuin'),
+            "Skey": ticket_dict.get('skey'),
+        }
+    }
+    init_ret = requests.post(
+        url=init_url,
+        json=data_dict
+    )
+    init_ret.encoding = 'utf-8'
+    user_dict = init_ret.json()
+    print(user_dict)
+    # for user in user_dict['ContactList']:
+    #     print(user.get('NickName'))
+
+    return render_template('weixin_account.html', user_dict=user_dict)
+
+
 
 
 

@@ -36,6 +36,9 @@ class BaseConfig(object):
     # to enable the database to searchable
     WHOOSH_BASE = basedir
     WHOOSH_ANALYZER= StemmingAnalyzer() # might be optional
+    # weixin configuration
+    WEIXIN_APP_ID = ''
+    WEIXIN_APP_SECRET = ''
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'site.db')

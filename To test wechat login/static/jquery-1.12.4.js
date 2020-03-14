@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <div style="width: 200px;margin: 100px auto;background-color:cadetblue" >
-        <h2 style="text-align: center;color:white;padding-top: 15px">微信登录</h2>
-        [外链图片转存失败(img-1b2f5Lln-1562225009323)(https://login.weixin.qq.com/qrcode/%7B%7Bqcode%7D%7D)]
-    </div>
+  $(function () {
+            checkLogin();
+        })
 
-    <script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
-    <script>
         $(function () {
             checkLogin();
         });
@@ -24,17 +13,17 @@
                 success:function (arg) {
                     console.log(arg);
                     checkLogin();
+
                     if(arg.code === 408){
                         checkLogin();
+
                     }else if(arg.code === 201){
                         $('#userAvatar').attr('src',arg.avatar);
                         checkLogin();
+
                     }else if(arg.code === 200){
                         location.href = "{{ url_for('index') }}"
                     }
                 }
             })
         }
-    </script>
-</body>
-</html>
