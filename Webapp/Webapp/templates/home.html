@@ -1,6 +1,6 @@
 <!-- posts is the argument from view function-->
 
-{% extends "layout.html" %}
+{% extends "layout_withoutsidebar.html" %}
 {% block category %}
     {% for category in categories%}
         <a href=""><span class="badge badge-primary">{{category.name}}</span></a>

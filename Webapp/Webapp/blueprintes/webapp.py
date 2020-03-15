@@ -32,6 +32,10 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+@webapp_bp.route("/test")
+def test():
+    return render_template('new_login.html', title='Test')
+
 
 @webapp_bp.route("/search", methods = ['POST'])
 def search():
