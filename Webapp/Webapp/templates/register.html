@@ -1,27 +1,30 @@
-{% extends "layout.html" %}
+{% extends "layout_withoutsidebar.html" %}
 {% block content %}
-    <div class="content-section">
-        <form method="POST" action="">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customized_css/signin.css') }}">
+  <body class="text-center">
+    <form class="form-signin" method="POST">
             {{ form.hidden_tag() }}
+        <!-- User name field -->
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
+                <div class="py-5 text-center">
+                    <h1>Join today</h1>
+                </div>
                 <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
-
+                    {{ form.username.label(class="d-flex justify-content-between align-items-center mb-3") }}
                     {% if form.username.errors %}
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        {{ form.username(class="form-control form-control-lg is-invalid" ) }}
                         <div class="invalid-feedback">
                             {% for error in form.username.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.username(class="form-control form-control-lg") }}
+                        {{ form.username(class="form-control form-control-lg", placeholder = "") }}
                     {% endif %}
                 </div>
-
+        <!-- Email field -->
                 <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
+                    {{ form.email.label(class="d-flex justify-content-between align-items-center mb-3") }}
                     {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
@@ -30,12 +33,12 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.email(class="form-control form-control-lg") }}
+                        {{ form.email(class="form-control form-control-lg",  placeholder = "") }}
                     {% endif %}
                 </div>
-
+        <!-- Password field -->
                 <div class="form-group">
-                    {{ form.password.label(class="form-control-label") }}
+                    {{ form.password.label(class="d-flex justify-content-between align-items-center mb-3") }}
                     {% if form.password.errors %}
                         {{ form.password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
@@ -47,8 +50,9 @@
                         {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+        <!-- Confirm password field -->
                 <div class="form-group">
-                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {{ form.confirm_password.label(class="d-flex justify-content-between align-items-center mb-3") }}
                     {% if form.confirm_password.errors %}
                         {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
@@ -61,14 +65,15 @@
                     {% endif %}
                 </div>
             </fieldset>
+        <!-- Submit button field -->
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
             </div>
         </form>
-    </div>
     <div class="border-top pt-3">
         <small class="text-muted">
             Already Have An Account? <a class="ml-2" href="{{ url_for('user.login') }}">Sign In</a>
         </small>
     </div>
+  </body>
 {% endblock content %}
