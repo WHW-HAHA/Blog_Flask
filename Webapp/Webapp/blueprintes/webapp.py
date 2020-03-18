@@ -24,6 +24,11 @@ def home():
     for post in Post.query.all():
         post.total_likes = len(list(post.likeby))
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+
+    posts_category1 = posts[0:5]
+    posts_category1 = posts[6:11]
+    posts_category1 = posts[12:17]
+    posts_category1 = posts[18:23]
     categories = Category.query.all()
     return render_template('home.html', posts=posts, categories = categories)
 

@@ -198,6 +198,10 @@ def index():
 
     return render_template('weixin_account.html', user_dict=user_dict)
 
+@user_bp.route('/price')
+def pay():
+    return render_template('price.html')
+
 
 
 

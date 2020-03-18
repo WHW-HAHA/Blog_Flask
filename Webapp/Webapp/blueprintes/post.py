@@ -19,7 +19,6 @@ post_bp = Blueprint('post', __name__)
 @post_bp.route("/post/<post_id>") # post_id 在这个route函数被调用时传入
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    print(post.categories)
     return render_template('post_content.html', title=post.title, post=post)
 
 
