@@ -4,11 +4,10 @@ body {
   margin-top: 5rem;
 }
 
+div{}
 
-.L_center_img img{
-		 max-height:145px;
-		 max-width: 120px;
-		 vertical-align:middle;
+.coverImg{
+    object-fit: cover;
 }
 
 
@@ -85,4 +84,9 @@ a.article-title:hover {
 
 .account-heading {
   font-size: 2.5rem;
+}
+
+.img{
+width: 100%;
+height: auto;
 }
