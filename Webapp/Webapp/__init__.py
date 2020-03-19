@@ -69,7 +69,7 @@ def rigister_commands(app):
     @app.cli.command()
     def forge():
         ''' Create fake data '''
-        from Webapp.fakes import fake_admin,fake_user, fake_category, fake_deal, fake_post
+        from Webapp.fakes import fake_admin,fake_user, fake_category, fake_deal, fake_post, fake_count
 
         db.drop_all()
         db.create_all()
@@ -90,6 +90,9 @@ def rigister_commands(app):
 
         click.echo('Generating deals')
         fake_deal()
+
+        click.echo('Count likes and deals')
+        fake_count()
 
         click.echo('Done.')
 

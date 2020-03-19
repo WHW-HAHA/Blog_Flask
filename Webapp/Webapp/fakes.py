@@ -14,8 +14,8 @@ Naming standard:
 '''
 fake 数据只能从父类插入
 '''
-
 import random
+from numpy import random as Random
 from faker import Faker
 from Webapp import db
 from Webapp.models import Admin, Category, Post, Deal, User
@@ -72,18 +72,27 @@ def fake_deal(count = 100):
     db.session.commit()
 
 def fake_category():
-    categeory_list = ["Categeory 1", "Categeory 2", "Categeory 3", "Categeory 4", "Unclassified"]
+    categeory_list = ["The latest", "Asia", "Europe & USA", "Cartoon", 'Unclassified']
     for Name in categeory_list:
         category = Category( name = Name,
                               description = fake.sentence(),
                               # admin = Admin.query.get(random.randint(1, 2))
                               )
-        for post in Post.query.all():
-            for j in range(random.randint(1, 3)):
-                if post not in category.posts:
-                    category.posts.append(post)
+        posts = Post.query.all()
+        for j in Random.randint(50, size = 10):
+            post = posts[j]
+            category.posts.append(post)
         db.session.add(category)
     db.session.commit()
+
+def fake_count():
+
+    for post in Post.query.all():
+        post.total_like = len(post.likeby)
+        post.total_buy = len(post.deals)
+    db.session.commit()
+
+
 
 
 

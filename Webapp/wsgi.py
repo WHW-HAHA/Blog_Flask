@@ -23,7 +23,7 @@ if os.path.exists(dotenv_path):
 
 def Forge(app):
     ''' Create fake data '''
-    from Webapp.fakes import fake_admin, fake_user, fake_category, fake_deal, fake_post
+    from Webapp.fakes import fake_admin, fake_user, fake_category, fake_deal, fake_post, fake_count
     from Webapp import db
     import click
 
@@ -47,6 +47,9 @@ def Forge(app):
 
         click.echo('Generating deals')
         fake_deal()
+
+        click.echo('Generating counts')
+        fake_count()
 
         click.echo('Done.')
 

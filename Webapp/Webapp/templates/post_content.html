@@ -3,66 +3,96 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customized_css/contentpage.css') }}">
 
 {% block content %} <!--12 columns content-->
-    <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
-    <div class="blog-header">
-      <div class="container">
+<img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
+<div class="blog-header">
+    <div class="container">
         <h1 class="blog-title">{{post.title }}</h1>
         <p class="lead blog-description">{{post.subtitle }}</p>
         <div class="article-metadata">
-          <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
-          {% for category in post.categories%}
-          <a href=""><span class="badge badge-primary">{{category.name}}</span></a>
-          {% endfor%}
+            <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+            {% for category in post.categories%}
+            <a href=""><span class="badge badge-primary">{{category.name}}</span></a>
+            {% endfor%}
         </div>
-          <p class="article-content" >{{post.content}}</p>
-      </div>
+        <p class="article-content">{{post.content}}</p>
     </div>
+</div>
 
 <div class="Container">
     <div class="row">
-    <!--2 x 8 content for pictures-->
-         <div class="col-md-8">
-          <div class="row">
-            <div class="col-md-6">
-                <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <img style="width:100%" class="initImg coverImg" src="../../static/case/case1.jpg">
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <img style="width:100%" class="initImg coverImg" src="../../static/case/case2.jpg">
-                </div>
-            </div>
-
-          </div>
+        <!--2 x 8 content for pictures-->
+        <div class="col-md-8">
             <div class="row">
-            <div class="col-md-6">
-                <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <img style="width:100%" class="initImg coverImg" src="../../static/case/case3.jpg">
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <img style="width:100%" class="initImg coverImg" src="../../static/case/case1.jpg">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <img style="width:100%" class="initImg coverImg" src="../../static/case/case2.jpg">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <img style="width:100%" class="initImg coverImg" src="../../static/case/case3.jpg">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                        <a class="lightbox" href="../../static/case/case4.jpg"><img style="width:100%"
+                                                                                    class="initImg coverImg"
+                                                                                    src="../../static/case/case4.jpg"></a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                <a class="lightbox" href="../../static/case/case4.jpg"><img style="width:100%" class="initImg coverImg" src="../../static/case/case4.jpg"></a>
-                </div>
-            </div>
-          </div>
         </div>
 
-    <!--1 x 4 columns content for sidebar-->
+        <!--1 x 4 columns content for sidebar-->
         <div class="col-md-4">
             <a href="{{url_for('user.pay')}}"><h3>Read more?</h3></a>
         </div>
 
-<!--More relevant posts-->
-    <footer class="blog-footer">
-      <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
-    </footer>
-{% endblock content %}
+        <!-- show simlar posts-->
+        <div class="container">
+            <div class ="row">
+            {%for post in like_posts%}
+            <div class="col-md-3">
+                <div class="card mb-3 box-shadow">
+                    <img class="card-img-top"
+                         src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href= "{{url_for('post.post', post_id=post.id)}}"><strong>{{post.title}}</strong></a>
+                        <p>{{post.subtitle}}</p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="text-muted"><img src="../../static/red_heart.svg" >: {{post.total_like}}</small>
+                            <small class="text-muted"><img src="../../static/white_heart.svg" >: {{post.total_buy}}</small>
+                            <small></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        </div>
+
+        </div>
+        <!--More relevant posts-->
+        <footer class="blog-footer">
+            <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a
+                    href="https://twitter.com/mdo">@mdo</a>.</p>
+            <p>
+                <a href="#">Back to top</a>
+            </p>
+        </footer>
+        {% endblock content %}
 
 
 

@@ -99,10 +99,10 @@ post_category_collections = db.Table("post_category_collections",
                                      db.Column('category_id', db.Integer, db.ForeignKey("category.id")))
 
 # one user can like many posts and a post can be followed by many users
+# 关联表意味着每一行 都是一个表的id 对应另一个标的 id post_id --> user_id
 post_user_colloections = db.Table('post_user_collections',
                                   db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
                                   db.Column('user_id', db.Integer, db.ForeignKey('user.id')))
-
 class Post(db.Model):
     __tablename__ = 'post'
     __searchable__  =  ['title', 'subtitle', 'content']
@@ -112,18 +112,15 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable = False, default = 0)
-    image_file = db.Column(db.String, nullable = False, default = 'default post.jpg')
+    image_file = db.Column(db.String, nullable = False, default = 'LiyuanLing.png')
     #relationships
     deals = db.relationship('Deal', backref = 'what')
     # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
-    # category_id = db.Column(db.Integer, nullable = True, default = 'Unclassified')
+    # category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable = True, default = 'unclassified')
     categories = db.relationship('Category', secondary = post_category_collections, backref= 'posts')
     likeby = db.relationship('User', secondary =post_user_colloections, backref = 'like')
     total_like = db.Column(db.Integer, nullable = True, default = 0)
-
-
-
-
+    total_buy = db.Column(db.Integer, nullable = True, default = 0)
 
 class Category(db.Model):
     __tablename__ = 'category'
