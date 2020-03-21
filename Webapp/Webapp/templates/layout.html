@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customized/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/main.css') }}" charset="utf-8">
     {% if title %}
         <title>webapp- {{ title }}</title>
     {% else %}
@@ -16,7 +16,7 @@
     {% endif %}
 </head>
 
-<body>
+<body style="background-color:white;">
     <header class="site-header">
     <!-- the collapse page above header  -->
     <div class="collapse bg-dark" id="navbarHeader">

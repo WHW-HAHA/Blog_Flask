@@ -76,10 +76,11 @@ def xml_parser(text):
     return dic
 
 # put the user information and functionality all in account page
-@user_bp.route('/account/', methods = ['GET'])
+@user_bp.route('/account')
 @login_required
 def account():
     user = current_user
+    likes_all = user.like # return a query
     deals_all = user.deals
     # deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
     item_id = []
@@ -88,7 +89,25 @@ def account():
         deal.price = Post.query.get(deal.item_id).price
         deal.title = Post.query.get(deal.item_id).title
         deal.image_file = Post.query.get(deal.item_id).image_file
-    return render_template('account.html', title = user.username, user = user, deals = deals_all)
+    total_buys = len(deals_all)
+    total_likes = len(likes_all)
+    return render_template('account.html', title = user.username, user = user, deals = likes_all, total_buys= total_buys, total_likes = total_likes)
+
+
+@user_bp.route('/update', methods = ['POST'])
+@login_required
+def account_update():
+    category = request.args.get('category')
+    print('The selected category is {}'.format(category))
+    if category == 'likes':
+        posts = current_user.like
+    if category == 'buys':
+        posts = current_user.like
+    if category == 'similar':
+        posts = current_user.like
+    else:
+        pass
+    return jsonify({"deals" : posts})
 
 
 @user_bp.route('/user/edit_account', methods = ['GET', 'POST'])

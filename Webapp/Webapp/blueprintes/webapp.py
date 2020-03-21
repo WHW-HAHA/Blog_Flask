@@ -25,13 +25,15 @@ def welcome():
     category3 = Category.query.get(3)
     category4 = Category.query.get(4)
     category5 = Category.query.get(5)
-    post_list_1 = Post.query.order_by(Post.date_posted.desc()).all()[0:7]
-    post_list_2 = category2.posts[0:7]
-    post_list_3 = category3.posts[0:7]
-    post_list_4 = category4.posts[0:7]
-    post_list_5 = category5.posts[0:7]
+    category_list = Category.query.all()[1:5]
+    post_list_1 = Post.query.order_by(Post.date_posted.desc()).all()[0:5]
+    post_list_2 = category2.posts[0:5]
+    post_list_3 = category3.posts[0:5]
+    post_list_4 = category4.posts[0:5]
+    post_list_5 = category5.posts[0:5]
     print(post_list_1)
-    return render_template('welcome.html', list1 = post_list_1, list2 = post_list_2, list3 = post_list_3, list4 = post_list_4, list5 = post_list_5)
+    return render_template('welcome.html',category1= category1,category_list= category_list,
+                           list1 = post_list_1, list2 = post_list_2, list3 = post_list_3, list4 = post_list_4, list5 = post_list_5)
 
 @webapp_bp.route("/home")
 def home():

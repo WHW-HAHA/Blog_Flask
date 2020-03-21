@@ -8,7 +8,22 @@ body {
   color: #5a5a5a;
 }
 
+.post-title{
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  }
 
+.post-subtitle{
+     width:100%;
+     height: 50px;
+     display: -webkit-box;
+     -webkit-box-orient: vertical;
+     -webkit-line-clamp: 2;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     }
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 

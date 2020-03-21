@@ -23,7 +23,7 @@ def post(post_id):
     # get posts with similar category, and show 5 of them
     category = post.categories
     # category = Category.query.get(post.categories)
-    like_posts = category[0].posts[0:7]
+    like_posts = category[0].posts[0:5]
     return render_template('post_content.html', title=post.title, post=post, like_posts = like_posts)
 
 

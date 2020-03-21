@@ -1,32 +1,5 @@
-{% extends "layout.html" %}
 
-{% block content %}
-
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
-
-<div class="container" style="background-color:white">
-    <div class="row">
-        <div class="col-md-4 text-right">
-            <img class="rounded-circle article-img"
-                 src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}"
-                 style="height:50%; width:auto">
-        </div>
-        <div class="col-md-8 text-left">
-            <h2 class="mb-3">{{ username }}</h2>
-            <div class="row">
-                <div class="col-md-2 text-left">
-
-                    <p class="text-muted">{{total_likes}} favorites</p>
-                </div>
-                <div class="col-md-2 text-left">
-                    <p class="text-muted">{{total_buys}} payments</p>
-                </div>
-            </div>
-            <a class="mr-2" href="{{ url_for('user.update_account') }}">Edit Account</a>
-        </div>
-    </div>
-</div>
-
+{% block accountcontent%}
 <style>
 .post-title{
   width:100%;
@@ -49,20 +22,19 @@
 
 <div class="row">
     <div class="col-md-4 text-center">
-        <button class="updatebutton" >Your favorites</button>
+        <a href="">Your favorites</a>
     </div>
     <div class="col-md-4 text-center">
-        <button class="updatebutton" id="buysbutton">Your buys</button>
+        <a href="">Your buys</a>
     </div>
     <div class="col-md-4 text-center">
-        <button class="updatebutton" id="similarbutton">You may like</button>
+        <a href="">You may like</a>
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='change_content.js')}}"></script>
-<div id="content" class="album py-5 bg-light" style="background-color:white;">
+<div class="album py-5 bg-light" style="background-color:white;">
     <!-- list1 -->
-    <div class="container" style="background-color:white;" >
+    <div class="container" style="background-color:white;">
         <div class="row">
             {%for post in deals%}
             <div class="col-md-4">
@@ -93,6 +65,3 @@
         </div>
     </div>
 </div>
-
-{% endblock %}
-
