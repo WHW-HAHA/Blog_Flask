@@ -40,6 +40,7 @@
     <!-- list1 -->
     <div class="container" style="background-color:white;" >
         <div class="row">
+            <h1> {{message}}</h1>
             {%for post in deals%}
             <div class="col-md-4">
                 <div class="card mb-4 box-shado_file">
@@ -70,7 +71,7 @@
 </div>
 
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='change_content.js')}}"></script>
+<script src="{{ url_for('static', filename='js/change_content.js')}}"></script>
 
 {% endblock %}
 

@@ -4,7 +4,7 @@ $(document).ready(function() {
         var data = {'category': category}
         console.log(data)
         req = $.ajax({
-            url : 'account/update',
+            url : 'home/update',
             type : 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',

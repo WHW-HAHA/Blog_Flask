@@ -92,8 +92,7 @@ def account():
         deal.image_file = Post.query.get(deal.item_id).image_file
     total_buys = len(deals_all)
     total_likes = len(likes_all)
-    return render_template('account.html', title = user.username, user = user, deals = likes_all, total_buys= total_buys, total_likes = total_likes)
-
+    return render_template('account.html', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys, total_likes = total_likes)
 
 @user_bp.route('/account/update', methods = ['POST'])
 @login_required
@@ -102,9 +101,10 @@ def account_update():
     if category == 'likes':
         if current_user.like:
             posts = current_user.like
+            message = ''
         else:
-            flash("You haven't like anything")
             posts = []
+            message = "You haven't like anything"
 
     if category == 'buys':
         # get all the posts have been brought by this user
@@ -113,9 +113,10 @@ def account_update():
             for deal in current_user.deals:
                 brought_post = Post.query.get(deal.item_id)
                 posts.append(brought_post)
+            message = ''
         else:
-            flash("You haven't buy anything")
             posts = []
+            message = "You haven't brought anything"
 
 
     if category == 'similar':
@@ -140,10 +141,12 @@ def account_update():
                     except:
                         pass
                 posts = similar_post
+                message = ''
         else:
             posts = Post.query.order_by(Post.date_posted.desc()).all()[:10]
+            message = ''
 
-    return render_template('content_section.html', posts = posts)
+    return render_template('content_section.html', posts = posts, message = message)
 
 
 @user_bp.route('/user/edit_account', methods = ['GET', 'POST'])

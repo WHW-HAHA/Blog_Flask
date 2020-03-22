@@ -51,29 +51,10 @@
 {% endblock%}
 
 {% block content %}
-<style>
-.post-title{
-  width:100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  }
-
-.post-subtitle{
-     width:100%;
-     height: 50px;
-     display: -webkit-box;
-     -webkit-box-orient: vertical;
-     -webkit-line-clamp: 2;
-     overflow: hidden;
-     text-overflow: ellipsis;
-     }
-
-</style>
 <div class="album py-5 bg-light">
     <!-- list1 -->
     <div class="container" style="background-color:#E3AFBC;">
-        <a href="{{url_for('webapp.home')}}"><h2>The latest ones</h2></a>
+        <a href="{{url_for('webapp.show_category')}}"><h2>The latest ones</h2></a>
         <div class="row">
             {%for post in list1%}
             <div class="col-md-4">
@@ -123,3 +104,4 @@
         </div>
     </div>
     {% endblock sidebar %}
+</div>

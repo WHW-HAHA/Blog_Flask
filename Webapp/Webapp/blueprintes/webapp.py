@@ -55,9 +55,15 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
-@webapp_bp.route("/test")
-def test():
-    return render_template('new_login.html', title='Test')
+
+@webapp_bp.route("/category")
+def show_category():
+    # Names of the categories
+    # The latest, Asia, Europe & USA, Cartoon, Unclassified
+    page = request.args.get('page', 1, type=int)
+    posts = Category.query.filter_by(name = 'The latest').first().posts
+    return render_template('category_content.html', posts = posts, category_name = 'The latest')
+
 
 
 @webapp_bp.route("/search", methods = ['POST'])
