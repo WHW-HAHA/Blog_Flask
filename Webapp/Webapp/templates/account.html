@@ -1,9 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}">
-
 <div class="container" style="background-color:white">
     <div class="row">
         <div class="col-md-4 text-right">
@@ -15,7 +12,6 @@
             <h2 class="mb-3">{{ username }}</h2>
             <div class="row">
                 <div class="col-md-2 text-left">
-
                     <p class="text-muted">{{total_likes}} favorites</p>
                 </div>
                 <div class="col-md-2 text-left">
@@ -27,39 +23,19 @@
     </div>
 </div>
 
-<style>
-.post-title{
-  width:100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  }
-
-.post-subtitle{
-     width:100%;
-     height: 50px;
-     display: -webkit-box;
-     -webkit-box-orient: vertical;
-     -webkit-line-clamp: 2;
-     overflow: hidden;
-     text-overflow: ellipsis;
-     }
-
-</style>
 
 <div class="row">
     <div class="col-md-4 text-center">
-        <button class="updatebutton" >Your favorites</button>
+        <a href="#" class="updatebutton" id="likes">Your favorites</a>
     </div>
     <div class="col-md-4 text-center">
-        <button class="updatebutton" id="buysbutton">Your buys</button>
+        <a href="#" class="updatebutton" id="buys">Your buys</a>
     </div>
     <div class="col-md-4 text-center">
-        <button class="updatebutton" id="similarbutton">You may like</button>
+        <a href="#" class="updatebutton" id="similar">You may like</a>
     </div>
 </div>
 
-<script src="{{ url_for('static', filename='change_content.js')}}"></script>
 <div id="content" class="album py-5 bg-light" style="background-color:white;">
     <!-- list1 -->
     <div class="container" style="background-color:white;" >
@@ -89,10 +65,12 @@
                 </div>
             </div>
             {%endfor%}
-
         </div>
     </div>
 </div>
+
+<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='change_content.js')}}"></script>
 
 {% endblock %}
 

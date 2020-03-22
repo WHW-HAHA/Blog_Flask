@@ -3,10 +3,8 @@
 {% extends "layout.html" %}
 {% block category %}
 {% endblock%}
-
 {% block content %}
 <!--Category1-->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     {% for post in posts.items %}
         <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
@@ -16,7 +14,7 @@
             </div>
               <h2><a class="article-title" href = "{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a></h2>
               <p class="article-content" >{{post.subtitle}}</p>
-            <p class="article-content" >{{post.content}}</p>
+              <p class="article-content" >{{post.content}}</p>
               <div class="article-metadata"> </div>
               <!--tugs -->
               <p class="article-content" > Heart shape: {{post.total_like}}</p>

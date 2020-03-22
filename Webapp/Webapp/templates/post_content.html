@@ -1,6 +1,4 @@
-{% extends "layout_withoutsidebar.html" %}
-<!--Custmized style sheet for this page-->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customized_css/contentpage.css') }}">
+{% extends "layout.html" %}
 
 {% block content %} <!--12 columns content-->
 <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
@@ -59,40 +57,42 @@
 
         <!-- show simlar posts-->
         <div class="container">
-            <div class ="row">
-            {%for post in like_posts%}
-            <div class="col-md-3">
-                <div class="card mb-3 box-shadow">
-                    <img class="card-img-top"
-                         src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
-                         alt="Card image cap">
-                    <div class="card-body">
-                        <a href= "{{url_for('post.post', post_id=post.id)}}"><strong>{{post.title}}</strong></a>
-                        <p>{{post.subtitle}}</p>
+            <div class="row">
+                {%for post in like_posts%}
+                <div class="col-md-3">
+                    <div class="card mb-3 box-shadow">
+                        <img class="card-img-top"
+                             src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <a href="{{url_for('post.post', post_id=post.id)}}"><strong>{{post.title}}</strong></a>
+                            <p>{{post.subtitle}}</p>
 
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg" >: {{post.total_like}}</small>
-                            <small class="text-muted"><img src="../../static/white_heart.svg" >: {{post.total_buy}}</small>
-                            <small></small>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                                <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                                </small>
+                                <small class="text-muted"><img src="../../static/white_heart.svg">: {{post.total_buy}}
+                                </small>
+                                <small></small>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {%endfor%}
             </div>
-            {%endfor%}
-        </div>
         </div>
 
-        </div>
-        <!--More relevant posts-->
-        <footer class="blog-footer">
-            <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a
-                    href="https://twitter.com/mdo">@mdo</a>.</p>
-            <p>
-                <a href="#">Back to top</a>
-            </p>
-        </footer>
-        {% endblock content %}
+    </div>
+    <!--More relevant posts-->
+    <footer class="blog-footer">
+        <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a
+                href="https://twitter.com/mdo">@mdo</a>.</p>
+        <p>
+            <a href="#">Back to top</a>
+        </p>
+    </footer>
+    {% endblock content %}
 
 
 

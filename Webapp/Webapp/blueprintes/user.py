@@ -13,7 +13,7 @@ Naming standard:
 from flask import Blueprint, render_template, redirect, flash, url_for, session, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from Webapp.forms.user import RegistrationForm, LoginForm, UpdateAccountForm
-from Webapp.models import User, Deal, Post
+from Webapp.models import User, Deal, Post, Category
 from Webapp import db, bcrypt
 import re
 import time
@@ -21,6 +21,7 @@ from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
 from weixin.login import WeixinLogin
+from collections import Counter
 
 
 user_bp = Blueprint('user', __name__)
@@ -94,20 +95,55 @@ def account():
     return render_template('account.html', title = user.username, user = user, deals = likes_all, total_buys= total_buys, total_likes = total_likes)
 
 
-@user_bp.route('/update', methods = ['POST'])
+@user_bp.route('/account/update', methods = ['POST'])
 @login_required
 def account_update():
-    category = request.args.get('category')
-    print('The selected category is {}'.format(category))
+    category = request.get_json()['category']
     if category == 'likes':
-        posts = current_user.like
+        if current_user.like:
+            posts = current_user.like
+        else:
+            flash("You haven't like anything")
+            posts = []
+
     if category == 'buys':
-        posts = current_user.like
+        # get all the posts have been brought by this user
+        if current_user.deals:
+            posts = []
+            for deal in current_user.deals:
+                brought_post = Post.query.get(deal.item_id)
+                posts.append(brought_post)
+        else:
+            flash("You haven't buy anything")
+            posts = []
+
+
     if category == 'similar':
-        posts = current_user.like
-    else:
-        pass
-    return jsonify({"deals" : posts})
+        # get the category this user may like
+        categories = []
+        if current_user.like:
+            for post in current_user.like:
+                for category in post.categories:
+                    categories.append(category)
+            top_2_likes = Counter(categories).most_common(2)
+            if len(top_2_likes) == 2:
+                similar_post_1 = top_2_likes[0][0].posts
+                similar_post_2 = top_2_likes[1][0].posts
+                similar_post = similar_post_1 + similar_post_2
+            if len(top_2_likes) ==1:
+                similar_post = top_2_likes[0][0].posts
+            if current_user.deals:
+                for deal in current_user.deals:
+                    brought_post = Post.query.get(deal.item_id)
+                    try:
+                        similar_post.pop(brought_post)
+                    except:
+                        pass
+                posts = similar_post
+        else:
+            posts = Post.query.order_by(Post.date_posted.desc()).all()[:10]
+
+    return render_template('content_section.html', posts = posts)
 
 
 @user_bp.route('/user/edit_account', methods = ['GET', 'POST'])
@@ -153,7 +189,6 @@ def authorized():
     expires = datetime.now() + timedelta(days=1)
     resp.set_cookie("openid", openid, expires=expires)
     return resp
-
 
 @user_bp.route('check/weixin-login')
 def check_login():
