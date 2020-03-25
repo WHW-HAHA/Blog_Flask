@@ -4,7 +4,7 @@ $(document).ready(function() {
         var data = {'category': category}
         console.log(data)
         req = $.ajax({
-            url : '/update',
+            url : '/gotocategory',
             type : 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',
@@ -14,11 +14,11 @@ $(document).ready(function() {
 
         console.log('Function Done')
 
-        req.done(function(data) {
-            $('#content').fadeOut(100).fadeIn(100);
-            $('#content').html(data);
+//        req.done(function(data) {
+//            $('#content').fadeOut(100).fadeIn(100);
+//            $('#content').html(data);
         console.log('Function2 Done')
 
         });
     });
-});
+//});

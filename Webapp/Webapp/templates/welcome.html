@@ -54,7 +54,7 @@
 <div class="album py-5 bg-light">
     <!-- list1 -->
     <div class="container" style="background-color:#E3AFBC;">
-        <a class="gotoContentButton" id="The latest" href="{{url_for('webapp.show_category')}}"><h2>The latest</h2></a>
+        <a  href="{{url_for('webapp.go_to_category', name='The latest')}}"><h2>The latest</h2></a>
         <div class="row">
             {%for post in list1%}
             <div class="col-md-4">
@@ -86,7 +86,7 @@
                 <a><h2>Read more about "The latest"</h2></a>
             </div>
         </div>
-        <a class="gotoContentButton" id="Asia" href="{{url_for('webapp.show_category')}}"><h2>Asia</h2></a>
+        <a  href="{{url_for('webapp.go_to_category', name='Asia')}}"><h2>Asia</h2></a>
         <div class="row">
             {%for post in list2%}
             <div class="col-md-4">
@@ -118,7 +118,7 @@
                 <a><h2>Read more about "The latest"</h2></a>
             </div>
         </div>
-        <a class="gotoContentButton" id="Europe & USA" href="{{url_for('webapp.show_category')}}"><h2>Europe & USA</h2></a>
+        <a href="{{url_for('webapp.go_to_category', name='Europe & USA')}}"><h2>Europe & USA</h2></a>
         <div class="row">
             {%for post in list3%}
             <div class="col-md-4">
@@ -150,7 +150,7 @@
                 <a><h2>Read more about "The latest"</h2></a>
             </div>
         </div>
-        <a class="gotoContentButton" id="Cartoon" href="{{url_for('webapp.show_category')}}"><h2>Cartoon</h2></a>
+        <a href="{{url_for('webapp.go_to_category', name='Cartoon')}}"><h2>Cartoon</h2></a>
         <div class="row">
             {%for post in list4%}
             <div class="col-md-4">
@@ -182,7 +182,7 @@
                 <a><h2>Read more about "The latest"</h2></a>
             </div>
         </div>
-        <a class="gotoContentButton" id="Unclassified" href="{{url_for('webapp.show_category')}}"><h2>Unclassified</h2></a>
+        <a href="{{url_for('webapp.go_to_category', name='Unclassified')}}"><h2>Unclassified</h2></a>
         <div class="row">
             {%for post in list5%}
             <div class="col-md-4">
@@ -217,7 +217,7 @@
     </div>
 </div>
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='js/gotoCategory.js')}}"></script>
+<!--<script src="{{ url_for('static', filename='js/gotoCategory.js')}}"></script>-->
     {% endblock content %}
 
     {% block sidebar %}

@@ -31,9 +31,18 @@ def welcome():
     post_list_3 = category3.posts[0:5]
     post_list_4 = category4.posts[0:5]
     post_list_5 = category5.posts[0:5]
-    print(post_list_1)
     return render_template('welcome.html',category1= category1,category_list= category_list,
                            list1 = post_list_1, list2 = post_list_2, list3 = post_list_3, list4 = post_list_4, list5 = post_list_5)
+
+@webapp_bp.route('/gotocategory/<name>')
+def go_to_category(name):
+    category_name = name
+    category = Category.query.filter_by(name = category_name).first()
+    posts = category.posts
+    return render_template('category_content.html', category = category, posts = posts )
+
+def sort_
+
 
 @webapp_bp.route("/home")
 def home():

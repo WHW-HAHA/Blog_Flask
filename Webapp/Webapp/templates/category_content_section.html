@@ -1,0 +1,16 @@
+{% for post in posts %}
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <h2><a class="article-title" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a></h2>
+        <p class="article-content">{{post.subtitle}}</p>
+        <p class="article-content">{{post.content}}</p>
+        <div class="article-metadata"></div>
+        <!--tugs -->
+        <p class="article-content"> Heart shape: {{post.total_like}}</p>
+    </div>
+</article>
+{% endfor %}

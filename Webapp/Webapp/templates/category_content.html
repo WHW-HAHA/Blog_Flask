@@ -5,25 +5,29 @@
 {% endblock%}
 {% block content %}
 <!--Category1-->
-    <h1>{{category_name}}</h1>
-    <button name="updatebutton" name="like"> Sort by popularity </button>
-    <button name="updatebutton" name="time"> Sort by time </button>
+<h1>{{category.name}}</h1>
+<h3>{{category.description}}</h3>
+<button name="updatebutton" name="like"> Sort by popularity</button>
+<button name="updatebutton" name="time"> Sort by time</button>
+
+<div id="content">
     {% for post in posts %}
-        <article class="media content-section">
+    <article class="media content-section">
         <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
-          <div class="media-body">
+        <div class="media-body">
             <div class="article-metadata">
-              <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+                <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
-              <h2><a class="article-title" href = "{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a></h2>
-              <p class="article-content" >{{post.subtitle}}</p>
-              <p class="article-content" >{{post.content}}</p>
-              <div class="article-metadata"> </div>
-              <!--tugs -->
-              <p class="article-content" > Heart shape: {{post.total_like}}</p>
-                </div>
-        </article>
+            <h2><a class="article-title" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a></h2>
+            <p class="article-content">{{post.subtitle}}</p>
+            <p class="article-content">{{post.content}}</p>
+            <div class="article-metadata"></div>
+            <!--tugs -->
+            <p class="article-content"> Heart shape: {{post.total_like}}</p>
+        </div>
+    </article>
     {% endfor %}
+</div>
 
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/sort_content.js')}}"></script>
