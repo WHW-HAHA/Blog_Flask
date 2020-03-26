@@ -7,8 +7,8 @@
 <!--Category1-->
 <h1>{{category.name}}</h1>
 <h3>{{category.description}}</h3>
-<button name="updatebutton" name="like"> Sort by popularity</button>
-<button name="updatebutton" name="time"> Sort by time</button>
+<a class="contentSortButton" name="popularity" href="#" category="{{category.name}}"> Sort by popularity</a>
+<a Class="contentSortButton" name="time" href="#"> Sort by time</a>
 
 <div id="content">
     {% for post in posts %}

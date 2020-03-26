@@ -36,13 +36,46 @@ def welcome():
 
 @webapp_bp.route('/gotocategory/<name>')
 def go_to_category(name):
+    if name == 'TheLatest':
+        name = 'The latest'
+    if name == 'Europe&USA':
+        name = 'Europe & USA'
     category_name = name
     category = Category.query.filter_by(name = category_name).first()
     posts = category.posts
     return render_template('category_content.html', category = category, posts = posts )
 
-def sort_
+def take_total_like(elem):
+    return elem.total_like
 
+def take_time_posted(elem):
+    return elem.date_posted
+
+def bubbleSort_by_totallike(nums):
+    for i in range(len(nums) - 1):
+        for j in range(len(nums) - i - 1):
+            if nums[j].total_like > nums[j+1].total_like:
+                nums[j], nums[j+1] = nums[j+1], nums[j]
+    return nums
+
+def bubbleSort_by_time(nums):
+    for i in range(len(nums) - 1):
+        for j in range(len(nums) - i - 1):
+            if nums[j].post_dated > nums[j+1].post_dated:
+                nums[j], nums[j+1] = nums[j+1], nums[j]
+    return nums
+
+@webapp_bp.route('/gotocategory/TheLatest/sortby', methods = ['POST'])
+def sort_content_TheLatest():
+    sort_by = request.get_json()['by']
+    if sort_by == 'popularity':
+        posts_all = Category.query.get(1).posts
+        posts = bubbleSort_by_totallike(posts_all)
+        print('Sorted posts: {}'.format(posts))
+    if sort_by == 'time':
+        posts_all = Category.query.get(1).posts
+        posts = bubbleSort_by_time(posts_all)
+    return render_template('category_content_section.html', posts = posts)
 
 @webapp_bp.route("/home")
 def home():
