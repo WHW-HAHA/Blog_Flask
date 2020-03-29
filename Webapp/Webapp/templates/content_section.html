@@ -16,8 +16,7 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                        <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                        </small>
+                        <a class="add_favourite" href="#" post_title="{{post.title}}" category="{{category.name}}"><img src="../../static/red_heart.svg">: {{post.total_like}}</a>
                         <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                         <small></small>
                     </div>

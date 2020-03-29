@@ -4,12 +4,14 @@
 <div class="container" style="background-color:white">
     <div class="row">
         <div class="col-md-4 text-right">
-            <img class="rounded-circle article-img"
-                 src="{{ url_for('static', filename='profile_pics/' + user.image_file) }}"
-                 style="height:50%; width:auto">
+            <a class="mr-2" href="{{ url_for('user.change_profile_pic') }}">
+                <img class="rounded-circle article-img"
+                     src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
+                     style="height:50%; width:auto">
+            </a>
         </div>
         <div class="col-md-8 text-left">
-            <h2 class="mb-3">{{ username }}</h2>
+            <h2 class="mb-3">{{ current_user.username }}</h2>
             <div class="row">
                 <div class="col-md-2 text-left">
                     <p class="text-muted">{{total_likes}} favorites</p>
@@ -17,12 +19,23 @@
                 <div class="col-md-2 text-left">
                     <p class="text-muted">{{total_buys}} payments</p>
                 </div>
+                <div class="col-md-6 text-left">
+                    <p class="text-muted">{{membership_message}}</p>
+                </div>
             </div>
-            <a class="mr-2" href="{{ url_for('user.update_account') }}">Edit Account</a>
+            <!--Update current picture-->
+            <div class="col-md-4 text-left">
+                <a class="mr-2" href="{{ url_for('user.change_profile_pic')}}">Change Profile Picture</a>
+            </div>
+            <div class="col-md-4 text-left">
+                <a class="mr-2" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
+            </div>
+            <div class="col-md-4 text-left">
+                <a class="mr-2" href="{{ url_for('user.change_password') }}">Change Password</a>
+            </div>
         </div>
     </div>
 </div>
-
 
 <div class="row">
     <div class="col-md-4 text-center">
@@ -38,7 +51,7 @@
 
 <div id="content" class="album py-5 bg-light" style="background-color:white;">
     <!-- list1 -->
-    <div class="container" style="background-color:white;" >
+    <div class="container" style="background-color:white;">
         <div class="row">
             <h1> {{message}}</h1>
             {%for post in deals%}

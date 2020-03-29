@@ -50,11 +50,14 @@ def fake_admin():
     db.session.commit()
 
 def fake_user(count = 50):
+    membership = ['none', 'week', 'month', 'year']
     for i in range(count):
         user = User(username = fake.name(),
                     email = fake.email(),
                     password = 'Whw8409040',
+                    membership = random.choice(membership)
                     )
+
         for j in range(random.randint(1, 5)):
             post = Post.query.get(random.randint(1, Post.query.count()))
             if post not in user.like:
