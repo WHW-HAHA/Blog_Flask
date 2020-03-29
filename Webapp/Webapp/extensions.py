@@ -25,6 +25,7 @@ bcrypt = Bcrypt()
 weixin = Weixin()
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
     from Webapp.Webapp.models import Admin

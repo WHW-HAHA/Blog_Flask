@@ -226,7 +226,7 @@ def save_picture(form_picture):
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message('Password Reset Request',
-                  sender='noreply@demo.com',
+                  sender='hhhh@hhhh.com',
                   recipients=[user.email])
     msg.body = f'''To reset your password, visit the following link:
                     {url_for('user.reset_token', token=token, _external=True)}
@@ -243,7 +243,7 @@ def reset_request():
         user = User.query.filter_by(email = form.email.data).first()
         send_reset_email(user)
         flash('An email has been sent with instructions to reset your password.', 'info')
-        return redirect(url_for(user.login))
+        return redirect(url_for('user.login'))
     return render_template('reset_request.html', title = 'Reset Password', form = form)
 
 @user_bp.route("/reset_password/<token>", methods=['GET', 'POST'])

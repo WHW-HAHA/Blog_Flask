@@ -39,6 +39,13 @@ class BaseConfig(object):
     # weixin configuration
     WEIXIN_APP_ID = ''
     WEIXIN_APP_SECRET = ''
+    # Email server
+    MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = 'wanghanwei666666@gmail.com'
+    MAIL_PASSWORD = 'Whw844409040'
+
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'site.db')
