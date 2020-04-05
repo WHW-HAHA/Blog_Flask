@@ -1,7 +1,40 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>Sorry, no content about "{{keyword}}" has been found.</h2>
 
-    <a href="{{ url_for('webapp.welcome') }}"> Back to home page</a>
+<h2 name="keyword message" keyword="{{keyword}}" id="header">Sorry, no content about "{{keyword}}" has been found.</h2>
 
+<a href="{{ url_for('webapp.welcome') }}"> Back to home page</a>
+
+<script type="text/javascript">
+        var Highlight = {
+            arr : [],
+            init : function (ops){
+                this.arr[ops.id] = {
+                    id : ops.id,
+                    arr : ops.arr
+                }
+                this.show(this.arr[ops.id]);
+            },
+            show : function (obj){
+                obj.html = document.getElementById(obj.id).innerHTML;
+                for (var i = 0 ; i < obj.arr.length ; i ++) {
+                    // 全局匹配 替换
+                    var reg = new RegExp(obj.arr[i],'g');
+                    obj.html = obj.html.replace(reg,"<span style='background-color:orange'>"+obj.arr[i]+"</span>");
+                }
+                document.getElementById(obj.id).innerHTML = obj.html;
+                console.log(obj.html)
+            }
+        }
+        window.onload = function (){
+            // 使用方法
+            // id 必须
+            // 默认为id 高亮内容添加class为 Highlight span 标签包裹，直接在style中写样式即可
+            keyword = document.getElementById('header').getAttribute('keyword')
+            console.log(keyword)
+            lowercase_keyword = keyword.toLowerCase()
+            Highlight.init({id:"header",arr:[keyword, lowercase_keyword]});
+        }
+
+</script>
 {% endblock content %}

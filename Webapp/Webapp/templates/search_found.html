@@ -1,31 +1,69 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2 name="keyword message" keyword = "{{keyword}}">We have found these interesting content about "{{keyword}}" for you.</h2>
 
-    {% for post in posts.items %}
-        <article class="media content-section">
-        <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
-            </div>
-            <h2><a class="article-title" href = "{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a></h2>
-              <p class="article-content" >{{post.subtitle}}</p>
-            <p class="article-content" >{{post.content}}</p>
-          </div>
-        </article>
-    {% endfor %}
+<h2 name="keyword message" keyword="{{keyword}}" id="header">We have found these interesting content about "{{keyword}}" for you.</h2>
 
-    {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-      {% if page_num %}
+<div class="container" id="container">
+{% for post in posts.items %}
+<article class="media content-section" id=>
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <h2><a class="article-title" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a>
+        </h2>
+        <p class="article-content" >{{post.subtitle}}</p>
+        <p class="article-content" >{{post.content}}</p>
+    </div>
+</article>
+{% endfor %}
+
+</div>
+
+{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
         {% if posts.page == page_num %}
-          <a class="btn btn-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
+        <a class="btn btn-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
         {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
         {% endif %}
-      {% else %}
-        ...
-      {% endif %}
-    {% endfor %}
+    {% else %}
+    ...
+    {% endif %}
+{% endfor %}
+
+<script type="text/javascript">
+        var Highlight = {
+            arr : [],
+            init : function (ops){
+                this.arr[ops.id] = {
+                    id : ops.id,
+                    arr : ops.arr
+                }
+                this.show(this.arr[ops.id]);
+            },
+            show : function (obj){
+                obj.html = document.getElementById(obj.id).innerHTML;
+                for (var i = 0 ; i < obj.arr.length ; i ++) {
+                    // 全局匹配 替换
+                    var reg = new RegExp(obj.arr[i],'g');
+                    obj.html = obj.html.replace(reg,"<span style='background-color:orange'>"+obj.arr[i]+"</span>");
+                }
+                document.getElementById(obj.id).innerHTML = obj.html;
+                console.log(obj.html)
+            }
+        }
+        window.onload = function (){
+            // 使用方法
+            // id 必须
+            // 默认为id 高亮内容添加class为 Highlight span 标签包裹，直接在style中写样式即可
+            keyword = document.getElementById('header').getAttribute('keyword')
+            console.log(keyword)
+            lowercase_keyword = keyword.toLowerCase()
+            Highlight.init({id:"container",arr:[keyword, lowercase_keyword]});
+            Highlight.init({id:"header",arr:[keyword, lowercase_keyword]});
+        }
+</script>
 {% endblock content %}
 

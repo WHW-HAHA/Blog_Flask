@@ -168,22 +168,25 @@ def search():
     # get keyword variable from form in web page
         ## search in user is no need
         keyword = request.form.get('keyword')
+        if keyword =="":
         # print('Keyword is {}'.format(keyword))
         # user_found = User.query.filter(
         #     User.username.like('%' + keyword + '%') if keyword is not None else '',).all()
         # search in posts
-        page = request.args.get('page', 1, type=int)
-        post_found = Post.query.filter(or_(
-            Post.title.like('%' + keyword + '%') if keyword is not None else '',
-            Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
-            Post.content.like('%' + keyword + '%') if keyword is not None else ''))
-        post = post_found.order_by(Post.date_posted.desc()).paginate(page,per_page=10)
-
-        # highlight the keyword in result page
-        if post_found.all():
-            return render_template('search_found.html', title = 'results of search', posts = post, keyword = keyword)
+            return render_template('search_nofound.html', title='no results have been found', keyword = keyword )
         else:
-            return render_template('search_nofound.html', title = 'no results have been found', keyword = keyword)
+            page = request.args.get('page', 1, type=int)
+            post_found = Post.query.filter(or_(
+                Post.title.like('%' + keyword + '%') if keyword is not None else '',
+                Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
+                Post.content.like('%' + keyword + '%') if keyword is not None else ''))
+            post = post_found.order_by(Post.date_posted.desc()).paginate(page,per_page=10)
+
+            # highlight the keyword in result page
+            if post_found.all():
+                return render_template('search_found.html', title = 'results of search', posts = post, keyword = keyword)
+            else:
+                return render_template('search_nofound.html', title = 'no results have been found', keyword = keyword)
 
 
 

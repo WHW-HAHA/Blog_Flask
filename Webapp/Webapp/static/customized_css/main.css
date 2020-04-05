@@ -12,6 +12,14 @@ h1, h2, h3, h4, h5, h6, p{
   color: black;
 }
 
+#Header.Highlight{
+    color: red;
+}
+#title.Highlight{
+    color: red;
+}
+
+
 .post-title{
   width:100%;
   white-space: nowrap;
@@ -31,7 +39,6 @@ h1, h2, h3, h4, h5, h6, p{
      }
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
-
 /* Carousel base class */
 .carousel {
   margin-bottom: 4rem;
