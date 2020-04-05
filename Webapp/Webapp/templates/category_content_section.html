@@ -1,16 +1,34 @@
-{% for post in posts %}
-<article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
-    <div class="media-body">
-        <div class="article-metadata">
-            <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+    <div class="album py-5 bg-light">
+        <!-- list1 -->
+        <div class="container" style="background-color:#E3AFBC;">
+            <div class="row">
+                {%for post in posts%}
+                <div class="col-md-4" id="post_content_section{{post.id}}">
+                    <div class="card mb-4 box-shado_file">
+                        <img class="card-img-top"
+                             src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
+                             alt="Card image cap">
+                        <div class="card-body" style="">
+                            <div class="post-title">
+                                <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                                        style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                            </div>
+                            <div class="post-subtitle">
+                                <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+
+                                <a class="add_favourite" href="#" post_title="{{post.title}}" category="{{category.name}}" post_id = "{{post.id}}"><img
+                                        src="../../static/red_heart.svg">: {{post.total_like}}</a>
+
+                                <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                                <small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
         </div>
-        <h2><a class="article-title" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a></h2>
-        <p class="article-content">{{post.subtitle}}</p>
-        <p class="article-content">{{post.content}}</p>
-        <div class="article-metadata"></div>
-        <!--tugs -->
-        <p class="article-content"> Heart shape: {{post.total_like}}</p>
     </div>
-</article>
-{% endfor %}

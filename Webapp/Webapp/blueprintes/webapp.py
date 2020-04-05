@@ -80,10 +80,11 @@ def sort_content_TheLatest(categoryName):
     if sort_by == 'time':
         posts_all = Category.query.filter_by(name = categoryName).first().posts
         posts = bubbleSort_by_time(list(posts_all))
-    return render_template('category_content_section.html', posts = posts)
+
+    return render_template('category_content_section.html', posts = posts, category = Category.query.filter_by(name = categoryName) )
 
 @webapp_bp.route('/gotocategory/<categoryName>/add_favourite', methods = ['POST'])
-def add_favourite(categoryName):
+def add_favourite_content_page(categoryName):
     post_title = request.get_json()['post_title']
     categoryName = request.get_json()['categoryName']
     post = Post.query.filter_by(title = post_title).first()
@@ -108,6 +109,27 @@ def add_favourite(categoryName):
     else:
         flash('You haven login yet, please login or register','success')
         return render_template('post_content_section.html', post = post, category=category)
+
+@webapp_bp.route('/search/add_favourite', methods = ['POST'])
+def add_favourite_search_page():
+    post_title = request.get_json()['post_title']
+    post = Post.query.filter_by(title = post_title).first()
+    if current_user.is_authenticated:
+        if post in current_user.like:
+            current_user.like.remove(post)
+            post.total_like = len(post.likeby)
+            db.session.commit()
+
+        else:
+            current_user.like.append(post)
+            post.total_like = len(post.likeby)
+            db.session.commit()
+
+        post = Post.query.filter_by(title=post_title).first()
+        return render_template('post_content_section.html', post = post)
+    else:
+        flash('You haven login yet, please login or register','success')
+        return render_template('post_content_section.html', post = post)
 
 @webapp_bp.route("/home")
 def home():
@@ -144,22 +166,22 @@ def show_category():
 def search():
     if request.method == 'POST':
     # get keyword variable from form in web page
-    # search in user
+        ## search in user is no need
         keyword = request.form.get('keyword')
-        print('Keyword is {}'.format(keyword))
-        user_found = User.query.filter(
-            User.username.like('%' + keyword + '%') if keyword is not None else '',).all()
+        # print('Keyword is {}'.format(keyword))
+        # user_found = User.query.filter(
+        #     User.username.like('%' + keyword + '%') if keyword is not None else '',).all()
         # search in posts
         page = request.args.get('page', 1, type=int)
         post_found = Post.query.filter(or_(
             Post.title.like('%' + keyword + '%') if keyword is not None else '',
             Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
             Post.content.like('%' + keyword + '%') if keyword is not None else ''))
-        post = post_found.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+        post = post_found.order_by(Post.date_posted.desc()).paginate(page,per_page=10)
 
         # highlight the keyword in result page
-        if user_found or post_found.all():
-            return render_template('search_found.html', title = 'results of search', user = user_found, posts = post)
+        if post_found.all():
+            return render_template('search_found.html', title = 'results of search', posts = post, keyword = keyword)
         else:
             return render_template('search_nofound.html', title = 'no results have been found', keyword = keyword)
 
