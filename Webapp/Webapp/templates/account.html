@@ -17,6 +17,10 @@ color: white
 .internal-link{
 color:white}
 
+
+.updatebutton{
+color:white}
+
 .text{
 color:white}
 
@@ -38,25 +42,30 @@ color:white}
             <h2 class="text">{{ current_user.username }}</h2>
             <div class="row">
                 <div class="col-md-2 text-left">
-                    <p class="text">{{total_likes}} favorites</p>
+                    <a ><img src="../../static/pure_white_heart.svg" style="width: 30%"><p class="text">{{total_likes}} favourite</p></a>
                 </div>
                 <div class="col-md-2 text-left">
                     <a ><img src="../../static/payment.svg" style="width: 30%"><p class="text">{{total_buys}} payments</p></a>
                 </div>
                 <div class="col-md-6 text-left">
-                    <p class="text">{{membership_message}}</p>
+                    <a ><img src="../../static/membership.svg" style="width: 10%"><p class="text">{{membership_message}}</p></a>
                 </div>
             </div>
 
             <!--Update current picture-->
-            <div class="col-md-4 text-left">
-                <a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">Change Profile Picture</a>
+            <div class="row">
+            <div class="col-md-2 text-left">
+                <a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">
+                 <img src="../../static/account.svg" style="width: 30%">Change Profile Picture</a>
             </div>
-            <div class="col-md-4 text-left">
-                <a class="internal-link" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
+            <div class="col-md-2 text-left">
+                <a class="internal-link" href="{{ url_for('user.update_profile')}}">
+                <img src="../../static/setting.svg" style="width: 30%">Edit Profile</a>
             </div>
-            <div class="col-md-4 text-left">
-                <a class="internal-link" href="{{ url_for('user.change_password') }}">Change Password</a>
+            <div class="col-md-2 text-left">
+                <a class="internal-link" href="{{ url_for('user.change_password') }}">
+                <img src="../../static/password.svg" style="width: 30%">Change Password</a>
+            </div>
             </div>
         </div>
     </div>
@@ -74,9 +83,9 @@ color:white}
     </div>
 </div>
 
-<div id="content" class="album py-5 bg-light" style="background-color:white;">
+<div id="content" class="album py-5">
     <!-- list1 -->
-    <div class="container" style="background-color:white;">
+    <div class="container">
         <div class="row">
             <h1> {{message}}</h1>
             {%for post in deals%}

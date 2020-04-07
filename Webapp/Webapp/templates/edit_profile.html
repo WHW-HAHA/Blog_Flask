@@ -1,18 +1,38 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div class="content-section">
+
+<style>
+.form-check{
+color:white;
+}
+.container{
+width = 50%
+}
+.form-group{
+color: white
+}
+.text-muted{
+color: white
+}
+.internal-link{
+color:white}
+
+.text{
+color:white}
+</style>
+
+<div class="container" style="width:50%">
     <div class="media">
         <div class="media-body">
             <div class="row">
             <div class="col-md-4 text-right">
             <img class="rounded-circle article-img"
                  src="{{ url_for('static', filename='profile_pics/'+current_user.image_file) }}"
-                 style="height:40%; width:auto">
+                 style="height:60%; width:auto">
             </div>
                 <div class="col">
-            <h2 class="account-heading">{{ current_user.username }}</h2>
-            <p class="text-secondary">{{ current_user.email }}</p>
+            <h2 class="text">{{ current_user.username }}</h2>
+            <p class="text">{{ current_user.email }}</p>
                 </div>
         </div>
         </div>
@@ -64,9 +84,14 @@
             </div>
 
         </fieldset>
+        <div class="container" style="width:50%">
         <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+            {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+        </div>
         </div>
     </form>
+    <div class="border-top pt-3">
+        <p class="text text-center">&copy; 2019-2020</p>
+    </div>
 </div>
 {% endblock %}

@@ -87,19 +87,19 @@ def xml_parser(text):
 def account():
     user = current_user
     if user.membership == 'none':
-        membership_message = "You don't have a membership yet"
+        membership_message = "You are not a member!"
     if user.membership == 'week':
         membership_expire = user.membership_date + timedelta(weeks = 1) - datetime.now()
         # membership_expire = membership_expire.strftime("%Y-%m-%d")
-        membership_message = 'Your membership will expire in {}'.format(membership_expire)
+        membership_message = 'Expire in {}'.format(membership_expire)
     if user.membership == 'month':
         membership_expire = user.membership_date + timedelta(weeks = 4) - datetime.now()
         # membership_expire = membership_expire.strftime("%Y-%m-%d")
-        membership_message = 'Your membership will expire in {}'.format(membership_expire)
+        membership_message = 'Expire in {}'.format(membership_expire)
     if user.membership == 'year':
         membership_expire = user.membership_date + timedelta(weeks = 52) - datetime.now()
         # membership_expire = membership_expire.strftime("%Y-%m-%d")
-        membership_message = 'Your membership will expire in {}'.format(membership_expire)
+        membership_message = 'Expire in {}'.format(membership_expire)
 
     likes_all = user.like # return a query
     deals_all = user.deals

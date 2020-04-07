@@ -51,18 +51,18 @@
 {% endblock%}
 
 {% block content %}
-<div class="album py-5 bg-light" style="background: linear-gradient(to left, #8942a8, #bd382d)">
+<div class="album py-5">
     <!-- list1 -->
-    <div class="container" style="bbackground: linear-gradient(to left, #541D61, #C05166);">
+    <div class="container">
         <a  href="{{url_for('webapp.go_to_category', name='TheLatest')}}" style="color: white; font-weight:bold"><h2 style="color: white; font-weight:bold">The latest</h2></a>
         <div class="row">
             {%for post in list1%}
             <div class="col-md-4">
-                <div class="card mb-4 box-shado_file">
+                <div class="card mb-4" >
                     <img class="card-img-top"
                          src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
                          alt="Card image cap">
-                    <div class="card-body" style="">
+                    <div class="card-body">
                         <div class="post-title">
                             <a href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
@@ -86,6 +86,7 @@
                 <a><h2>Read more about "The latest"</h2></a>
             </div>
         </div>
+
         <a  href="{{url_for('webapp.go_to_category', name='Asia')}}"><h2>Asia</h2></a>
         <div class="row">
             {%for post in list2%}
