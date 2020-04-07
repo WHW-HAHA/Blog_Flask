@@ -51,10 +51,10 @@
 {% endblock%}
 
 {% block content %}
-<div class="album py-5 bg-light">
+<div class="album py-5 bg-light" style="background: linear-gradient(to left, #8942a8, #bd382d)">
     <!-- list1 -->
-    <div class="container" style="background-color:#E3AFBC;">
-        <a  href="{{url_for('webapp.go_to_category', name='TheLatest')}}"><h2>The latest</h2></a>
+    <div class="container" style="bbackground: linear-gradient(to left, #541D61, #C05166);">
+        <a  href="{{url_for('webapp.go_to_category', name='TheLatest')}}" style="color: white; font-weight:bold"><h2 style="color: white; font-weight:bold">The latest</h2></a>
         <div class="row">
             {%for post in list1%}
             <div class="col-md-4">

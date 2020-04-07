@@ -1,7 +1,31 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div class="container" style="background-color:white">
+<style>
+.form-check{
+color:white;
+}
+.container{
+width = 50%
+}
+.form-group{
+color: white
+}
+.text-muted{
+color: white
+}
+
+.internal-link{
+color:white}
+
+.text{
+color:white}
+
+
+</style>
+
+
+
+<div class="container">
     <div class="row">
         <div class="col-md-4 text-right">
             <a class="mr-2" href="{{ url_for('user.change_profile_pic') }}">
@@ -11,27 +35,28 @@
             </a>
         </div>
         <div class="col-md-8 text-left">
-            <h2 class="mb-3">{{ current_user.username }}</h2>
+            <h2 class="text">{{ current_user.username }}</h2>
             <div class="row">
                 <div class="col-md-2 text-left">
-                    <p class="text-muted">{{total_likes}} favorites</p>
+                    <p class="text">{{total_likes}} favorites</p>
                 </div>
                 <div class="col-md-2 text-left">
-                    <p class="text-muted">{{total_buys}} payments</p>
+                    <a ><img src="../../static/payment.svg" style="width: 30%"><p class="text">{{total_buys}} payments</p></a>
                 </div>
                 <div class="col-md-6 text-left">
-                    <p class="text-muted">{{membership_message}}</p>
+                    <p class="text">{{membership_message}}</p>
                 </div>
             </div>
+
             <!--Update current picture-->
             <div class="col-md-4 text-left">
-                <a class="mr-2" href="{{ url_for('user.change_profile_pic')}}">Change Profile Picture</a>
+                <a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">Change Profile Picture</a>
             </div>
             <div class="col-md-4 text-left">
-                <a class="mr-2" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
+                <a class="internal-link" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
             </div>
             <div class="col-md-4 text-left">
-                <a class="mr-2" href="{{ url_for('user.change_password') }}">Change Password</a>
+                <a class="internal-link" href="{{ url_for('user.change_password') }}">Change Password</a>
             </div>
         </div>
     </div>

@@ -1,37 +1,60 @@
 {% extends "layout.html" %}
 {% block content %}
 <body class="text-center">
+
+<style>
+.form-check{
+color:white;
+}
+.container{
+width = 50%
+}
+.form-group{
+color: white
+}
+.text-muted{
+color: white
+}
+.internal-link{
+color:white}
+
+.text{
+color:white}
+</style>
+
+
+<div class="container" style="width:50%">
     <form class="form-signin" method="POST">
         {{ form.hidden_tag() }}
         <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <div class="py-5 text-center">
-            <h1>Please login</h1>
+            <h1 style="color:white">Please login</h1>
         </div>
         <div class="form-group">
             {{ form.email.label(class="d-flex justify-content-between align-items-center mb-3") }}
             {% if form.email.errors %}
-                {{ form.email(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.email.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
             {% else %}
-                {{ form.email(class="form-control form-control-lg") }}
+            {{ form.email(class="form-control form-control-lg") }}
             {% endif %}
         </div>
 
         <div class="form-group">
             {{ form.password.label(class="d-flex justify-content-between align-items-center mb-3") }}
             {% if form.password.errors %}
-                {{ form.password(class="form-control form-control-lg is-invalid") }}
-                <div class="invalid-feedback">
-                    {% for error in form.password.errors %}
-                        <span>{{ error }}</span>
-                    {% endfor %}
-                </div>
+            {{ form.password(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
             {% else %}
-                {{ form.password(class="form-control form-control-lg") }}
+            {{ form.password(class="form-control form-control-lg") }}
             {% endif %}
         </div>
 
@@ -41,19 +64,22 @@
         </div>
 
         <!-- submit button -->
+        <div class="container" style="width:50%">
         <div class="form-group">
             {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
             <small class="text-muted ml-2">
-                <a href="{{ url_for('user.reset_request') }}">Forgot Password?</a>
+                <a class="internal-link" href="{{ url_for('user.reset_request') }}" >Forgot Password?</a>
             </small>
         </div>
+        </div>
         <div class="border-top pt-3">
-        <small class="text-muted">
-            Need An Account? <a class="ml-2" href="{{url_for('user.register') }}">Sign Up Now</a>
-        </small>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+            <small class="text">
+                Need An Account? <a class="internal-link" href="{{url_for('user.register') }}">Sign Up Now</a>
+            </small>
+            <p class="text">&copy; 2019-2020</p>
         </div>
     </form>
-  </body>
+</div>
+</body>
 
 {% endblock content %}
