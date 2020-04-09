@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2 name="keyword message" keyword="{{keyword}}" id="header">We have found these interesting content about "{{keyword}}" for you.</h2>
+<h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">We have found these interesting contents about "{{keyword}}" for you.</h2>
 
 <div class="container" id="container">
 {% for post in posts.items %}
@@ -48,7 +48,7 @@
                 for (var i = 0 ; i < obj.arr.length ; i ++) {
                     // 全局匹配 替换
                     var reg = new RegExp(obj.arr[i],'g');
-                    obj.html = obj.html.replace(reg,"<span style='background-color:orange'>"+obj.arr[i]+"</span>");
+                    obj.html = obj.html.replace(reg,"<span style='color:#00CCBC'>"+obj.arr[i]+"</span>");
                 }
                 document.getElementById(obj.id).innerHTML = obj.html;
                 console.log(obj.html)
