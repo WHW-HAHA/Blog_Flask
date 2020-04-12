@@ -24,10 +24,23 @@ color:white}
 .text{
 color:white}
 
+.btn-outline-light{
+    border-radius: 10px;
+    border: 0px;
+    }
+
+.btn-outline-light:hover {
+    color:#bd382d;
+}
+
+.btn-secondary{
+background-color: rgba(0,0,0,0);
+border: 0px;
+}
+
+
 
 </style>
-
-
 
 <div class="container">
     <div class="row">
@@ -35,51 +48,81 @@ color:white}
             <a class="mr-2" href="{{ url_for('user.change_profile_pic') }}">
                 <img class="rounded-circle article-img"
                      src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
-                     style="height:50%; width:auto">
+                     style="height:80%; width:auto">
             </a>
         </div>
         <div class="col-md-8 text-left">
             <h2 class="text">{{ current_user.username }}</h2>
             <div class="row">
                 <div class="col-md-2 text-left">
-                    <a ><img src="../../static/pure_white_heart.svg" style="width: 30%"><p class="text">{{total_likes}} favourite</p></a>
+                    <a href=""><img src="../../static/pure_white_heart.svg" style="width: 30%">
+                        <p class="text">{{total_likes}} favourite</p></a>
                 </div>
                 <div class="col-md-2 text-left">
-                    <a ><img src="../../static/payment.svg" style="width: 30%"><p class="text">{{total_buys}} payments</p></a>
+                    <a href=""><img src="../../static/payment.svg" style="width: 30%">
+                        <p class="text">{{total_buys}} payments</p></a>
                 </div>
+
+                <div class="col-md-2 text-left">
+                    <a class="internal-link" href="{{ url_for('user.update_profile')}}">
+                        <img src="../../static/setting.svg" style="width: 30%">
+                        <p class="text">Edit Profile</p></a>
+                </div>
+
                 <div class="col-md-6 text-left">
-                    <a ><img src="../../static/membership.svg" style="width: 10%"><p class="text">{{membership_message}}</p></a>
+                    <a><img src="../../static/membership.svg" style="width: 10%; ">
+                        <p class="text">{{membership_message}}</p></a>
                 </div>
+
+
+                <div class="col-md-2">
+                    <div class="btn-group" role="group" >
+                        <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-left"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                        <img src="../../static/setting.svg" style="width: 40%;">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#" name="popularity">By
+                                popularity</a>
+                            <a class="dropdown-item" href="#" name="time">By date</a>
+                        </div>
+                    </div>
+                    <p class="text">Edit Profile</p></a>
+                </div>
+
             </div>
 
             <!--Update current picture-->
-            <div class="row">
-            <div class="col-md-2 text-left">
-                <a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">
-                 <img src="../../static/account.svg" style="width: 30%">Change Profile Picture</a>
-            </div>
-            <div class="col-md-2 text-left">
-                <a class="internal-link" href="{{ url_for('user.update_profile')}}">
-                <img src="../../static/setting.svg" style="width: 30%">Edit Profile</a>
-            </div>
-            <div class="col-md-2 text-left">
-                <a class="internal-link" href="{{ url_for('user.change_password') }}">
-                <img src="../../static/password.svg" style="width: 30%">Change Password</a>
-            </div>
-            </div>
+            <!--<div class="row">-->
+            <!--<div class="col-md-2 text-left">-->
+            <!--<a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">-->
+            <!--<img src="../../static/account.svg" style="width: 30%">Change Profile Picture</a>-->
+            <!--</div>-->
+            <!--<div class="col-md-2 text-left">-->
+            <!--<a class="internal-link" href="{{ url_for('user.update_profile')}}">-->
+            <!--<img src="../../static/setting.svg" style="width: 30%">Edit Profile</a>-->
+            <!--</div>-->
+            <!--<div class="col-md-2 text-left">-->
+            <!--<a class="internal-link" href="{{ url_for('user.change_password') }}">-->
+            <!--<img src="../../static/password.svg" style="width: 30%">Change Password</a>-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 </div>
 
-<div class="row">
+<p></p>
+<!-- Buttons -->
+<div class="row" style="margin:0px">
     <div class="col-md-4 text-center">
-        <a href="#" class="updatebutton" id="likes">Your favorites</a>
+        <a href="#" class="btn btn-outline-light" id="likes">Your favorites</a>
     </div>
     <div class="col-md-4 text-center">
-        <a href="#" class="updatebutton" id="buys">Your buys</a>
+        <a href="#" class="btn btn-outline-light" id="buys">Your buys</a>
     </div>
     <div class="col-md-4 text-center">
-        <a href="#" class="updatebutton" id="similar">You may like</a>
+        <a href="#" class="btn btn-outline-light" id="similar">You may like</a>
     </div>
 </div>
 

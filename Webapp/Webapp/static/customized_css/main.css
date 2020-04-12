@@ -55,7 +55,6 @@ h1, h2, h3, h4, h5, h6, p{
   height: 32rem;
 }
 
-
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
@@ -256,4 +255,14 @@ a.article-title:hover {
 }
 .search-box:hover > .search-btn {
     background: white;
+}
+
+.btn-outline-light{
+border-radius: 10px;
+border: 0px;
+font-size: large;
+font-weight: bold}
+
+.btn-outline-light:hover {
+    color:#8942a8;
 }

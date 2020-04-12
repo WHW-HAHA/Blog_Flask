@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.contentSortButton').click(function() {
+    $('.dropdown-item').click(function() {
         var by = $(this).attr('name');
         console.log(by)
         var categoryName = $(this).attr('category')

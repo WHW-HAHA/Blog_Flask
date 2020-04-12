@@ -22,19 +22,15 @@ webapp_bp = Blueprint('webapp', __name__)
 @webapp_bp.route('/')
 @webapp_bp.route('/welcome')
 def welcome():
-    category1 = Category.query.get(1)
     category2 = Category.query.get(2)
     category3 = Category.query.get(3)
     category4 = Category.query.get(4)
-    category5 = Category.query.get(5)
-    category_list = Category.query.all()[1:5]
     post_list_1 = Post.query.order_by(Post.date_posted.desc()).all()[0:5]
     post_list_2 = category2.posts[0:5]
     post_list_3 = category3.posts[0:5]
     post_list_4 = category4.posts[0:5]
-    post_list_5 = category5.posts[0:5]
-    return render_template('welcome.html',category1= category1,category_list= category_list,
-                           list1 = post_list_1, list2 = post_list_2, list3 = post_list_3, list4 = post_list_4, list5 = post_list_5)
+    return render_template('welcome.html',category_asia= category2, category_usa= category3, category_cartoon= category4,
+                           list1 = post_list_1, list2 = post_list_2, list3 = post_list_3, list4 = post_list_4)
 
 @webapp_bp.route('/gotocategory/<name>')
 def go_to_category(name):
@@ -149,7 +145,7 @@ def home():
 
 @webapp_bp.route("/about")
 def about():
-    return render_template('about.html', title='About')
+    return render_template('test.html', title='About')
 
 
 @webapp_bp.route("/category")

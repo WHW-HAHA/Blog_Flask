@@ -1,5 +1,7 @@
 <!-- posts is the argument from view function-->
 {% extends "layout.html" %}
+
+
 {% block category %}
 
 <style>
@@ -20,55 +22,127 @@ color:white}
 
 .text{
 color:white}
+
+.internal-text{
+color: #8942a8
+}
+
+.internal-link{
+color: #8942a8;}
+
+.internal-link:hover{
+color: #bd382d;}
+
+.btn-outline-light{
+    border-radius: 10px;
+    border: 0px;
+    }
+
+.btn-outline-light:hover {
+    color:#bd382d;
+}
+
+.post-link{
+color:#8942a8;
+text-decoration: none;
+font-size: large;
+}
+
+.post-link:hover{
+color: #bd382d;
+}
+
+.carousel slide{
+border: 0px
+}
+
+.carousel-inner{
+border: 0px;
+height: 470px
+}
+
+.carousel-caption{
+padding: 25px;
+background-color: rgba(0,0,0,0.5);
+border-radius:10px;
+}
+
+.carousel-caption.p{
+color:black
+}
+
+}
+
+
+
+
 </style>
-
-
 <!--top 3 categories-->
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin:0px">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-        <li data-target="#myCarousel" data-slide-to="4"></li>
     </ol>
     <!--The first slide-->
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-100" style="width = 100%" src="../../static/category_pics/Picture3.png"
+            <img width="60%" height="30px"
+                 src="../../static/category_pics/Template_asia.png"
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1>{{category1.name}}</h1>
-                    <p>{{category1.description}}</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button" href="">Sign up today</a></p>
+                    <h1 class="text">{{category_asia.name}}</h1>
+                    <p class="text">{{category_asia.description}}</p>
+                    <p class="text"><a class="btn btn-outline-light" href="#Asia" role="button">See more</a>
+                    </p>
                 </div>
             </div>
         </div>
-        <!--The rest slide-->
-        {% for category in category_list%}
+        <!--The second slide-->
         <div class="carousel-item">
-            <img class="d-block w-100" src="../../static/category_pics/Picture1.png" alt="Second slide">
+            <img width="60%" height="30px"
+                 src="../../static/category_pics/Template_asia.png"
+                 alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1>{{category.name}}</h1>
-                    <p>{{category.description}}</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                    <h1 class="text">{{category_usa.name}}</h1>
+                    <p class="text">{{category_usa.description}}</p>
+                    <p class="text"><a class="btn btn-outline-light" href="#USA" role="button">See more</a>
+                    </p>
                 </div>
             </div>
         </div>
-        {% endfor%}
+        <!--The third slide-->
+        <div class="carousel-item">
+            <img width="60%" height="30px"
+                 src="../../static/category_pics/Template_asia.png"
+                 alt="First slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1 class="text">{{category_cartoon.name}}</h1>
+                    <p class="text">{{category_cartoon.description}}</p>
+                    <p class="text"><a class="btn btn-outline-light" href="#Cartoon" role="button">See more</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
         <!-- slide buttons -->
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev"
+           style="left:10%; top:50%; color:white">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next"
+           style="right:10%; top:50%; color:white">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
 </div>
+
 <!-- categories-->
 {% endblock%}
 
@@ -76,27 +150,30 @@ color:white}
 <div class="album py-5">
     <!-- list1 -->
     <div class="container">
-        <a  href="{{url_for('webapp.go_to_category', name='TheLatest')}}" style="color: white; font-weight:bold"><h2 style="color: white; font-weight:bold">The latest</h2></a>
+        <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+           href="{{url_for('webapp.go_to_category', name='TheLatest')}}">The latest</a>
+        <p></p>
         <div class="row">
             {%for post in list1%}
             <div class="col-md-4">
-                <div class="card mb-4" >
+                <div class="card mb-4">
                     <img class="card-img-top"
                          src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
                          alt="Card image cap">
                     <div class="card-body">
                         <div class="post-title">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                            <a class=" post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p><span class="internal-text" style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
                             </small>
-                            <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                             <small></small>
                         </div>
                     </div>
@@ -104,12 +181,19 @@ color:white}
             </div>
             {%endfor%}
 
-            <div class="col-md-4">
-                <a><h2>Read more about "The latest"</h2></a>
+            <div class="col-md-4 text-center">
+                <div class="container">
+                    <p></p>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+                       href="">Explore more...</a>
+                </div>
             </div>
         </div>
 
-        <a  href="{{url_for('webapp.go_to_category', name='Asia')}}"><h2>Asia</h2></a>
+        <!--section asia-->
+        <a id="Asia" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+           href="{{url_for('webapp.go_to_category', name='Asia')}}">Asia</a>
+        <p></p>
         <div class="row">
             {%for post in list2%}
             <div class="col-md-4">
@@ -119,17 +203,17 @@ color:white}
                          alt="Card image cap">
                     <div class="card-body" style="">
                         <div class="post-title">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                            <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
                             </small>
-                            <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                             <small></small>
                         </div>
                     </div>
@@ -137,11 +221,19 @@ color:white}
             </div>
             {%endfor%}
 
-            <div class="col-md-4">
-                <a><h2>Read more about "The latest"</h2></a>
+            <div class="col-md-4 text-center">
+                <div class="container">
+                    <p></p>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+                       href="">Explore more...</a>
+                </div>
             </div>
         </div>
-        <a href="{{url_for('webapp.go_to_category', name='Europe&USA')}}"><h2>Europe & USA</h2></a>
+
+        <!--USA-->
+        <a id="USA" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+           href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Europe & USA</a>
+        <p></p>
         <div class="row">
             {%for post in list3%}
             <div class="col-md-4">
@@ -151,17 +243,17 @@ color:white}
                          alt="Card image cap">
                     <div class="card-body" style="">
                         <div class="post-title">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                            <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
                             </small>
-                            <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                             <small></small>
                         </div>
                     </div>
@@ -169,11 +261,19 @@ color:white}
             </div>
             {%endfor%}
 
-            <div class="col-md-4">
-                <a><h2>Read more about "The latest"</h2></a>
+            <div class="col-md-4 text-center">
+                <div class="container">
+                    <p></p>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+                       href="">Explore more...</a>
+                </div>
             </div>
         </div>
-        <a href="{{url_for('webapp.go_to_category', name='Cartoon')}}"><h2>Cartoon</h2></a>
+
+<!--Cartoon section-->
+        <a id="Cartoon" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+           href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Cartoon</a>
+        <p></p>
         <div class="row">
             {%for post in list4%}
             <div class="col-md-4">
@@ -183,17 +283,17 @@ color:white}
                          alt="Card image cap">
                     <div class="card-body" style="">
                         <div class="post-title">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                            <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
                             </small>
-                            <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                             <small></small>
                         </div>
                     </div>
@@ -201,59 +301,29 @@ color:white}
             </div>
             {%endfor%}
 
-            <div class="col-md-4">
-                <a><h2>Read more about "The latest"</h2></a>
-            </div>
-        </div>
-        <a href="{{url_for('webapp.go_to_category', name='Unclassified')}}"><h2>Unclassified</h2></a>
-        <div class="row">
-            {%for post in list5%}
-            <div class="col-md-4">
-                <div class="card mb-4 box-shado_file">
-                    <img class="card-img-top"
-                         src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
-                         alt="Card image cap">
-                    <div class="card-body" style="">
-                        <div class="post-title">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><span
-                                    style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
-                        </div>
-                        <div class="post-subtitle">
-                            <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                            <small></small>
-                        </div>
-                    </div>
+            <div class="col-md-4 text-center">
+                <div class="container">
+                    <p></p>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+                       href="">Explore more...</a>
                 </div>
             </div>
-            {%endfor%}
-
-            <div class="col-md-4">
-                <a><h2>Read more about "The latest"</h2></a>
-            </div>
         </div>
+</div>
+</div>
+{% endblock content %}
+
+{% block sidebar %}
+<div class="col-md-4">
+    <div class="content-section">
+        <h3>Our Sidebar</h3>
+        <p class='text-muted'>You can put any information here you'd like.</p>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-light">Latest Posts</li>
+            <li class="list-group-item list-group-item-light">Announcements</li>
+            <li class="list-group-item list-group-item-light">Calendars</li>
+            <li class="list-group-item list-group-item-light">etc</li>
+        </ul>
     </div>
 </div>
-<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-<!--<script src="{{ url_for('static', filename='js/gotoCategory.js')}}"></script>-->
-    {% endblock content %}
-
-    {% block sidebar %}
-    <div class="col-md-4">
-        <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.</p>
-            <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-            </ul>
-        </div>
-    </div>
-    {% endblock sidebar %}
+{% endblock sidebar %}

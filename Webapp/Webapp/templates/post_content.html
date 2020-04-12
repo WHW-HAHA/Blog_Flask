@@ -1,89 +1,208 @@
 {% extends "layout.html" %}
-
 {% block content %} <!--12 columns content-->
-<img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
+
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='customized_css/water_fall.css') }}">-->
+<style>
+
+.white-text{
+color:white}
+
+.internal-text{
+color: #8942a8
+}
+
+.add_favourite{
+color: #8942a8
+}
+
+.btn-outline-light{
+    border-radius: 10px;
+    <!--border: 0px;-->
+    font-weight:bold;
+    font-size:x-large
+    }
+
+.btn-outline-light:hover {
+    color:#bd382d;
+}
+
+.post-link{
+color:#8942a8;
+text-decoration: none;
+font-size: large;
+}
+
+.post-link:hover{
+color: #bd382d;}
+
+.btn-secondary{
+    border-radius: 10px;
+    border:0px;
+    font-weight:bold;
+    font-size:large;
+    background-color:#bd382d;
+}
+
+.dropdown-item{
+    font-weight:bold;
+    font-size:large;
+    color:#bd382d;
+    margin:0px
+}
+
+article-img:{
+width:30%;
+height:auto
+}
+
+.container-waterfall {
+  width: 1100px;
+  margin: 20px auto;
+  padding: 0 10px;
+  column-count: 4;
+  -moz-column-gap:20px; /* Firefox */
+  -webkit-column-gap:20px; /* Safari and Chrome */
+  column-gap:20px;
+}
+
+.container-waterfall .item {
+  width: 100%;
+  margin: 0 0 3px;
+  padding: 3px;
+  overflow: hidden;
+  background-color: #ffffff;
+  break-inside: avoid;
+  border: 0px solid #ccc;
+}
+
+.item img {
+  width: 100%;
+}
+
+@media screen and (max-width: 1100px) {
+  .container-waterfall {
+    column-count: 3;
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+    padding: 20px 20px 20px 0;
+  }
+}
+@media screen and (max-width: 768px) {
+  .container-waterfall {
+    column-count: 2;
+  }
+}
+@media screen and (max-width: 480px) {
+  .container-waterfall {
+    column-count: 1;
+  }
+}
+
+
+.badge-danger{
+boeder-radius: 10px;
+background-color:#8942a8;
+}
+</style>
+
+
 <div class="blog-header">
     <div class="container">
-        <h1 class="blog-title">{{post.title }}</h1>
-        <p class="lead blog-description">{{post.subtitle }}</p>
+        <div class="row">
+            <div class="col">
+                <h1 class="white-text">{{post.title}}</h1>
+                <p></p>
+                <h3 class="white-text">{{post.subtitle}}</h3>
+            </div>
+        </div>
+        <!--<p class="lead blog-description">{{post.subtitle }}</p>-->
         <div class="article-metadata">
-            <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
-            {% for category in post.categories%}
-            <a href=""><span class="badge badge-primary">{{category.name}}</span></a>
-            {% endfor%}
+            <h3 class="white-text">{{post.date_posted.strftime('%Y-%m-%d') }}</h3>
+            <div class="row">
+                {% for category in post.categories%}
+                <div class="col-md-2">
+                    <a href=""><h3><span class="badge badge-danger ">{{category.name}}</span></h3></a>
+                </div>
+                {% endfor%}
+            </div>
+            <p class="white-text">{{post.content}}</p>
         </div>
-        <p class="article-content">{{post.content}}</p>
     </div>
-</div>
 
-<div class="Container">
-    <div class="row">
-        <!--2 x 8 content for pictures-->
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                        <img style="width:100%" class="initImg coverImg" src="../../static/case/case1.jpg">
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                        <img style="width:100%" class="initImg coverImg" src="../../static/case/case2.jpg">
-                    </div>
-                </div>
-
+    <div class="col-md-12">
+        <div class="container-waterfall">
+            <!--test-->
+            <div class="item">
+                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                        <img style="width:100%" class="initImg coverImg" src="../../static/case/case3.jpg">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 box-shadow h-md-250">
-                        <a class="lightbox" href="../../static/case/case4.jpg"><img style="width:100%"
-                                                                                    class="initImg coverImg"
-                                                                                    src="../../static/case/case4.jpg"></a>
-                    </div>
-                </div>
+            <div class="item">
+                <img src="https://s2.ax1x.com/2019/07/09/Z6JKNd.md.jpg" alt="cat">
+            </div>
+            <div class="item">
+                <img src="https://s2.ax1x.com/2019/07/09/Z6Jl9I.md.jpg" alt="cat">
+            </div>
+            <div class="item">
+                <img src="https://s2.ax1x.com/2019/07/09/Z6J13t.md.jpg" alt="cat">
+            </div>
+            <div class="item">
+                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
+            </div>
+            <div class="item">
+                <img src="https://s2.ax1x.com/2019/07/09/Z6JM4A.md.jpg" alt="cat">
+            </div>
+            <div class="item">
+                <img src="https://s2.ax1x.com/2019/07/09/Z6JKNd.md.jpg" alt="cat">
+            </div>
+            <div class="item">
+                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
+            </div>
+            <div class="item">
+                <img src="https://s2.ax1x.com/2019/07/09/Z6JEjK.md.jpg" alt="cat">
+            </div>
+
+            <div class="item">
+                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
+            </div>
+            <div class="item">
+                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
             </div>
         </div>
+    </div>
 
-        <!--1 x 4 columns content for sidebar-->
-        <div class="col-md-4">
-            <a href="{{url_for('user.pay')}}"><h3>Read more?</h3></a>
-        </div>
-
-        <!-- show simlar posts-->
-        <div class="container">
-            <div class="row">
-                {%for post in like_posts%}
-                <div class="col-md-3">
-                    <div class="card mb-3 box-shadow">
-                        <img class="card-img-top"
-                             src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
-                             alt="Card image cap">
-                        <div class="card-body">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><strong>{{post.title}}</strong></a>
-                            <p>{{post.subtitle}}</p>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                                <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                                </small>
-                                <small class="text-muted"><img src="../../static/white_heart.svg">: {{post.total_buy}}
-                                </small>
-                                <small></small>
-                            </div>
+    <!-- show simlar posts-->
+    <div class="container">
+        <h3 class="white-text">You may also like these</h3>
+        <p></p>
+        <div class="row">
+            {%for post in like_posts%}
+            <div class="col-md-3">
+                <div class="card mb-3 box-shado_file">
+                    <img class="card-img-top"
+                         src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
+                         alt="Card image cap">
+                    <div class="card-body" style="">
+                        <div class="post-title">
+                            <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
+                                    style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                        </div>
+                        <div class="post-subtitle">
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                            </small>
+                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <small></small>
                         </div>
                     </div>
                 </div>
-                {%endfor%}
             </div>
+            {%endfor%}
         </div>
-
     </div>
+
     <!--More relevant posts-->
     <footer class="blog-footer">
         <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a

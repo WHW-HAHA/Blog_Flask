@@ -4,38 +4,107 @@
 {% block category %}
 {% endblock%}
 {% block content %}
-<!--Category1-->
-<h1>{{category.name}}</h1>
-<h3>{{category.description}}</h3>
-<a class="contentSortButton" name="popularity" href="#" category="{{category.name}}"> Sort by popularity</a>
-<a Class="contentSortButton" name="time" href="#" category="{{category.name}}"> Sort by time</a>
+
+<style>
+
+.white-text{
+color:white}
+
+.internal-text{
+color: #8942a8
+}
+
+.add_favourite{
+color: #8942a8
+}
+
+.btn-outline-light{
+    border-radius: 10px;
+    <!--border: 0px;-->
+    font-weight:bold;
+    font-size:x-large
+    }
+
+.btn-outline-light:hover {
+    color:#bd382d;
+}
+
+.post-link{
+color:#8942a8;
+text-decoration: none;
+font-size: large;
+}
+
+.post-link:hover{
+color: #bd382d;}
+
+.btn-secondary{
+    border-radius: 10px;
+    border:0px;
+    font-weight:bold;
+    font-size:large;
+    background-color:#bd382d;
+}
+
+.dropdown-item{
+    font-weight:bold;
+    font-size:large;
+    color:#bd382d;
+    margin:0px
+}
+
+</style>
+
+<div style="text-align:left">
+    <h1 class="white-text">{{category.name}}</h1>
+    <p></p>
+    <h3 class="white-text">{{category.description}}</h3>
+
+    <!--<a class="btn btn-outline-light contentSortButton" name="popularity" href="#" category="{{category.name}}"> Sort by-->
+        <!--popularity</a>-->
+    <!--<a Class="btn btn-outline-light contentSortButton" name="time" href="#" category="{{category.name}}"> Sort by-->
+        <!--time</a>-->
+    <div style="text-align:right">
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Sort
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="#" name="popularity" category="{{category.name}}">By popularity</a>
+            <a class="dropdown-item" href="#" name="time" category="{{category.name}}">By date</a>
+        </div>
+    </div>
+    </div>
+    <p></p>
+</div>
 
 <div id="content">
-    <div class="album py-5 bg-light">
-        <!-- list1 -->
-        <div class="container" style="background-color:#E3AFBC;">
+    <div class="album py-5">
+        <div class="container">
             <div class="row">
                 {%for post in posts%}
                 <div class="col-md-4" id="post_content_section{{post.id}}">
                     <div class="card mb-4 box-shado_file">
-                        <img class="card-img-top"
+                        <a href="#"><img class="card-img-top"
                              src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
-                             alt="Card image cap">
+                                alt="Card image cap"></a>
                         <div class="card-body" style="">
                             <div class="post-title">
-                                <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                                <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                         style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                             </div>
                             <div class="post-subtitle">
-                                <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                                <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                                <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
 
-                                <a class="add_favourite" href="#" post_title="{{post.title}}" category="{{category.name}}" post_id = "{{post.id}}"><img
-                                        src="../../static/red_heart.svg">: {{post.total_like}}</a>
+                                <a class="add_favourite" href="#" post_title="{{post.title}}"
+                                   category="{{category.name}}" post_id="{{post.id}}"><img
+                                        src="../../static/red_heart.svg" >: {{post.total_like}}</a>
 
-                                <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                                <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                                 <small></small>
                             </div>
                         </div>
