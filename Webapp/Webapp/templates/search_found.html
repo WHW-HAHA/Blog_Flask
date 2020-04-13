@@ -1,36 +1,51 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">We have found these interesting contents about "{{keyword}}" for you.</h2>
-
+<h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">We have found these interesting
+    contents about "{{keyword}}" for you.</h2>
+<HR color="white">
 <div class="container" id="container">
-{% for post in posts.items %}
-<article class="media content-section" id=>
-    <img class="rounded-circle article-img" src="{{ url_for('static', filename='post_pics/' + post.image_file) }}">
-    <div class="media-body">
-        <div class="article-metadata">
-            <small class="text-muted">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+    {% for post in posts.items %}
+    <article class="media content-section" style="">
+        <div class="media-body">
+            <div class="row">
+                <div class="col-md-1.5">
+                    <img class=" article-img" src="{{url_for('static', filename='post_pics/' + post.image_file) }}">
+                </div>
+                <div class="col">
+                    <h2><a class="internal-text" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a>
+                    </h2>
+                    <h5 class="internal-text">{{post.subtitle}}</h5>
+                </div>
+            </div>
+
+            <div class="article-metadata">
+                <small class="internal-text">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
+                {% for category in post.categories%}
+                <div class="col-md-1.5">
+                    <a href="{{url_for('webapp.go_to_category', name='category.name')}}"><p><span
+                            class="badge badge-danger">{{category.name}}</span></p></a>
+                </div>
+                {% endfor%}
+            </div>
+
+            <p class="internal-text">{{post.content}}</p>
         </div>
-        <h2><a class="article-title" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a>
-        </h2>
-        <p class="article-content" >{{post.subtitle}}</p>
-        <p class="article-content" >{{post.content}}</p>
-    </div>
-</article>
-{% endfor %}
+    </article>
+    {% endfor %}
 
 </div>
 
 {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-    {% if page_num %}
-        {% if posts.page == page_num %}
-        <a class="btn btn-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
-        {% else %}
-        <a class="btn btn-outline-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
-        {% endif %}
-    {% else %}
-    ...
-    {% endif %}
+{% if page_num %}
+{% if posts.page == page_num %}
+<a class="btn btn-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
+{% else %}
+<a class="btn btn-outline-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
+{% endif %}
+{% else %}
+...
+{% endif %}
 {% endfor %}
 
 <script type="text/javascript">
@@ -48,7 +63,7 @@
                 for (var i = 0 ; i < obj.arr.length ; i ++) {
                     // 全局匹配 替换
                     var reg = new RegExp(obj.arr[i],'g');
-                    obj.html = obj.html.replace(reg,"<span style='color:#00CCBC'>"+obj.arr[i]+"</span>");
+                    obj.html = obj.html.replace(reg,"<span style='background-color:#00CCBC; border-radius:5px'>"+obj.arr[i]+"</span>");
                 }
                 document.getElementById(obj.id).innerHTML = obj.html;
                 console.log(obj.html)
@@ -64,6 +79,9 @@
             Highlight.init({id:"container",arr:[keyword, lowercase_keyword]});
             Highlight.init({id:"header",arr:[keyword, lowercase_keyword]});
         }
+
+
+
 </script>
 {% endblock content %}
 

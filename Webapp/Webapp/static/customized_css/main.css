@@ -153,9 +153,10 @@ a.article-title:hover {
 }
 
 .article-img {
-  height: 65px;
-  width: 65px;
-  margin-right: 16px;
+  width: 100px;
+  height: auto;
+  margin-right: 5px;
+  margin-right: 0px;
 }
 
 .article-metadata {
@@ -199,6 +200,7 @@ a.article-title:hover {
     opacity:.80;
     filter: alpha(opacity=88);
 }
+
 .white_content {
     display: none;
     position: absolute;

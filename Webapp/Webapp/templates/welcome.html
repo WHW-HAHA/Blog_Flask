@@ -33,15 +33,6 @@ color: #8942a8;}
 .internal-link:hover{
 color: #bd382d;}
 
-.btn-outline-light{
-    border-radius: 10px;
-    border: 0px;
-    }
-
-.btn-outline-light:hover {
-    color:#bd382d;
-}
-
 .post-link{
 color:#8942a8;
 text-decoration: none;
@@ -70,11 +61,6 @@ border-radius:10px;
 .carousel-caption.p{
 color:black
 }
-
-}
-
-
-
 
 </style>
 <!--top 3 categories-->
@@ -127,8 +113,6 @@ color:black
                 </div>
             </div>
         </div>
-
-
         <!-- slide buttons -->
         <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev"
            style="left:10%; top:50%; color:white">
@@ -150,9 +134,10 @@ color:black
 <div class="album py-5">
     <!-- list1 -->
     <div class="container">
-        <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+        <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='TheLatest')}}">The latest</a>
         <p></p>
+        <HR color="white">
         <div class="row">
             {%for post in list1%}
             <div class="col-md-4">
@@ -184,16 +169,17 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
-                       href="">Explore more...</a>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
+                       href="{{url_for('webapp.go_to_category', name='TheLatest')}}">Explore more...</a>
                 </div>
             </div>
         </div>
 
         <!--section asia-->
-        <a id="Asia" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+        <a id="Asia" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Asia')}}">Asia</a>
         <p></p>
+        <HR color="white">
         <div class="row">
             {%for post in list2%}
             <div class="col-md-4">
@@ -224,16 +210,17 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
-                       href="">Explore more...</a>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
+                       href="{{url_for('webapp.go_to_category', name='Asia')}}">Explore more...</a>
                 </div>
             </div>
         </div>
 
         <!--USA-->
-        <a id="USA" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+        <a id="USA" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Europe & USA</a>
         <p></p>
+        <HR color="white">
         <div class="row">
             {%for post in list3%}
             <div class="col-md-4">
@@ -264,16 +251,17 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
-                       href="">Explore more...</a>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+                       href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Explore more...</a>
                 </div>
             </div>
         </div>
 
 <!--Cartoon section-->
-        <a id="Cartoon" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
+        <a id="Cartoon" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Cartoon</a>
         <p></p>
+        <HR color="white">
         <div class="row">
             {%for post in list4%}
             <div class="col-md-4">
@@ -304,8 +292,8 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;"
-                       href="">Explore more...</a>
+                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+                       href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Explore more...</a>
                 </div>
             </div>
         </div>
@@ -313,6 +301,7 @@ color:black
 </div>
 {% endblock content %}
 
+<!--side bar-->
 {% block sidebar %}
 <div class="col-md-4">
     <div class="content-section">

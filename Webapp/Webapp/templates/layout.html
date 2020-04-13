@@ -16,18 +16,29 @@
 {% else %}
 <title>webapp</title>
 {% endif %}
+
 <style>
-    .btn-outline-light{
-    border-radius: 10px;
-    border: 10px;
-    font-size: large;
-    font-weight: bold;
-    color:white}
+.btn-outline-light{
+border-radius: 10px;
+font-size: large;
+font-weight: bold;
+}
 
-    .btn-outline-light:hover {
-        color:#8942a8;
-    }
+.btn-outline-light:hover{
+color:#00CCBC;
+background-color:rgba(0,0,0,0.2);
+-webkit-transform: translateY(-3px);
+-ms-transform: translateY(-3px);
+transform: translateY(-3px);
+-webkit-box-shadow: 0 0 6px #999;
+box-shadow: 0 0 6px #999;
+-webkit-transition: all .5s ease-out;
+transition: all .5s ease-out;
+}
 
+.internal-text{
+color: #8942a8
+}
 </style>
 
 </head>
@@ -86,7 +97,11 @@
     </div>
 </header>
 
+
 <main role="main" class="container">
+    <a class="btn btn-outline-light" id="ToTopButton" href="#" style="position:fixed;
+    right:15%; bottom: 10%; background-color:rgba(0,0,0,0.2)">Back to top</a>
+
     <div></div>
     <div class="row">
         <div class="col-md-12">
@@ -94,6 +109,7 @@
         </div>
         <div class="col-md-12"> <!-- give 8/12 columns for main field -->
             {% block content %}{% endblock %} <!-- where replace content with new content at main field-->
+            <HR color="white">
         </div>
     </div>
 </main>

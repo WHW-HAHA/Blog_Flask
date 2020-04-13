@@ -1,22 +1,9 @@
 {% extends "layout.html" %}
 {% block content %}
 <style>
-.form-check{
-color:white;
-}
-.container{
-width = 50%
-}
-.form-group{
-color: white
-}
-.text-muted{
-color: white
-}
 
 .internal-link{
 color:white}
-
 
 .updatebutton{
 color:white}
@@ -24,20 +11,58 @@ color:white}
 .text{
 color:white}
 
-.btn-outline-light{
-    border-radius: 10px;
-    border: 0px;
-    }
+.post-link{
+color:#8942a8;
+text-decoration: none;
+font-size: large;
+}
 
-.btn-outline-light:hover {
-    color:#bd382d;
+.internal-text{
+color: #8942a8
 }
 
 .btn-secondary{
 background-color: rgba(0,0,0,0);
 border: 0px;
+margin: 0px;
 }
 
+.btn-secondary:hover{
+background-color: rgba(0,0,0,0);
+border: 0px;
+margin: 0px;
+}
+
+.btn-group{
+border: 0px;
+margin: 0px;
+}
+
+.dropdown-item{
+color:#bd382d
+}
+
+.dropdown-item:hover{
+color:#8942a8
+
+
+    .btn-outline-light{
+    border-radius: 10px;
+    font-size: large;
+    font-weight: bold;
+background-color: rgba(0,0,0,0.2)
+}
+
+.btn-outline-light:hover{
+background-color:white;
+-webkit-transform: translateY(-3px);
+-ms-transform: translateY(-3px);
+transform: translateY(-3px);
+-webkit-box-shadow: 0 0 6px #999;
+box-shadow: 0 0 6px #999;
+-webkit-transition: all .5s ease-out;
+transition: all .5s ease-out;
+}
 
 
 </style>
@@ -48,49 +73,46 @@ border: 0px;
             <a class="mr-2" href="{{ url_for('user.change_profile_pic') }}">
                 <img class="rounded-circle article-img"
                      src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
-                     style="height:80%; width:auto">
+                     style="height:60%; width:auto">
             </a>
         </div>
+
         <div class="col-md-8 text-left">
             <h2 class="text">{{ current_user.username }}</h2>
             <div class="row">
-                <div class="col-md-2 text-left">
+                <div class="col-md-2 text-center">
                     <a href=""><img src="../../static/pure_white_heart.svg" style="width: 30%">
                         <p class="text">{{total_likes}} favourite</p></a>
                 </div>
-                <div class="col-md-2 text-left">
+                <div class="col-md-2 text-center">
                     <a href=""><img src="../../static/payment.svg" style="width: 30%">
                         <p class="text">{{total_buys}} payments</p></a>
                 </div>
 
-                <div class="col-md-2 text-left">
-                    <a class="internal-link" href="{{ url_for('user.update_profile')}}">
-                        <img src="../../static/setting.svg" style="width: 30%">
-                        <p class="text">Edit Profile</p></a>
+                <div class="col-md-2 text-center">
+                    <img src="../../static/membership.svg" style="width: 30%; ">
+                    <div class="col-md-12 text-center">
+                        <a href=""><p class="text">{{membership_message}}</p></a>
+                    </div>
                 </div>
+            </div>
 
-                <div class="col-md-6 text-left">
-                    <a><img src="../../static/membership.svg" style="width: 10%; ">
-                        <p class="text">{{membership_message}}</p></a>
-                </div>
-
-
+            <div class="row">
                 <div class="col-md-2">
-                    <div class="btn-group" role="group" >
-                        <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-left"
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-right"
                                 data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="true">
-                        <img src="../../static/setting.svg" style="width: 40%;">
+                            <img src="../../static/setting.svg" style="width: 40%;">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#" name="popularity">By
-                                popularity</a>
-                            <a class="dropdown-item" href="#" name="time">By date</a>
+                            <a class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
+                            <a class="dropdown-item" href="{{ url_for('user.change_profile_pic')}}">Change Avater</a>
+                            <a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
                         </div>
                     </div>
-                    <p class="text">Edit Profile</p></a>
+                    <p class="text-center" style="color:white">Edit Profile</p></a>
                 </div>
-
             </div>
 
             <!--Update current picture-->
@@ -125,6 +147,7 @@ border: 0px;
         <a href="#" class="btn btn-outline-light" id="similar">You may like</a>
     </div>
 </div>
+<HR color="white">
 
 <div id="content" class="album py-5">
     <!-- list1 -->
@@ -137,19 +160,21 @@ border: 0px;
                     <img class="card-img-top"
                          src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
                          alt="Card image cap">
-                    <div class="card-body" style="">
+
+                    <div class="card-body" style="background-color: rgba(0,0,0,0.1);">
                         <div class="post-title">
-                            <a href="{{url_for('post.post', post_id=post.id)}}"><span
+                            <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="text-muted"><img src="../../static/red_heart.svg">: {{post.total_like}}
+                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
                             </small>
-                            <small class="text-muted"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
                             <small></small>
                         </div>
                     </div>

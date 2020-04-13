@@ -15,17 +15,6 @@ color: #8942a8
 color: #8942a8
 }
 
-.btn-outline-light{
-    border-radius: 10px;
-    <!--border: 0px;-->
-    font-weight:bold;
-    font-size:x-large
-    }
-
-.btn-outline-light:hover {
-    color:#bd382d;
-}
-
 .post-link{
 color:#8942a8;
 text-decoration: none;
@@ -98,10 +87,10 @@ height:auto
   }
 }
 
-
 .badge-danger{
 boeder-radius: 10px;
-background-color:#8942a8;
+background-color:rgba(0,0,0,0.2);
+margin: 3px;
 }
 </style>
 
@@ -117,15 +106,16 @@ background-color:#8942a8;
         </div>
         <!--<p class="lead blog-description">{{post.subtitle }}</p>-->
         <div class="article-metadata">
-            <h3 class="white-text">{{post.date_posted.strftime('%Y-%m-%d') }}</h3>
+            <!--<h3 class="white-text">{{post.date_posted.strftime('%Y-%m-%d') }}</h3>-->
+            <p class="white-text">{{post.content}}</p>
             <div class="row">
+            <!--<h5 class="white-text">{{post.date_posted.strftime('%Y-%m-%d') }}</h5>-->
                 {% for category in post.categories%}
-                <div class="col-md-2">
-                    <a href=""><h3><span class="badge badge-danger ">{{category.name}}</span></h3></a>
+                <div class="col-md-1.5">
+                    <a href="{{url_for('webapp.go_to_category', name='category.name')}}"><h3><span class="badge badge-danger">{{category.name}}</span></h3></a>
                 </div>
                 {% endfor%}
             </div>
-            <p class="white-text">{{post.content}}</p>
         </div>
     </div>
 
@@ -168,11 +158,11 @@ background-color:#8942a8;
             </div>
         </div>
     </div>
-
     <!-- show simlar posts-->
     <div class="container">
         <h3 class="white-text">You may also like these</h3>
         <p></p>
+        <HR color="white">
         <div class="row">
             {%for post in like_posts%}
             <div class="col-md-3">
@@ -202,15 +192,6 @@ background-color:#8942a8;
             {%endfor%}
         </div>
     </div>
-
-    <!--More relevant posts-->
-    <footer class="blog-footer">
-        <p>Blog template built for <a href="https://getbootstrap.com">Bootstrap</a> by <a
-                href="https://twitter.com/mdo">@mdo</a>.</p>
-        <p>
-            <a href="#">Back to top</a>
-        </p>
-    </footer>
     {% endblock content %}
 
 
