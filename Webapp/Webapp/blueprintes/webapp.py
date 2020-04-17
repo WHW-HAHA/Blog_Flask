@@ -195,8 +195,7 @@ def one_day_VIP():
         return redirect(url_for('webapp.VIP_check'))
         # here should redirect to the VIP content page
     else:
-        flash("You already used this free VIP service, please enroll as a member!", "warning")
-        return render_template('price.html')
+        return render_template('create_share_link.html')
 
 @webapp_bp.route("/VIP")
 def VIP_check():

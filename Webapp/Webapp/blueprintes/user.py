@@ -27,7 +27,7 @@ import requests
 from bs4 import BeautifulSoup
 from weixin.login import WeixinLogin
 from collections import Counter
-
+import random
 
 user_bp = Blueprint('user', __name__)
 
@@ -48,7 +48,6 @@ def register():
     if form.validate_on_submit():
         # hash the original user password
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-
         user = User(username = form.username.data, email = form.email.data,
                     password = hashed_password)
         db.session.add(user)
@@ -56,6 +55,37 @@ def register():
         flash('Your account has been created! You are now able to login in!')
         return redirect(url_for('user.login'))
     return render_template('register.html', title = 'Register', form = form)
+
+@user_bp.route('/get_share_link', methods=['POST'])
+def get_share_link():
+    if current_user.is_authenticated:
+        if current_user.invitation_code:
+            invitation_code = current_user.invitation_code
+            flash('You already have a invitation code, you can check your unique invitation code in your account.', 'success')
+            return render_template('post_content_section.html', invitation_code = invitation_code)
+        else:
+            invitation_code = generate_verification_code()
+            current_user.invitation_code = invitation_code
+            db.session.commit()
+            flash('Here is your invitation code, you can check your unique invitation code in your account.', 'success')
+            return render_template('post_content_section.html', )
+    else:
+        flash("You haven't login yet, please login first!", 'warning')
+        return redirect('user.login')
+
+
+def generate_verification_code():
+    code_list = []
+    for i in range(10): # 0-9数字
+        code_list.append(str(i))
+    for i in range(65, 91): # A-Z
+        code_list.append(chr(i))
+    for i in range(97, 123): # a-z
+        code_list.append(chr(i))
+
+    myslice = random.sample(code_list, 12)  # 从list中随机获取12个元素，作为一个片断返回
+    verification_code = ''.join(myslice) # list to string
+    return verification_code
 
 
 @user_bp.route('/login', methods = ['GET', 'POST'])
