@@ -68,10 +68,10 @@ color: #8942a8
                     <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.about') }}">VIP</a>
 
                 </div>
-                <div class="navbar-nav" style="position: absolute; left: 45%; length: 40%">
+                <div class="navbar-nav" style="position: absol; left: 45%;">
                      <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
                         <input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"
-                               name="keyword" style="border-radius: 10px">
+                               name="keyword" style="border-radius:10px;">
                     </form>
                 </div>
                 <!-- Navbar Right Side -->
@@ -82,12 +82,9 @@ color: #8942a8
                                <!--name="keyword" style="border-radius: 10px">-->
                         <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Search</button>-->
                     <!--</form>-->
-
                     <a class="btn btn-outline-light text-left" href="{{ url_for('user.account') }}">Account</a>
                     <a class="btn btn-outline-light text-left" href="{{ url_for('user.logout') }}">Logout</a>
                     {% else %}
-                    <input type="text" placeholder="Search..">
-                    <a class="btn btn-outline-light text-left" href="{{url_for('webapp.search')}}">Search</a>
                     <a class="btn btn-outline-light text-left" href="{{ url_for('user.login') }}">Login</a>
                     <a class="btn btn-outline-light text-left" href="{{ url_for('user.register') }}">Register</a>
                     {% endif %}
@@ -97,12 +94,17 @@ color: #8942a8
     </div>
 </header>
 
-
 <main role="main" class="container">
     <a class="btn btn-outline-light" id="ToTopButton" href="#" style="position:fixed;
     right:15%; bottom: 10%; background-color:rgba(0,0,0,0.2)">Back to top</a>
-
     <div></div>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
     <div class="row">
         <div class="col-md-12">
             {% block category%}{% endblock %}
@@ -116,7 +118,7 @@ color: #8942a8
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery.js"></script> <!--This jquery includes ajax-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 

@@ -64,6 +64,10 @@ box-shadow: 0 0 6px #999;
 transition: all .5s ease-out;
 }
 
+.badge-light{
+color:#bd382d;
+background-color: rgba(0,0,0,0);
+}
 
 </style>
 
@@ -138,13 +142,13 @@ transition: all .5s ease-out;
 <!-- Buttons -->
 <div class="row" style="margin:0px">
     <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light" id="likes">Your favorites</a>
+        <a href="#" class="btn btn-outline-light" id="likes" style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your favorites</a>
     </div>
     <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light" id="buys">Your buys</a>
+        <a href="#" class="btn btn-outline-light" id="buys" style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your buys</a>
     </div>
     <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light" id="similar">You may like</a>
+        <a href="#" class="btn btn-outline-light" id="similar" style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">You may like</a>
     </div>
 </div>
 <HR color="white">
@@ -161,7 +165,7 @@ transition: all .5s ease-out;
                          src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
                          alt="Card image cap">
 
-                    <div class="card-body" style="background-color: rgba(0,0,0,0.1);">
+                    <div class="card-body">
                         <div class="post-title">
                             <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
@@ -171,11 +175,15 @@ transition: all .5s ease-out;
                             </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                            <small></small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light" style="color:#bd382d;background-color:rgba(0,0,0,0);">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
+
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light" style="color:#bd382d;background-color:rgba(0,0,0,0);">{{post.total_like}}</span>
+                            </a>
                         </div>
                     </div>
                 </div>

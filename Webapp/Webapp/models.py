@@ -87,6 +87,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String, nullable=False, default='default profile.jpg')
     membership = db.Column(db.String, nullable = False, default='none') # False or True
     membership_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    # vip_try_out = db.Column(db.Integer, default = 1)
     deals = db.relationship('Deal', backref = 'by')
 
     def get_reset_token(self, expires_sec = 1800):
@@ -132,6 +133,11 @@ class Post(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     price = db.Column(db.Integer, nullable = False, default = 0)
     image_file = db.Column(db.String, nullable = False, default = 'LiyuanLing.png')
+    source = db.Column(db.String, nullable = True, default= 'ins')
+    avater = db.Column(db.String, nullable = True)
+    normal_picture_list =db.Column(db.String, nullable = True)
+    vip1_picture_list = db.Column(db.String, nullable = True)
+    vip2_picture_list = db.Column(db.String, nullable = True)
     #relationships
     deals = db.relationship('Deal', backref = 'what')
     # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')

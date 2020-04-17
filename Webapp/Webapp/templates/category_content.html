@@ -51,6 +51,11 @@ color: #bd382d;}
     margin:0px
 }
 
+.badge-light{
+color:#bd382d;
+background-color: rgba(0,0,0,0);
+}
+
 </style>
 
 <div style="text-align:left">
@@ -85,7 +90,7 @@ color: #bd382d;}
                 <div class="col-md-4" id="post_content_section{{post.id}}">
                     <div class="card mb-4 box-shado_file">
                         <a href="#"><img class="card-img-top"
-                             src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
+                             src="{{post.avater}}"
                                 alt="Card image cap"></a>
                         <div class="card-body" style="">
                             <div class="post-title">
@@ -96,26 +101,27 @@ color: #bd382d;}
                                 <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
 
-                                <a class="add_favourite" href="#" post_title="{{post.title}}"
-                                   category="{{category.name}}" post_id="{{post.id}}"><img
-                                        src="../../static/red_heart.svg" >: {{post.total_like}}</a>
-
-                                <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                                <small></small>
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8" post_title="{{post.title}}" category="{{category.name}}" post_id="{{post.id}}">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 {%endfor%}
             </div>
         </div>
     </div>
 </div>
 
-
-<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
 <script src="{{ url_for('static', filename='js/sort_content.js')}}"></script>
 <script src="{{ url_for('static', filename='js/add_favourite.js')}}"></script>
 {% endblock content %}

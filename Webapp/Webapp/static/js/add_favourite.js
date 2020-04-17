@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.add_favourite').click(function() {
+    $('.fa-heart').click(function() {
         var post_title = $(this).attr('post_title')
         var categoryName = $(this).attr('category')
         var post_id = $(this).attr('post_id')

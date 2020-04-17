@@ -20,6 +20,9 @@ from faker import Faker
 from Webapp import db
 from Webapp.models import Admin, Category, Post, Deal, User
 from sqlalchemy import func
+import re
+import pandas as pd
+import glob
 
 # 建立1侧的模型，虚拟数据可以之后从多侧生成
 
@@ -27,12 +30,53 @@ fake = Faker()
 
 
 def fake_post(count = 50):
+    allInpuCSVs_list = glob.glob(r'*.csv')
+    for csv in allInpuCSVs_list:
+        try:
+            tempDF = pd.read_csv(csv, delimiter=',')
+            if tempDF.shape[1] == 1:
+                tempDF = pd.read_csv(csv, delimiter=';')
+        except:
+            tempDF = pd.read_csv(csv, delimiter=';')
+
+        post_id = tempDF['id'].dropna()[0]
+        post_category = tempDF['category_en'].dropna()
+        post_tag = tempDF['tag_en'].dropna()
+        post_title = tempDF['title_en'].dropna()[0]
+        post_subtitle = tempDF['subtitle_en'].dropna()[0]
+        post_content = tempDF['content_en'].dropna()[0]
+        post_avater = tempDF['avater'].dropna()
+        post_normal = tempDF['normal'].dropna()
+        post_vip1 = tempDF['vip1'].dropna()
+        post_vip2 = tempDF['vip2'].dropna()
+        avater_list = []
+        normal_list = ''
+        vip1_list = ''
+        vip2_list = ''
+
+        for url in post_avater:
+            p1 = re.compile(r'[(](.*?)[)]', re.S)
+            avater_list.append(re.findall(p1, url)[0])
+        for url in post_normal:
+            p1 = re.compile(r'[(](.*?)[)]', re.S)
+            normal_list = normal_list + (re.findall(p1, url)[0]) + '\\'
+        for url in post_vip1:
+            p1 = re.compile(r'[(](.*?)[)]', re.S)
+            vip1_list = vip1_list + (re.findall(p1, url)[0]) + '\\'
+        for url in post_vip2:
+            p1 = re.compile(r'[(](.*?)[)]', re.S)
+            vip2_list = vip2_list + (re.findall(p1, url)[0]) + '\\'
+
     for i in range(count):
         post = Post( title = fake.sentence(),
                      subtitle = fake.sentence(),
                      content = fake.text(500),
                      date_posted = fake.date_of_birth(),
                      price = fake.random_int(0, 100),
+                     avater = random.choice(avater_list),
+                     normal_picture_list = normal_list,
+                     vip1_picture_list = vip1_list,
+                     vip2_picture_list = vip2_list,
                      )
         db.session.add(post)
 

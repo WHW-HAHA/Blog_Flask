@@ -92,8 +92,12 @@ boeder-radius: 10px;
 background-color:rgba(0,0,0,0.2);
 margin: 3px;
 }
-</style>
 
+.badge-light{
+color:#bd382d;
+background-color: rgba(0,0,0,0);
+}
+</style>
 
 <div class="blog-header">
     <div class="container">
@@ -109,10 +113,15 @@ margin: 3px;
             <!--<h3 class="white-text">{{post.date_posted.strftime('%Y-%m-%d') }}</h3>-->
             <p class="white-text">{{post.content}}</p>
             <div class="row">
-            <!--<h5 class="white-text">{{post.date_posted.strftime('%Y-%m-%d') }}</h5>-->
+                <div class="col-md-1.5">
+                    <h3>
+                        <span class="badge badge-danger"><span class="fa fa-calendar" style="color:#8942a8"></span>
+                            {{post.date_posted.strftime('%Y/%m/%d')}}</span></h3>
+                </div>
                 {% for category in post.categories%}
                 <div class="col-md-1.5">
-                    <a href="{{url_for('webapp.go_to_category', name='category.name')}}"><h3><span class="badge badge-danger">{{category.name}}</span></h3></a>
+                    <a href="{{url_for('webapp.go_to_category', name='category.name')}}"><h3><span
+                            class="badge badge-danger">{{category.name}}</span></h3></a>
                 </div>
                 {% endfor%}
             </div>
@@ -122,41 +131,14 @@ margin: 3px;
     <div class="col-md-12">
         <div class="container-waterfall">
             <!--test-->
+            {%for picture in picture_list%}
             <div class="item">
-                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
+                <!--<img class="lazy" src="{{picture}}" alt="cat">-->
+                <img class="lazyload" data-src="{{picture}}" alt="cat">
             </div>
-            <div class="item">
-                <img src="https://s2.ax1x.com/2019/07/09/Z6JKNd.md.jpg" alt="cat">
-            </div>
-            <div class="item">
-                <img src="https://s2.ax1x.com/2019/07/09/Z6Jl9I.md.jpg" alt="cat">
-            </div>
-            <div class="item">
-                <img src="https://s2.ax1x.com/2019/07/09/Z6J13t.md.jpg" alt="cat">
-            </div>
-            <div class="item">
-                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
-            </div>
-            <div class="item">
-                <img src="https://s2.ax1x.com/2019/07/09/Z6JM4A.md.jpg" alt="cat">
-            </div>
-            <div class="item">
-                <img src="https://s2.ax1x.com/2019/07/09/Z6JKNd.md.jpg" alt="cat">
-            </div>
-            <div class="item">
-                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
-            </div>
-            <div class="item">
-                <img src="https://s2.ax1x.com/2019/07/09/Z6JEjK.md.jpg" alt="cat">
-            </div>
-
-            <div class="item">
-                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
-            </div>
-            <div class="item">
-                <img src="{{url_for('static', filename='post_pics/' + post.image_file)}}" alt="cat">
-            </div>
+            {%endfor%}
         </div>
+        <h3>More interesting contents about {{post.title}} are available in <a>VIP</a> section.</h3>
     </div>
     <!-- show simlar posts-->
     <div class="container">
@@ -170,6 +152,7 @@ margin: 3px;
                     <img class="card-img-top"
                          src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
                          alt="Card image cap">
+
                     <div class="card-body" style="">
                         <div class="post-title">
                             <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
@@ -180,11 +163,15 @@ margin: 3px;
                             </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                            <small></small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
+
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -192,7 +179,9 @@ margin: 3px;
             {%endfor%}
         </div>
     </div>
-    {% endblock content %}
+</div>
 
+<script src="{{ url_for('static', filename='js/waterfall.js')}}"></script>
+<script src="{{ url_for('static', filename='js/lazyload.js')}}"></script>
 
-
+{% endblock content%}

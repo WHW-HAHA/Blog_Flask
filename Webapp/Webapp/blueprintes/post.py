@@ -19,12 +19,16 @@ post_bp = Blueprint('post', __name__)
 @post_bp.route("/post/<post_id>") # post_id 在这个route函数被调用时传入
 def post(post_id):
     post = Post.query.get_or_404(post_id)
+    picture_list = post.normal_picture_list
+    picture_list = picture_list.split('\\')
+    print(picture_list)
 
     # get posts with similar category, and show 5 of them
     category = post.categories
     # category = Category.query.get(post.categories)
     like_posts = category[0].posts[0:5]
-    return render_template('post_content.html', title=post.title, post=post, like_posts = like_posts)
+
+    return render_template('post_content.html', title=post.title, post=post, picture_list = picture_list[:-1], like_posts = like_posts)
 
 
 

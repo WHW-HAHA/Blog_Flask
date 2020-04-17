@@ -62,6 +62,11 @@ border-radius:10px;
 color:black
 }
 
+.badge-light{
+color:#bd382d;
+background-color: rgba(0,0,0,0);
+}
+
 </style>
 <!--top 3 categories-->
 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin:0px">
@@ -155,10 +160,15 @@ color:black
                             </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
+
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
                             <small></small>
                         </div>
                     </div>
@@ -169,14 +179,16 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
+                    <a class="btn btn-outline-light"
+                       style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
                        href="{{url_for('webapp.go_to_category', name='TheLatest')}}">Explore more...</a>
                 </div>
             </div>
         </div>
 
         <!--section asia-->
-        <a id="Asia" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
+        <a id="Asia" class="btn btn-outline-light"
+           style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Asia')}}">Asia</a>
         <p></p>
         <HR color="white">
@@ -185,7 +197,7 @@ color:black
             <div class="col-md-4">
                 <div class="card mb-4 box-shado_file">
                     <img class="card-img-top"
-                         src="{{url_for('static', filename='post_pics/' + post.image_file)}}"
+                         src="https://user-images.githubusercontent.com/43483189/79245751-cb49ad00-7e78-11ea-9026-65cbb214751f.jpg"
                          alt="Card image cap">
                     <div class="card-body" style="">
                         <div class="post-title">
@@ -193,14 +205,19 @@ color:black
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                            <small></small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
+
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -210,14 +227,16 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
+                    <a class="btn btn-outline-light"
+                       style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
                        href="{{url_for('webapp.go_to_category', name='Asia')}}">Explore more...</a>
                 </div>
             </div>
         </div>
 
         <!--USA-->
-        <a id="USA" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
+        <a id="USA" class="btn btn-outline-light"
+           style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Europe & USA</a>
         <p></p>
         <HR color="white">
@@ -234,14 +253,19 @@ color:black
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                            <small></small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
+
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -251,14 +275,16 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+                    <a class="btn btn-outline-light"
+                       style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
                        href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Explore more...</a>
                 </div>
             </div>
         </div>
 
-<!--Cartoon section-->
-        <a id="Cartoon" class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+        <!--Cartoon section-->
+        <a id="Cartoon" class="btn btn-outline-light"
+           style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Cartoon</a>
         <p></p>
         <HR color="white">
@@ -275,14 +301,25 @@ color:black
                                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                         </div>
                         <div class="post-subtitle">
-                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span></p>
+                            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <small class="internal-text">{{post.date_posted.strftime('%Y/%m/%d') }}</small>
-                            <small class="internal-text"><img src="../../static/red_heart.svg">: {{post.total_like}}
-                            </small>
-                            <small class="internal-text"><img src="../../static/pay.svg">: {{post.total_buy}}</small>
-                            <small></small>
+                            <a type="button" class="btn">
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </a>
+
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
+
+                            <!--<a type="button" class="btn btn-outline-light" >-->
+                            <!--<span class="fa fa-credit-card" style="color:#8942a8">  </span>-->
+                            <!--<span class="badge badge-light">{{post.total_buy}}</span>-->
+                            <!--</a>-->
+                            <!--<p class="fa fa-credit-card" style="color:#8942a8"> {{post.total_buy}}</p>-->
                         </div>
                     </div>
                 </div>
@@ -292,12 +329,13 @@ color:black
             <div class="col-md-4 text-center">
                 <div class="container">
                     <p></p>
-                    <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+                    <a class="btn btn-outline-light"
+                       style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
                        href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Explore more...</a>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </div>
 {% endblock content %}
 

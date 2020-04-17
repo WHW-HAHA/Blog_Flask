@@ -16,6 +16,7 @@ from Webapp.models import Post, User, Category
 from sqlalchemy import and_, or_
 from flask_login import current_user
 from Webapp.extensions import db
+from datetime import datetime, timedelta
 
 webapp_bp = Blueprint('webapp', __name__)
 
@@ -177,12 +178,35 @@ def search():
                 Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
                 Post.content.like('%' + keyword + '%') if keyword is not None else ''))
             post = post_found.order_by(Post.date_posted.desc()).paginate(page,per_page=10)
-
             # highlight the keyword in result page
             if post_found.all():
+                flash('We had found these for you!')
                 return render_template('search_found.html', title = 'results of search', posts = post, keyword = keyword)
             else:
                 return render_template('search_nofound.html', title = 'no results have been found', keyword = keyword)
 
+@webapp_bp.route("/get_temporary_vip")
+def one_day_VIP():
+    if current_user.vip_try_out:
+        current_user.membership_date = datetime.now()
+        expire_date = current_user.membership_date + timedelta(days=1)
+        current_user.vip_try_out = 0
+        flash("Enjoy your exploration, your temporary VIP will expire in one day.")
+        return redirect(url_for('webapp.VIP_check'))
+        # here should redirect to the VIP content page
+    else:
+        flash("You already used this free VIP service, please enroll as a member!", "warning")
+        return render_template('price.html')
 
+@webapp_bp.route("/VIP")
+def VIP_check():
+    if current_user.is_authenticated:
+        if current_user.membership:
+            return render_template('vip_entrance.html')
+        else:
+            flash('You are currently not a VIP. Get your temporary VIP here!','success')
+            return render_template('temporary_vip.html')
+    else:
+        flash("You haven't login yet, please login first", "warning")
+        return redirect(url_for("user.login"))
 

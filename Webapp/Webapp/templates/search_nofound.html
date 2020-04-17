@@ -20,7 +20,7 @@
                 for (var i = 0 ; i < obj.arr.length ; i ++) {
                     // 全局匹配 替换
                     var reg = new RegExp(obj.arr[i],'g');
-                    obj.html = obj.html.replace(reg,"<span style='color:#00CCBC'>"+obj.arr[i]+"</span>");
+                    obj.html = obj.html.replace(reg,"<span style='background-color:#00CCBC; border-radius:5px'>"+obj.arr[i]+"</span>");
                 }
                 document.getElementById(obj.id).innerHTML = obj.html;
                 console.log(obj.html)
