@@ -19,7 +19,7 @@ post_bp = Blueprint('post', __name__)
 @post_bp.route("/post/<post_id>") # post_id 在这个route函数被调用时传入
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    picture_list = post.normal_picture_list
+    picture_list = post.picture_list
     picture_list = picture_list.split('\\')
     print(picture_list)
 

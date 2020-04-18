@@ -31,13 +31,18 @@ fake = Faker()
 
 def fake_post(count = 50):
     allInpuCSVs_list = glob.glob(r'*.csv')
+    print(allInpuCSVs_list)
+
     for csv in allInpuCSVs_list:
+        print(csv)
         try:
             tempDF = pd.read_csv(csv, delimiter=',')
             if tempDF.shape[1] == 1:
                 tempDF = pd.read_csv(csv, delimiter=';')
+            # print(tempDF)
         except:
             tempDF = pd.read_csv(csv, delimiter=';')
+            # print(tempDF)
 
         post_id = tempDF['id'].dropna()[0]
         post_category = tempDF['category_en'].dropna()
@@ -45,40 +50,36 @@ def fake_post(count = 50):
         post_title = tempDF['title_en'].dropna()[0]
         post_subtitle = tempDF['subtitle_en'].dropna()[0]
         post_content = tempDF['content_en'].dropna()[0]
+        post_source = tempDF['source'].dropna()[0]
+        post_classification = tempDF['classification'].dropna()[0]
         post_avater = tempDF['avater'].dropna()
         post_normal = tempDF['normal'].dropna()
-        post_vip1 = tempDF['vip1'].dropna()
-        post_vip2 = tempDF['vip2'].dropna()
+        print(post_normal)
         avater_list = []
         normal_list = ''
-        vip1_list = ''
-        vip2_list = ''
-
         for url in post_avater:
             p1 = re.compile(r'[(](.*?)[)]', re.S)
             avater_list.append(re.findall(p1, url)[0])
         for url in post_normal:
-            p1 = re.compile(r'[(](.*?)[)]', re.S)
-            normal_list = normal_list + (re.findall(p1, url)[0]) + '\\'
-        for url in post_vip1:
-            p1 = re.compile(r'[(](.*?)[)]', re.S)
-            vip1_list = vip1_list + (re.findall(p1, url)[0]) + '\\'
-        for url in post_vip2:
-            p1 = re.compile(r'[(](.*?)[)]', re.S)
-            vip2_list = vip2_list + (re.findall(p1, url)[0]) + '\\'
+            try:
+                p1 = re.compile(r'[(](.*?)[)]', re.S)
+                normal_list = normal_list + (re.findall(p1, url)[0]) + '\\'
+            except:
+                pass
 
-    for i in range(count):
-        post = Post( title = fake.sentence(),
-                     subtitle = fake.sentence(),
-                     content = fake.text(500),
-                     date_posted = fake.date_of_birth(),
-                     price = fake.random_int(0, 100),
-                     avater = random.choice(avater_list),
-                     normal_picture_list = normal_list,
-                     vip1_picture_list = vip1_list,
-                     vip2_picture_list = vip2_list,
-                     )
-        db.session.add(post)
+        for i in range(count):
+            post = Post( title = fake.text(20),
+                         subtitle = fake.sentence(),
+                         content = fake.text(500),
+                         date_posted = fake.date_of_birth(),
+                         price = fake.random_int(0, 100),
+                         avater = random.choice(avater_list),
+                         picture_list = normal_list,
+                         classification = post_classification,
+                         source= post_source,
+                         )
+            db.session.add(post)
+    db.session.commit()
 
 def fake_admin():
     admin = Admin(
@@ -94,12 +95,21 @@ def fake_admin():
     db.session.commit()
 
 def fake_user(count = 50):
-    membership = ['none', 'week', 'month', 'year']
     for i in range(count):
+        membership = random.choice(['none', 'week', 'month', 'year'])
+        if membership == 'none':
+            vip1 = 'no'
+            vip2 = 'no'
+        else:
+            vip1 = 'yes'
+            vip2 = random.choice(['yes', 'no'])
+
         user = User(username = fake.name(),
                     email = fake.email(),
                     password = 'Whw8409040',
-                    membership = random.choice(membership)
+                    membership = membership,
+                    vip1 = vip1,
+                    vip2 = vip2,
                     )
 
         for j in range(random.randint(1, 5)):
@@ -126,7 +136,7 @@ def fake_category():
                               # admin = Admin.query.get(random.randint(1, 2))
                               )
         posts = Post.query.all()
-        for j in Random.randint(50, size = 10):
+        for j in Random.randint(150, size=10):
             post = posts[j]
             category.posts.append(post)
         db.session.add(category)

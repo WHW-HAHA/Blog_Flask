@@ -185,23 +185,39 @@ def search():
             else:
                 return render_template('search_nofound.html', title = 'no results have been found', keyword = keyword)
 
-@webapp_bp.route("/get_temporary_vip")
-def one_day_VIP():
-    if current_user.vip_try_out:
+@webapp_bp.route("/get_temporary_vip1")
+def three_days_VIP1():
+    if current_user.vip1_try_out == 'yes':
+        current_user.membership_date = datetime.now()
+        expire_date = current_user.membership_date + timedelta(days=3)
+        current_user.vip1_try_out = 'no'
+        flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
+        return redirect(url_for('webapp.VIP_check'))
+    else:
+        return render_template('create_share_link_vip1.html')
+
+@webapp_bp.route("/get_temporary_vip2")
+def one_day_VIP2():
+    if current_user.vip2_try_out == 'yes':
         current_user.membership_date = datetime.now()
         expire_date = current_user.membership_date + timedelta(days=1)
-        current_user.vip_try_out = 0
-        flash("Enjoy your exploration, your temporary VIP will expire in one day.")
+        current_user.vip2_try_out = 'no'
+        flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
         return redirect(url_for('webapp.VIP_check'))
-        # here should redirect to the VIP content page
     else:
-        return render_template('create_share_link.html')
+        return render_template('create_share_link_vip2.html')
+
 
 @webapp_bp.route("/VIP")
 def VIP_check():
     if current_user.is_authenticated:
-        if current_user.membership:
-            return render_template('vip_entrance.html')
+        if current_user.membership != 'none':
+            if current_user.vip1 == 'yes':
+                if current_user.vip2 =='yes':
+                    flash('You are VIP2 user, we have unlocked VIP2 contents for you!', 'success')
+                else:
+                    flash('You are VIP1 user, we have unlocked VIP1 contents for you!', 'success')
+            return redirect(url_for('webapp.welcome'))
         else:
             flash('You are currently not a VIP. Get your temporary VIP here!','success')
             return render_template('temporary_vip.html')

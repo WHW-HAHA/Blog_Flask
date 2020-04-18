@@ -87,6 +87,11 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String, nullable=False, default='default profile.jpg')
     membership = db.Column(db.String, nullable = False, default='none') # False or True
     membership_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    vip1 = db.Column(db.String, nullable = False, default='none')
+    vip1_try_out = db.Column(db.String, nullable = False, default = 'yes')
+    vip2 = db.Column(db.String, nullable = False, default='none')
+    vip2_try_out = db.Column(db.String, nullable = False, default = 'yes')
+    invitation_code = db.Column(db.String(12), nullable = True)
     # vip_try_out = db.Column(db.Integer, default = 1)
     deals = db.relationship('Deal', backref = 'by')
 
@@ -102,8 +107,6 @@ class User(db.Model, UserMixin):
         except:
             return None
         return User.query.get(user_id)
-
-
 
 class Deal(db.Model):
     # 1 user to multi deals
@@ -135,9 +138,8 @@ class Post(db.Model):
     image_file = db.Column(db.String, nullable = False, default = 'LiyuanLing.png')
     source = db.Column(db.String, nullable = True, default= 'ins')
     avater = db.Column(db.String, nullable = True)
-    normal_picture_list =db.Column(db.String, nullable = True)
-    vip1_picture_list = db.Column(db.String, nullable = True)
-    vip2_picture_list = db.Column(db.String, nullable = True)
+    picture_list =db.Column(db.String, nullable = True)
+    classification = db.Column(db.String, nullable = False, default = 'vip2')
     #relationships
     deals = db.relationship('Deal', backref = 'what')
     # category_id = db.relationship("Category", secondary= post_category_collections, backref = "posts", lazy = 'dynamic')
