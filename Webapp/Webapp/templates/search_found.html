@@ -1,54 +1,279 @@
 {% extends "layout.html" %}
 {% block content %}
+<style>
+
+.white-text{
+color:white}
+
+.internal-text{
+color: #8942a8
+}
+
+.add_favourite{
+color: #8942a8
+}
+
+.post-link{
+color:#8942a8;
+text-decoration: none;
+font-size: large;
+}
+
+.post-link:hover{
+color: #bd382d;}
+
+.btn-secondary{
+    border-radius: 10px;
+    border:0px;
+    font-weight:bold;
+    font-size:large;
+    background-color:rgba(0,0,0,0.2);
+}
+
+.btn-secondary:hover{
+    background-color:rgba(0,0,0,0.2);
+}
+
+.btn-secondary:onclick{
+    background-color:rgba(0,0,0,0.2);
+}
+
+
+.dropdown-item{
+    font-weight:bold;
+    font-size:large;
+    color:#bd382d;
+    margin:0px
+}
+
+.badge-light{
+color:#bd382d;
+background-color: rgba(0,0,0,0);
+}
+
+.mask{
+    position: absolute;
+    /*position: relative;*/
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.2);
+    opacity: 0.8;
+    border-radius: 3px;
+    <!--filter:alpha(opacity=60);-->
+    <!-- -moz-opacity:0.6;-->
+    }
+
+.toumingzi{
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    color: white;
+}
+
+</style>
+
 
 <h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">We have found these interesting
     contents about "{{keyword}}" for you.</h2>
 <HR color="white">
 <div class="container" id="container">
-    {% for post in posts.items %}
-    <article class="media content-section" style="">
-        <div class="media-body">
-            <div class="row">
-                <div class="col-md-1.5">
-                    <img class=" article-img" src="{{url_for('static', filename='post_pics/' + post.image_file) }}">
-                </div>
-                <div class="col">
-                    <h2><a class="internal-text" href="{{url_for('post.post', post_id=post.id)}}">{{post.title }}</a>
-                    </h2>
-                    <h5 class="internal-text">{{post.subtitle}}</h5>
+    <div class="row">
+        {%for post in posts.items%}
+        {% if post.classification == 'normal'%}
+        <div class="col-md-4" id="post_content_section{{post.id}}">
+            <div class="card mb-4 box-shado_file">
+                <a href="#"><img class="card-img-top"
+                                 src="{{post.avater}}"
+                                 alt="Card image cap"></a>
+                <div class="card-body" style="">
+                    <div class="post-title">
+                        <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
+                                style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                        <p></p>
+                    </div>
+                    <div>
+                        <p class="internal-text"><span
+                                style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                        </p>
+                        <p class="internal-text"><span
+                                style="position: relative; bottom: 0; left: 0;">{{post.content}}</span>
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p>
+                            <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                            <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                        </p>
+                        <p>
+                            <span><img src="../../static/available.svg" style="width:60%"></span>
+                            <span class="badge badge-light"></span>
+                        </p>
+
+                        <p>
+                            <a type="button" class="btn btn-outline-light" href="#">
+                                <span class="fa fa-heart" style="color:#8942a8" post_title="{{post.title}}"
+                                      post_id="{{post.id}}">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
-
-            <div class="article-metadata">
-                <small class="internal-text">{{post.date_posted.strftime('%Y-%m-%d') }}</small>
-                {% for category in post.categories%}
-                <div class="col-md-1.5">
-                    <a href="{{url_for('webapp.go_to_category', name='category.name')}}"><p><span
-                            class="badge badge-danger">{{category.name}}</span></p></a>
-                </div>
-                {% endfor%}
-            </div>
-
-            <p class="internal-text">{{post.content}}</p>
         </div>
-    </article>
-    {% endfor %}
+        {%endif%}
 
-</div>
+        {% if post.classification == 'vip1'%}
+        <div class="col-md-4" id="post_content_section{{post.id}}">
+            <div class="card mb-4 box-shado_file">
+                {% if current_user.vip1 == 'yes'%}
+                <a href="#"><img class="card-img-top"
+                                 src="{{post.avater}}"
+                                 alt="Card image cap"></a>
+                <div class="card-body">
+                    <div class="post-title">
+                        <a class=" post-link"
+                           href="{{url_for('post.post', post_id=post.id)}}"><span
+                                style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                        <p></p>
+                    </div>
 
-{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-{% if page_num %}
-{% if posts.page == page_num %}
-<a class="btn btn-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
-{% else %}
-<a class="btn btn-outline-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
-{% endif %}
-{% else %}
-...
-{% endif %}
-{% endfor %}
+                    {% else %}
+                    <a href="#"><img class="card-img-top"
+                                     src="{{post.avater}}"
+                                     alt="Card image cap"></a>
+                    <span class="mask"></span>
+                    <div class="toumingzi">
+                        <h1 class="fa fa-lock white-text"></h1>
+                        <h4 class="white-text">Only available for VIP1</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="post-title">
+                            <h2 class=" post-link"><span
+                                    style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span>
+                            </h2>
+                            <p></p>
+                        </div>
+                        {% endif %}
+                        <div>
+                            <p class="internal-text"><span
+                                    style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            </p>
+                            <p class="internal-text"><span
+                                    style="position: relative; bottom: 0; left: 0;">{{post.content}}</span>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p>
+                                <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                            </p>
+                            <p>
+                                <span><img src="../../static/VIP-01.svg" style="width:60%"></span>
+                                <span class="badge badge-light"></span>
+                            </p>
+                            <p>
+                                <a type="button" class="btn btn-outline-light" href="#">
+                                    <span class="fa fa-heart" style="color:#8942a8" post_title="{{post.title}}"
+                                          post_id="{{post.id}}">  </span>
+                                    <span class="badge badge-light">{{post.total_like}}</span>
+                                </a>
+                            </p>
+                            <small></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
 
-<script type="text/javascript">
+            {% if post.classification == 'vip2'%}
+            <div class="col-md-4" id="post_content_section{{post.id}}">
+                <div class="card mb-4 box-shado_file">
+                    {% if current_user.vip2 == 'yes'%}
+                    <a href="#"><img class="card-img-top"
+                                     src="{{post.avater}}"
+                                     alt="Card image cap"></a>
+
+
+                    <div class="card-body">
+                        <div class="post-title">
+                            <a class=" post-link"
+                               href="{{url_for('post.post', post_id=post.id)}}"><span
+                                    style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                            <p></p>
+                        </div>
+
+                        {% else %}
+                        <a href="#"><img class="card-img-top"
+                                         src="{{post.avater}}"
+                                         alt="Card image cap"></a>
+                        <span class="mask"></span>
+                        <div class="toumingzi">
+                            <h1 class="fa fa-lock white-text"></h1>
+                            <h4 class="white-text">Only available for VIP2</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="post-title">
+                                <h2 class=" post-link"><span
+                                        style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span>
+                                </h2>
+                                <p></p>
+                            </div>
+                            {% endif %}
+
+                            <div>
+                                <p class="internal-text"><span
+                                        style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                                </p>
+                                <p class="internal-text"><span
+                                        style="position: relative; bottom: 0; left: 0;">{{post.content}}</span>
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p>
+                                    <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                    <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                                </p>
+
+                                <p type="button" class="btn">
+                                    <span><img src="../../static/VIP-02.svg" style="width:60%"></span>
+                                    <span class="badge badge-light"></span>
+                                </p>
+                                <p>
+                                    <a type="button" class="btn btn-outline-light" href="#">
+                                        <span class="fa fa-heart" style="color:#8942a8" post_title="{{post.title}}"
+                                              post_id="{{post.id}}">  </span>
+                                        <span class="badge badge-light">{{post.total_like}}</span>
+                                    </a>
+                                </p>
+                                <small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {%endfor%}
+            </div>
+        </div>
+
+
+        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+        {% if posts.page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('webapp.home', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+
+        <script type="text/javascript">
         var Highlight = {
             arr : [],
             init : function (ops){
@@ -69,6 +294,12 @@
                 console.log(obj.html)
             }
         }
+        function titleCase(str) {
+            newStr = str.slice(0,1).toUpperCase() +str.slice(1).toLowerCase();
+                return newStr;
+            }
+
+
         window.onload = function (){
             // 使用方法
             // id 必须
@@ -76,12 +307,16 @@
             keyword = document.getElementById('header').getAttribute('keyword')
             console.log(keyword)
             lowercase_keyword = keyword.toLowerCase()
-            Highlight.init({id:"container",arr:[keyword, lowercase_keyword]});
-            Highlight.init({id:"header",arr:[keyword, lowercase_keyword]});
+            uppercase_keyword = keyword.toUpperCase()
+            title_keyword = titleCase(lowercase_keyword)
+            Highlight.init({id:"container",arr:[keyword, lowercase_keyword, uppercase_keyword, title_keyword]});
+            Highlight.init({id:"header",arr:[keyword, lowercase_keyword, uppercase_keyword, title_keyword]});
         }
 
 
 
-</script>
-{% endblock content %}
+
+
+        </script>
+        {% endblock content %}
 

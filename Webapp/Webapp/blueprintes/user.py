@@ -56,7 +56,8 @@ def register():
         return redirect(url_for('user.login'))
     return render_template('register.html', title = 'Register', form = form)
 
-@user_bp.route('/get_share_link', methods=['POST'])
+
+@user_bp.route('/get_share_code', methods=['POST'])
 def get_share_link():
     if current_user.is_authenticated:
         if current_user.invitation_code:
@@ -73,7 +74,6 @@ def get_share_link():
         flash("You haven't login yet, please login first!", 'warning')
         return redirect('user.login')
 
-
 def generate_verification_code():
     code_list = []
     for i in range(10): # 0-9数字
@@ -84,8 +84,8 @@ def generate_verification_code():
         code_list.append(chr(i))
 
     myslice = random.sample(code_list, 12)  # 从list中随机获取12个元素，作为一个片断返回
-    verification_code = ''.join(myslice) # list to string
-    return verification_code
+    share_code = ''.join(myslice) # list to string
+    return share_code
 
 
 @user_bp.route('/login', methods = ['GET', 'POST'])
