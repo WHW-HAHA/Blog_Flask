@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="icon" href="../../static/Icon.ico">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="../../static/Icon.ico">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="{{ url_for('static', filename='customized_css/main.css') }}" charset="utf-8">
-<link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet"/>
-{% if title %}
-<title>webapp- {{ title }}</title>
-{% else %}
-<title>webapp</title>
-{% endif %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='customized_css/main.css') }}" charset="utf-8">
+    <link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet"/>
+    {% if title %}
+    <title>webapp- {{ title }}</title>
+    {% else %}
+    <title>webapp</title>
+    {% endif %}
 
-<style>
+    <style>
 .btn-outline-light{
 border-radius: 10px;
 font-size: large;
@@ -41,7 +41,8 @@ color: #8942a8
 }
 
 
-</style>
+
+    </style>
 
 </head>
 <body style="background: linear-gradient(to left, #8942a8, #bd382d);">
@@ -71,8 +72,9 @@ color: #8942a8
 
                 </div>
                 <div class="navbar-nav" style="position: absol; left: 45%;">
-                     <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Type to search..."
+                               aria-label="Search"
                                name="keyword" style="border-radius:10px;">
                     </form>
                 </div>
@@ -80,9 +82,9 @@ color: #8942a8
                 <div class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <!--<form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">-->
-                        <!--<input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"-->
-                               <!--name="keyword" style="border-radius: 10px">-->
-                        <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Search</button>-->
+                    <!--<input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"-->
+                    <!--name="keyword" style="border-radius: 10px">-->
+                    <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Search</button>-->
                     <!--</form>-->
                     <a class="btn btn-outline-light text-left" href="{{ url_for('user.account') }}">Account</a>
                     <a class="btn btn-outline-light text-left" href="{{ url_for('user.logout') }}">Logout</a>
@@ -100,12 +102,15 @@ color: #8942a8
     <a class="btn btn-outline-light" id="ToTopButton" href="#" style="position:fixed; z-index: 99998;
     right:15%; bottom: 10%; background-color:rgba(0,0,0,0.2)">Back to top</a>
     <div></div>
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-    {% endfor %}
+        {% for message in get_flashed_messages() %}
+       
+    <div class="alert alert-warning">
+               
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+           
+    </div>
+        {% endfor %}
 
     <div class="row">
         <div class="col-md-12">
@@ -113,7 +118,9 @@ color: #8942a8
         </div>
         <div class="col-md-12"> <!-- give 8/12 columns for main field -->
             {% block content %}{% endblock %} <!-- where replace content with new content at main field-->
-            <HR color="white">
+            <div class="border-top pt-3">
+                <p class="text text-center">&copy; 2019-2020</p>
+            </div>
         </div>
     </div>
 </main>
@@ -121,8 +128,12 @@ color: #8942a8
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="http://code.jquery.com/jquery.js"></script> <!--This jquery includes ajax-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
