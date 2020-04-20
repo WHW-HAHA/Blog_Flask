@@ -198,7 +198,7 @@ def account_update():
             posts = Post.query.order_by(Post.date_posted.desc()).all()[:10]
             message = ''
 
-    return render_template('content_section.html', posts = posts, message = message, category = Category.query.get(1))
+    return render_template('account_content_section.html', posts = posts, message = message, category = Category.query.get(1))
 
 
 @user_bp.route('/user/edit_profile', methods = ['GET', 'POST'])
