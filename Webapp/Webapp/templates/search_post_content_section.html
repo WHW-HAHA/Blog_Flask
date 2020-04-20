@@ -3,12 +3,14 @@
                      src="{{post.avater}}"
                      alt="Card image cap"></a>
     <div class="card-body" style="">
-        <div class="post-title">
+        <div>
             <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
                     style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
         </div>
-        <div class="post-subtitle">
+        <div>
             <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+            </p>
+            <p class="internal-text"><span style="position: relative; bottom: 0; left: 0;">{{post.content}}</span>
             </p>
         </div>
         <div class="d-flex justify-content-between align-items-center">
@@ -30,8 +32,7 @@
             </p>
 
             <p>
-                <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
-                                              category="{{category.name}}" post_id="{{post.id}}">
+                <button class="btn btn-outline-light aheart" post_title="{{post.title}}" post_id="{{post.id}}">
                                         <span class="fa fa-heart" style="color:#8942a8"> </span>
                     <span class="badge badge-light">{{post.total_like}}</span>
                 </button>

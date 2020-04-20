@@ -81,6 +81,24 @@ def sort_content_TheLatest(categoryName):
 
     return render_template('category_content_section.html', posts = posts, category = Category.query.filter_by(name = categoryName) )
 
+@webapp_bp.route('/search/sorted', methods = ['POST'])
+def sort_content_search():
+    sort_by = request.get_json()['by']
+    keyword = request.get_json()['keyword']
+
+    post_found = Post.query.filter(or_(
+        Post.title.like('%' + keyword + '%') if keyword is not None else '',
+        Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
+        Post.content.like('%' + keyword + '%') if keyword is not None else ''))
+    posts = post_found.all()
+
+    if sort_by == 'popularity':
+        posts = bubbleSort_by_totallike(list(posts))
+    if sort_by == 'time':
+        posts = bubbleSort_by_time(list(posts))
+    return render_template('search_content_section.html', posts = posts)
+
+
 @webapp_bp.route('/gotocategory/<categoryName>/add_favourite', methods = ['POST'])
 def add_favourite_content_page(categoryName):
     post_title = request.get_json()['post_title']
@@ -93,19 +111,26 @@ def add_favourite_content_page(categoryName):
     category = Category.query.filter_by(name = categoryName).first()
     if current_user.is_authenticated:
         if post in current_user.like:
-            current_user.like.remove(post)
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.remove(post)
+            print(len(post.likeby))
+            db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-
+            print(len(post.likeby))
         else:
-            current_user.like.append(post)
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.append(post)
+            print(len(post.likeby))
+            db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
+            print(len(post.likeby))
 
         post = Post.query.filter_by(title=post_title).first()
         return render_template('post_content_section.html', post = post, category=category)
     else:
-        flash('You haven login yet, please login or register','success')
+        flash('You have not login yet, please login or register','success')
         return render_template('post_content_section.html', post = post, category=category)
 
 @webapp_bp.route('/search/add_favourite', methods = ['POST'])
@@ -114,20 +139,27 @@ def add_favourite_search_page():
     post = Post.query.filter_by(title = post_title).first()
     if current_user.is_authenticated:
         if post in current_user.like:
-            current_user.like.remove(post)
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.remove(post)
+            print(len(post.likeby))
+            db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-
+            print(len(post.likeby))
         else:
-            current_user.like.append(post)
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.append(post)
+            print(len(post.likeby))
+            db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
+            print(len(post.likeby))
 
         post = Post.query.filter_by(title=post_title).first()
-        return render_template('post_content_section.html', post = post)
+        return render_template('search_post_content_section.html', post = post,)
     else:
         flash('You haven login yet, please login or register','success')
-        return render_template('post_content_section.html', post = post)
+        return render_template('search_post_content_section.html', post = post,)
 
 @webapp_bp.route("/home")
 def home():
@@ -145,9 +177,6 @@ def home():
     categories = Category.query.all()
     return render_template('home.html', posts=posts, categories = categories)
 
-@webapp_bp.route("/about")
-def about():
-    return render_template('test.html', title='About')
 
 
 @webapp_bp.route("/category")
@@ -159,7 +188,6 @@ def show_category():
     return render_template('category_content.html', posts = posts, category_name = 'The latest')
 
 
-
 @webapp_bp.route("/search", methods = ['POST'])
 def search():
     if request.method == 'POST':
@@ -167,18 +195,13 @@ def search():
         ## search in user is no need
         keyword = request.form.get('keyword')
         if keyword =="":
-        # print('Keyword is {}'.format(keyword))
-        # user_found = User.query.filter(
-        #     User.username.like('%' + keyword + '%') if keyword is not None else '',).all()
-        # search in posts
             return render_template('search_nofound.html', title='no results have been found', keyword = keyword )
         else:
-            page = request.args.get('page', 1, type=int)
             post_found = Post.query.filter(or_(
                 Post.title.like('%' + keyword + '%') if keyword is not None else '',
                 Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
                 Post.content.like('%' + keyword + '%') if keyword is not None else ''))
-            post = post_found.order_by(Post.date_posted.desc()).paginate(page,per_page=10)
+            post = post_found.order_by(Post.date_posted.desc()).all()
             # highlight the keyword in result page
             if post_found.all():
                 flash('We had found these for you!')
@@ -238,4 +261,8 @@ def VIP_check():
 
 @webapp_bp.route("/buy_vip")
 def buy_vip():
+    return render_template('price.html')
+
+@webapp_bp.route("/about")
+def about():
     return render_template('price.html')

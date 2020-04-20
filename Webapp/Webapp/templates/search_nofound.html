@@ -1,9 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<style>
+.btn-outline-light{
+border-radius: 10px;
+font-size: large;
+font-weight: bold;
+}
+
+.btn-outline-light:hover{
+color:#00CCBC;
+background-color:rgba(0,0,0,0.2);
+-webkit-transform: translateY(-3px);
+-ms-transform: translateY(-3px);
+transform: translateY(-3px);
+-webkit-box-shadow: 0 0 6px #999;
+box-shadow: 0 0 6px #999;
+-webkit-transition: all .5s ease-out;
+transition: all .5s ease-out;
+}
+</style>
+
+
 <h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">Sorry, no content about "{{keyword}}" has been found.</h2>
 
-<a href="{{ url_for('webapp.welcome') }}" style="color: white"> Back to home page</a>
+<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.welcome') }}" style="background-color:rgba(0,0,0,0.2)">Back to home page</a>
 
 <script type="text/javascript">
         var Highlight = {
