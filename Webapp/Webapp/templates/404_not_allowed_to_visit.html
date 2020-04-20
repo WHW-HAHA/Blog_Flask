@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1 class="white-text">You are not allowed to visit this page </h1>
+    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.welcome') }}">Back to home page</a>
+{% endblock content %}

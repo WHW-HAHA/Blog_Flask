@@ -78,8 +78,8 @@ def sort_content_TheLatest(categoryName):
     if sort_by == 'time':
         posts_all = Category.query.filter_by(name = categoryName).first().posts
         posts = bubbleSort_by_time(list(posts_all))
-
     return render_template('category_content_section.html', posts = posts, category = Category.query.filter_by(name = categoryName) )
+
 
 @webapp_bp.route('/search/sorted', methods = ['POST'])
 def sort_content_search():
@@ -97,6 +97,34 @@ def sort_content_search():
     if sort_by == 'time':
         posts = bubbleSort_by_time(list(posts))
     return render_template('search_content_section.html', posts = posts)
+
+@webapp_bp.route('/add_favourite', methods = ['POST'])
+def add_favourite_welcome_page():
+    post_title = request.get_json()['post_title']
+    post = Post.query.filter_by(title = post_title).first()
+    if current_user.is_authenticated:
+        if post in current_user.like:
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.remove(post)
+            print(len(post.likeby))
+            db.session.commit()
+            post.total_like = len(post.likeby)
+            db.session.commit()
+            print(len(post.likeby))
+        else:
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.append(post)
+            print(len(post.likeby))
+            db.session.commit()
+            post.total_like = len(post.likeby)
+            db.session.commit()
+            print(len(post.likeby))
+
+        post = Post.query.filter_by(title=post_title).first()
+        return render_template('post_content_section_welcome.html', post = post,)
+    else:
+        flash('You have not login yet, please login or register','success')
+        return render_template('post_content_section_welcome.html', post = post)
 
 
 @webapp_bp.route('/gotocategory/<categoryName>/add_favourite', methods = ['POST'])
