@@ -17,6 +17,7 @@ $(document).ready(function() {
         req.done(function(data) {
             $('#post_content_section' + post_id).fadeOut(100).fadeIn(100);
             $('#post_content_section' + post_id).html(data);
+            $(window.location.href="#popup"+ post_id);
         });
     });
 });

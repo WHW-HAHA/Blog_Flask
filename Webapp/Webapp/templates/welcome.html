@@ -95,14 +95,79 @@ top: 10%;
 }
 
 
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  z-index:99999
+}
 
 
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
 
+.overlay2:target {
+  visibility: hidden;
+  opacity: 0;
+}
 
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 55%;
+  height: 15%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
 
+.popup h2 {
+  margin-top: 0;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.popup .close:hover {
+  color: #06D85F;
+}
+
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
 
 
 </style>
+
+
 <!--top 3 categories-->
 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin:0px">
     <ol class="carousel-indicators">
@@ -206,11 +271,13 @@ top: 10%;
                                 <span class="badge badge-light"></span>
                             </p>
                             <p>
-                                <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
-                                        post_id="{{post.id}}">
-                                    <span class="fa fa-heart" style="color:#8942a8"> </span>
-                                    <span class="badge badge-light">{{post.total_like}}</span>
-                                </button>
+                                <a href="#popup">
+                                    <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
+                                            post_id="{{post.id}}">
+                                        <span class="fa fa-heart" style="color:#8942a8"> </span>
+                                        <span class="badge badge-light">{{post.total_like}}</span>
+                                    </button>
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -622,11 +689,11 @@ top: 10%;
                         <span class="badge badge-light"></span>
                     </p>
                     <p>
-                        <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
-                                post_id="{{post.id}}">
-                            <span class="fa fa-heart" style="color:#8942a8"> </span>
-                            <span class="badge badge-light">{{post.total_like}}</span>
-                        </button>
+                            <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
+                                    post_id="{{post.id}}">
+                                <span class="fa fa-heart" style="color:#8942a8"> </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
+                            </button>
                     </p>
                 </div>
             </div>

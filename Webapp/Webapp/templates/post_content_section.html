@@ -40,4 +40,13 @@
     </div>
 </div>
 
-<h1 class="info-box-middle"> we had dadad </h1>
+<div id="popup{{post.id}}" class="overlay text-center">
+	<div class="popup">
+		<h2 style="color:#00CCBC">{{header}}</h2>
+		<a class="close" href="#popup2">&times;</a>
+		<div class="content internal-text" >
+            <span class="internal-text" style="color:#00CCBC">{{post.title}}</span>
+			{{message}}
+		</div>
+	</div>
+</div>

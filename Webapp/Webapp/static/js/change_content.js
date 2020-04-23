@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.btn-outline-light').click(function() {
+    $('.category').click(function() {
         var category = $(this).attr('id');
         var data = {'category': category}
         console.log(data)

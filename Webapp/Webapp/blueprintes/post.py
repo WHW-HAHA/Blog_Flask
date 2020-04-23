@@ -61,24 +61,23 @@ def add_favourite_post_page(post_id):
         if post in current_user.like:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.remove(post)
-            print(len(post.likeby))
             db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-            print(len(post.likeby))
+            return render_template('post_page_content_section.html', post=post, header='Failed',
+                                   message="You haven't log in yet, please please login or register!")
+
         else:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.append(post)
-            print(len(post.likeby))
             db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-            print(len(post.likeby))
+            return render_template('post_page_content_section.html', post=post, header='Failed',
+                                   message="You haven't log in yet, please please login or register!")
 
-        post = Post.query.filter_by(title=post_title).first()
-        return render_template('post_page_content_section.html', post = post,)
     else:
-        flash('You have not login yet, please login or register','success')
-        return render_template('post_page_content_section.html', post = post,)
+        return render_template('post_page_content_section.html', post = post,header = 'Failed', message = "You haven't log in yet, please please login or register!")
+
 
 

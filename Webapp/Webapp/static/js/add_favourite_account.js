@@ -2,13 +2,11 @@ $(document).ready(function() {
     $(document).on('click', '.aheart', function() {
         var post_title = $(this).attr('post_title')
         var post_id = $(this).attr('post_id')
-        var prime_post_id = $('prime_post').attr('post_id')
-        var data = {'post_title': post_title,
-                    'prime_post_id': prime_post_id}
+        var data = {'post_title': post_title}
         console.log(data)
 
         req = $.ajax({
-            url : + prime_post_id +'/add_favourite',
+            url : 'account/add_favourite',
             type : 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',

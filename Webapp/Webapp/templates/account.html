@@ -172,15 +172,15 @@ background-color: rgba(0,0,0,0);
 <!-- Buttons -->
 <div class="row" style="margin:0px">
     <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light" id="likes"
+        <a href="#" class="btn btn-outline-light category" id="likes"
            style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your favorites</a>
     </div>
     <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light" id="buys"
+        <a href="#" class="btn btn-outline-light category" id="buys"
            style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your buys</a>
     </div>
     <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light" id="similar"
+        <a href="#" class="btn btn-outline-light category" id="similar"
            style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">You may like</a>
     </div>
 </div>
@@ -387,6 +387,7 @@ background-color: rgba(0,0,0,0);
 </div>
 
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/add_favourite_account.js')}}"></script>
 <script src="{{ url_for('static', filename='js/change_content.js')}}"></script>
 
 {% endblock %}

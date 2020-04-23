@@ -200,6 +200,30 @@ def account_update():
 
     return render_template('account_content_section.html', posts = posts, message = message, category = Category.query.get(1))
 
+@user_bp.route('/account/add_favourite', methods = ['POST'])
+def add_favourite_account_page():
+    post_title = request.get_json()['post_title']
+    post = Post.query.filter_by(title = post_title).first()
+    if current_user.is_authenticated:
+        if post in current_user.like:
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.remove(post)
+            db.session.commit()
+            post.total_like = len(post.likeby)
+            db.session.commit()
+            return render_template('post_content_section_welcome.html', post=post, header='Succeed',
+                                   message='have been removed from your favourite list!')
+        else:
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.append(post)
+            db.session.commit()
+            post.total_like = len(post.likeby)
+            db.session.commit()
+            post = Post.query.filter_by(title=post_title).first()
+            return render_template('post_content_section_welcome.html', post=post, header='Succeed',
+                                   message='have been added in your favourite list!')
+    else:
+        return render_template('post_content_section_welcome.html', post = post,header = 'Failed', message = "You haven't log in yet, please please login or register!")
 
 @user_bp.route('/user/edit_profile', methods = ['GET', 'POST'])
 @login_required # the account page only accessible when ...
