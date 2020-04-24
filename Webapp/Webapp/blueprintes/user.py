@@ -57,19 +57,19 @@ def register():
     return render_template('register.html', title = 'Register', form = form)
 
 
-@user_bp.route('/get_share_code', methods=['POST'])
+@user_bp.route('get_temporary_vip1/get_share_code', methods=['POST'])
 def get_share_link():
     if current_user.is_authenticated:
         if current_user.invitation_code:
             invitation_code = current_user.invitation_code
-            flash('You already have a invitation code, you can check your unique invitation code in your account.', 'success')
-            return render_template('post_content_section.html', invitation_code = invitation_code)
+            print(invitation_code)
+            return render_template('invitation_code_section.html', invitation_code = invitation_code)
         else:
             invitation_code = generate_verification_code()
             current_user.invitation_code = invitation_code
             db.session.commit()
-            flash('Here is your invitation code, you can check your unique invitation code in your account.', 'success')
-            return render_template('post_content_section.html', )
+            print(invitation_code)
+            return render_template('invitation_code_section.html', invitation_code = invitation_code)
     else:
         flash("You haven't login yet, please login first!", 'warning')
         return redirect('user.login')

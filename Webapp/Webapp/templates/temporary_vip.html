@@ -1,6 +1,13 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.three_days_VIP1') }}">Get your temporary VIP1 for another 3 days.</a>
-    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.one_day_VIP2') }}">Get your temporary VIP2 for another 1 day</a>
-{% endblock content %}
+<div class="row">
+    <div class="col-md-6">
+    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.three_days_VIP1') }}">Get your temporary VIP1 for another 3 days</a>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.one_day_VIP2') }}">Get your temporary VIP2 for another 1 day</a>
+</div>
+</div>
+<p></p>
+    {% endblock content %}
