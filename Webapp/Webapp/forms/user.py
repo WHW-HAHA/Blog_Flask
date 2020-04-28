@@ -67,7 +67,7 @@ class UpdateProfilePicForm(FlaskForm):
     submit = SubmitField('Change profile picture')
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired])
+    password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
@@ -75,7 +75,7 @@ class ResetPasswordForm(FlaskForm):
 class RequestResetForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    submit = SubmitField('Request Password Reset')
+    submit = SubmitField('Request Reset')
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is None:

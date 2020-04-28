@@ -4,9 +4,6 @@
 .form-check{
 color:white;
 }
-.container{
-width = 50%
-}
 .form-group{
 color: white
 }
@@ -28,13 +25,13 @@ color:white}
 </style>
 
 <body class="text-left">
-<div class="container" style="width:70%">
+<div class="container container-form">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
 
         <fieldset class="form-group">
             <div class="py-5 text-center">
-                <h1 style="color:white">Reset password</h1>
+                <h1 style="color:white">Request Reset</h1>
             </div>
             <div class="form-group">
                 {{ form.email.label(class="form-control-label") }}
@@ -42,7 +39,7 @@ color:white}
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
                     {% for error in form.email.errors %}
-                    <span>{{ error }}</span>
+                    <span style="color:white">{{ error }}</span>
                     {% endfor %}
                 </div>
                 {% else %}
@@ -51,7 +48,7 @@ color:white}
             </div>
         </fieldset>
 
-        <div class="container" style="width:40%">
+        <div class="container container-button">
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
             </div>

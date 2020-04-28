@@ -24,13 +24,10 @@ color:white}
 
 .text{
 color:white}
-
-
 </style>
 
 <body class="text-center">
-<div class="container" style="width: 50%">
-
+<div class="container container-form">
     <form class="form-signin" method="POST">
         {{ form.hidden_tag() }}
         <!-- User name field -->
@@ -95,7 +92,7 @@ color:white}
             </div>
         </fieldset>
         <!-- Submit button field -->
-        <div class="container" style="width:50%">
+        <div class="container container-button">
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
             </div>
