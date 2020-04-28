@@ -14,9 +14,9 @@ import os
 from dotenv import load_dotenv
 
 # claim and use .env or .flaskenv as setting files
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
+#dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+#if os.path.exists(dotenv_path):
+#    load_dotenv(dotenv_path)
 
 from Webapp import create_app
 
