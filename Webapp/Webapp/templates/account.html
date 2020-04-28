@@ -92,8 +92,6 @@ background-color: rgba(0,0,0,0);
     color: white;
 }
 
-
-
 @media screen and(min-width: 768px) and (max-width: 1024px) {
 .container-form{
 width:90%}
@@ -111,121 +109,201 @@ width:90%
 }
 
 
+
+
+
+
+
 </style>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-1 text-right">
-            <a class="mr-2" href="{{ url_for('user.change_profile_pic') }}">
+    <div class="row row-cols-2 align-items-center">
+        <div class="col-6 text-right">
+            <a href="{{ url_for('user.change_profile_pic') }}">
                 <img class="rounded-circle article-img"
                      src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
-                     style="width:30%; height:auto">
+                     style="height:auto; width:20%">
             </a>
         </div>
-
-        <div class="col-md-2 text-left">
+        <div class="col-6 text-left ">
             <h2 class="text">{{ current_user.username }}</h2>
-            <div class="row">
-                <div class="col-md-2 text-center">
-                    <a href=""><img src="../../static/pure_white_heart.svg" style="width: 30%">
-                        <p class="text">{{total_likes}} favourite</p></a>
-                </div>
+            <p class="text">{{ current_user.email }}</p>
+        </div>
+    </div>
+    <br/>
+    <br/>
 
-                <!--<div class="col-md-2 text-center">-->
-                    <!--<a href=""><img src="../../static/payment.svg" style="width: 30%">-->
-                        <!--<p class="text">{{total_buys}} payments</p></a>-->
-                <!--</div>-->
+    <div class="row row-cols-4 align-items-center">
+        <div class="col-3 text-center" style="height:40px">
+            <a href=""><img class="icon" src="../../static/pure_white_heart.svg" style="height:100%">
+                <p class="text">{{total_likes}} likes</p></a>
+        </div>
 
-                <div class="col-md-2 text-center">
-                    <img src="../../static/membership.svg" style="width: 30%; ">
-                    <div class="col-md-12 text-center">
-                        <a href=""><p class="text">VIP</p></a>
-                    </div>
-                </div>
+        <div class="col-3 text-center" style="height:40px">
+            <img class="icon" src="../../static/membership.svg" style="height: 100%;">
+            <div class="col-md-12 text-center">
+                <a href=""><p class="text">VIP</p></a>
+            </div>
+        </div>
 
-                <div class="col-md-2 text-center">
-                    <img src="../../static/invitation_code.svg" style="width: 30%; ">
-                    <div class="col-md-12 text-center">
-                        <a href=""><p class="text">Invitation</p></a>
-                    </div>
+        <div class="col-3 text-center" style="height:40px">
+            <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
+            <div class="col-md-12 text-center">
+                <a href=""><p class="text">Invitation</p></a>
+            </div>
+        </div>
+
+        <div class="col-3 text-center" style="height:40px">
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-center" style="height:30px"
+                        data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="true">
+                    <img class="icon" src="../../static/setting.svg" style="height: 180%;">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
+                    <a class="dropdown-item" href="{{ url_for('user.change_profile_pic')}}">Change Avater</a>
+                    <a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-right"
-                                data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="true">
-                            <img src="../../static/setting.svg" style="width: 40%;">
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
-                            <a class="dropdown-item" href="{{ url_for('user.change_profile_pic')}}">Change Avater</a>
-                            <a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
-                        </div>
-                    </div>
-                    <p class="text-center" style="color:white">Edit Profile</p></a>
-                </div>
-            </div>
-
-            <!--Update current picture-->
-            <!--<div class="row">-->
-            <!--<div class="col-md-2 text-left">-->
-            <!--<a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">-->
-            <!--<img src="../../static/account.svg" style="width: 30%">Change Profile Picture</a>-->
-            <!--</div>-->
-            <!--<div class="col-md-2 text-left">-->
-            <!--<a class="internal-link" href="{{ url_for('user.update_profile')}}">-->
-            <!--<img src="../../static/setting.svg" style="width: 30%">Edit Profile</a>-->
-            <!--</div>-->
-            <!--<div class="col-md-2 text-left">-->
-            <!--<a class="internal-link" href="{{ url_for('user.change_password') }}">-->
-            <!--<img src="../../static/password.svg" style="width: 30%">Change Password</a>-->
-            <!--</div>-->
-            <!--</div>-->
+            <p class="text-center" style="color:white">Edit Profile</p>
         </div>
     </div>
 </div>
+<!--Update current picture-->
+<!--<div class="row">-->
+<!--<div class="col-md-2 text-left">-->
+<!--<a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">-->
+<!--<img src="../../static/account.svg" style="width: 30%">Change Profile Picture</a>-->
+<!--</div>-->
+<!--<div class="col-md-2 text-left">-->
+<!--<a class="internal-link" href="{{ url_for('user.update_profile')}}">-->
+<!--<img src="../../static/setting.svg" style="width: 30%">Edit Profile</a>-->
+<!--</div>-->
+<!--<div class="col-md-2 text-left">-->
+<!--<a class="internal-link" href="{{ url_for('user.change_password') }}">-->
+<!--<img src="../../static/password.svg" style="width: 30%">Change Password</a>-->
+<!--</div>-->
+<!--</div>-->
 
-<p></p>
-<!-- Buttons -->
-<div class="row" style="margin:0px">
-    <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light category" id="likes"
-           style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your favorites</a>
+<div class="container">
+    <br/>
+    <br/>
+    <br/>
+    <!-- Buttons -->
+    <div class="row row-cols-2" style="margin:0px">
+        <div class="col-6 text-center">
+            <a href="#" class="btn btn-outline-light category" id="likes"
+               style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your favorites</a>
+        </div>
+        <!--<div class="col-4 text-center">-->
+        <!--<a href="#" class="btn btn-outline-light category" id="buys"-->
+        <!--style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your buys</a>-->
+        <!--</div>-->
+        <div class="col-6 text-center">
+            <a href="#" class="btn btn-outline-light category" id="similar"
+               style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">You may like</a>
+        </div>
     </div>
-    <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light category" id="buys"
-           style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">Your buys</a>
-    </div>
-    <div class="col-md-4 text-center">
-        <a href="#" class="btn btn-outline-light category" id="similar"
-           style="font-size:large;font-weight:bold; background-color: rgba(0,0,0,0.2)">You may like</a>
-    </div>
-</div>
-<HR color="white">
+    <HR color="white">
 
-<div id="content" class="album py-5">
-    <!-- list1 -->
-    <div class="container">
-        <div class="row">
-            <h1> {{message}}</h1>
-            {%for post in deals%}
-            <div class="col-md-4" id="post_content_section{{post.id}}">
-                {% if post.classification == 'normal'%}
-                <div class="card mb-4 box-shado_file">
+    <div id="content" class="album py-5">
+        <!-- list1 -->
+        <div class="container">
+            <div class="row">
+                <h1> {{message}}</h1>
+                {%for post in deals%}
+                <div class="col-md-4" id="post_content_section{{post.id}}">
+                    {% if post.classification == 'normal'%}
+                    <div class="card mb-4 box-shado_file">
+                        <a href="#"><img class="card-img-top"
+                                         src="{{post.avater}}"
+                                         alt="Card image cap"></a>
+                        <div class="card-body" style="">
+                            <div class="post-title">
+                                <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
+                                        style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                            </div>
+                            <div class="post-subtitle">
+                                <p class="internal-text"><span
+                                        style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p>
+                                    <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                    <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                                </p>
+                                <p>
+                                    <span><img src="../../static/available.svg" style="width:60%"></span>
+                                    <span class="badge badge-light"></span>
+                                </p>
+                                <p>
+                                    <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
+                                            post_id="{{post.id}}">
+                                        <span class="fa fa-heart" style="color:#8942a8"> </span>
+                                        <span class="badge badge-light">{{post.total_like}}</span>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {%endif%}
+
+                    {% if post.classification == 'vip1'%}
+                    <div class="card mb-4 box-shado_file">
+                        {% if current_user.vip1 == 'yes'%}
+                        <a href="#"><img class="card-img-top"
+                                         src="{{post.avater}}"
+                                         alt="Card image cap"></a>
+                        <div class="card-body">
+                            <div class="post-title">
+                                <a class=" post-link"
+                                   href="{{url_for('post.post', post_id=post.id)}}"><span
+                                        style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                            </div>
+                            <div class="post-subtitle">
+                                <p><span class="internal-text"
+                                         style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p>
+                                    <span class="fa fa-calendar" style="color:#8942a8">  </span>
+                                    <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
+                                </p>
+                                <p>
+                                    <span><img src="../../static/VIP-01.svg" style="width:60%"></span>
+                                </p>
+                                <p>
+                                    <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
+                                            post_id="{{post.id}}">
+                                        <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                        <span class="badge badge-light">{{post.total_like}}</span>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% else %}
                     <a href="#"><img class="card-img-top"
                                      src="{{post.avater}}"
                                      alt="Card image cap"></a>
-                    <div class="card-body" style="">
+                    <span class="mask"></span>
+                    <div class="toumingzi">
+                        <h1 class="fa fa-lock white-text"></h1>
+                        <h4 class="white-text">Only available for VIP1</h4>
+                    </div>
+                    <div class="card-body">
                         <div class="post-title">
-                            <a class="post-link" href="{{url_for('post.post', post_id=post.id)}}"><span
-                                    style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
+                            <h2 class=" post-unlink"><span
+                                    style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span>
+                            </h2>
                         </div>
                         <div class="post-subtitle">
-                            <p class="internal-text"><span
-                                    style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
+                            <p><span class="internal-text"
+                                     style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
                             </p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
@@ -234,24 +312,22 @@ width:90%
                                 <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
                             </p>
                             <p>
-                                <span><img src="../../static/available.svg" style="width:60%"></span>
-                                <span class="badge badge-light"></span>
+                                <span><img src="../../static/VIP-01.svg" style="width:60%"></span>
                             </p>
                             <p>
-                                <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
-                                        post_id="{{post.id}}">
-                                    <span class="fa fa-heart" style="color:#8942a8"> </span>
-                                    <span class="badge badge-light">{{post.total_like}}</span>
-                                </button>
+                                <span class="fa fa-heart" style="color:#8942a8">  </span>
+                                <span class="badge badge-light">{{post.total_like}}</span>
                             </p>
                         </div>
                     </div>
                 </div>
-                {%endif%}
+                {% endif %}
+                {% endif %}
 
-                {% if post.classification == 'vip1'%}
+
+                {% if post.classification == 'vip2'%}
                 <div class="card mb-4 box-shado_file">
-                    {% if current_user.vip1 == 'yes'%}
+                    {% if current_user.vip2 == 'yes'%}
                     <a href="#"><img class="card-img-top"
                                      src="{{post.avater}}"
                                      alt="Card image cap"></a>
@@ -272,7 +348,7 @@ width:90%
                                 <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
                             </p>
                             <p>
-                                <span><img src="../../static/VIP-01.svg" style="width:60%"></span>
+                                <span><img src="../../static/VIP-02.svg" style="width:60%"></span>
                             </p>
                             <p>
                                 <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
@@ -284,57 +360,21 @@ width:90%
                         </div>
                     </div>
                 </div>
-
                 {% else %}
+
                 <a href="#"><img class="card-img-top"
                                  src="{{post.avater}}"
                                  alt="Card image cap"></a>
                 <span class="mask"></span>
                 <div class="toumingzi">
                     <h1 class="fa fa-lock white-text"></h1>
-                    <h4 class="white-text">Only available for VIP1</h4>
+                    <h4 class="white-text">Only available for VIP2</h4>
                 </div>
                 <div class="card-body">
                     <div class="post-title">
-                        <h2 class=" post-unlink"><span
+                        <h2 class="post-unlink"><span
                                 style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span>
                         </h2>
-                    </div>
-                    <div class="post-subtitle">
-                        <p><span class="internal-text"
-                                 style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
-                        </p>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p>
-                            <span class="fa fa-calendar" style="color:#8942a8">  </span>
-                            <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
-                        </p>
-                        <p>
-                            <span><img src="../../static/VIP-01.svg" style="width:60%"></span>
-                        </p>
-                        <p>
-                            <span class="fa fa-heart" style="color:#8942a8">  </span>
-                            <span class="badge badge-light">{{post.total_like}}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-            {% endif %}
-
-
-            {% if post.classification == 'vip2'%}
-            <div class="card mb-4 box-shado_file">
-                {% if current_user.vip2 == 'yes'%}
-                <a href="#"><img class="card-img-top"
-                                 src="{{post.avater}}"
-                                 alt="Card image cap"></a>
-                <div class="card-body">
-                    <div class="post-title">
-                        <a class=" post-link"
-                           href="{{url_for('post.post', post_id=post.id)}}"><span
-                                style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span></a>
                     </div>
                     <div class="post-subtitle">
                         <p><span class="internal-text"
@@ -350,59 +390,20 @@ width:90%
                             <span><img src="../../static/VIP-02.svg" style="width:60%"></span>
                         </p>
                         <p>
-                            <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
-                                    post_id="{{post.id}}">
-                                <span class="fa fa-heart" style="color:#8942a8">  </span>
-                                <span class="badge badge-light">{{post.total_like}}</span>
-                            </button>
+                            <span class="fa fa-heart" style="color:#8942a8">  </span>
+                            <span class="badge badge-light">{{post.total_like}}</span>
+
                         </p>
                     </div>
                 </div>
             </div>
-            {% else %}
-
-            <a href="#"><img class="card-img-top"
-                             src="{{post.avater}}"
-                             alt="Card image cap"></a>
-            <span class="mask"></span>
-            <div class="toumingzi">
-                <h1 class="fa fa-lock white-text"></h1>
-                <h4 class="white-text">Only available for VIP2</h4>
-            </div>
-            <div class="card-body">
-                <div class="post-title">
-                    <h2 class="post-unlink"><span
-                            style="position: relative; top: 0; left: 0;"><strong>{{post.title}}</strong></span>
-                    </h2>
-                </div>
-                <div class="post-subtitle">
-                    <p><span class="internal-text"
-                             style="position: relative; bottom: 0; left: 0;">{{post.subtitle}}</span>
-                    </p>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                    <p>
-                        <span class="fa fa-calendar" style="color:#8942a8">  </span>
-                        <span class="badge badge-light">{{post.date_posted.strftime('%Y/%m/%d')}}</span>
-                    </p>
-                    <p>
-                        <span><img src="../../static/VIP-02.svg" style="width:60%"></span>
-                    </p>
-                    <p>
-                        <span class="fa fa-heart" style="color:#8942a8">  </span>
-                        <span class="badge badge-light">{{post.total_like}}</span>
-
-                    </p>
-                </div>
-            </div>
+            {% endif %}
+            {% endif %}
         </div>
-        {% endif %}
-        {% endif %}
+        {%endfor%}
+
+
     </div>
-    {%endfor%}
-
-
-</div>
 </div>
 </div>
 
