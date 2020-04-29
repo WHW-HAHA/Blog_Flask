@@ -44,30 +44,11 @@ color:#bd382d
 
 .dropdown-item:hover{
 color:#8942a8
-
-
     .btn-outline-light{
     border-radius: 10px;
     font-size: large;
     font-weight: bold;
 background-color: rgba(0,0,0,0.2)
-}
-
-.btn-outline-light:hover{
-background-color:white;
--webkit-transform: translateY(-3px);
--ms-transform: translateY(-3px);
-transform: translateY(-3px);
--webkit-box-shadow: 0 0 6px #999;
-box-shadow: 0 0 6px #999;
--webkit-transition: all .5s ease-out;
-transition: all .5s ease-out;
-}
-
-
-.badge-light{
-color:#bd382d;
-background-color: rgba(0,0,0,0);
 }
 
 .mask{
@@ -108,57 +89,26 @@ width:90%
 }
 }
 
-
-
-
-
-
-
 </style>
 
 <div class="container">
     <div class="row row-cols-2 align-items-center">
-        <div class="col-6 text-right">
+        <div class="col-6 text-right" style="height:100px">
             <a href="{{ url_for('user.change_profile_pic') }}">
                 <img class="rounded-circle article-img"
                      src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
-                     style="height:auto; width:20%">
+                     style="height:100%; width:auto">
             </a>
         </div>
+
         <div class="col-6 text-left ">
+            <div class="row">
             <h2 class="text">{{ current_user.username }}</h2>
-            <p class="text">{{ current_user.email }}</p>
-        </div>
-    </div>
-    <br/>
-    <br/>
-
-    <div class="row row-cols-4 align-items-center">
-        <div class="col-3 text-center" style="height:40px">
-            <a href=""><img class="icon" src="../../static/pure_white_heart.svg" style="height:100%">
-                <p class="text">{{total_likes}} likes</p></a>
-        </div>
-
-        <div class="col-3 text-center" style="height:40px">
-            <img class="icon" src="../../static/membership.svg" style="height: 100%;">
-            <div class="col-md-12 text-center">
-                <a href=""><p class="text">VIP</p></a>
-            </div>
-        </div>
-
-        <div class="col-3 text-center" style="height:40px">
-            <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
-            <div class="col-md-12 text-center">
-                <a href=""><p class="text">Invitation</p></a>
-            </div>
-        </div>
-
-        <div class="col-3 text-center" style="height:40px">
             <div class="btn-group" role="group">
                 <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-center" style="height:30px"
                         data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="true">
-                    <img class="icon" src="../../static/setting.svg" style="height: 180%;">
+                    <img class="icon" src="../../static/setting.svg" style="height: 120%;">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
@@ -166,7 +116,32 @@ width:90%
                     <a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
                 </div>
             </div>
-            <p class="text-center" style="color:white">Edit Profile</p>
+        </div>
+        </div>
+
+
+    </div>
+    <br/>
+    <br/>
+
+    <div class="row row-cols-3 align-items-center">
+        <div class="col-4 text-center" style="height:40px">
+            <a href=""><img class="icon" src="../../static/pure_white_heart.svg" style="height:100%">
+                <p class="text">{{total_likes}} likes</p></a>
+        </div>
+
+        <div class="col-4 text-center" style="height:40px">
+            <img class="icon" src="../../static/membership.svg" style="height: 100%;">
+            <div class="col-md-12 text-center">
+                <a href=""><p class="text">VIP</p></a>
+            </div>
+        </div>
+
+        <div class="col-4 text-center" style="height:40px">
+            <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
+            <div class="col-md-12 text-center">
+                <a href=""><p class="text">Invitation</p></a>
+            </div>
         </div>
     </div>
 </div>

@@ -35,7 +35,6 @@ def welcome():
     return render_template('welcome.html', category_asia=category2, category_usa=category3, category_cartoon=category4,
                            list1=post_list_1, list2=post_list_2, list3=post_list_3, list4=post_list_4)
 
-
 @webapp_bp.route('/gotocategory/<name>')
 def go_to_category(name):
     if name == 'TheLatest':
@@ -178,21 +177,17 @@ def add_favourite_search_page():
         if post in current_user.like:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.remove(post)
-            print(len(post.likeby))
             db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-            print(len(post.likeby))
             return render_template('search_post_content_section.html', post=post, header='Succeed',
                                    message='have been removed from your favourite list!')
         else:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.append(post)
-            print(len(post.likeby))
             db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-            print(len(post.likeby))
             return render_template('search_post_content_section.html', post=post, header='Succeed',
                                    message='have been removed from your favourite list!')
     else:
@@ -259,7 +254,6 @@ def three_days_VIP1():
         user.membership_date = expire_date
         user.vip1 = 'yes'
         db.session.commit()
-        print('status update')
         flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
         return redirect(url_for('webapp.welcome'))
     else:
@@ -276,7 +270,6 @@ def one_day_VIP2():
         user.membership_date = expire_date
         user.vip2 = 'yes'
         db.session.commit()
-        print('status update')
         flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
         return redirect(url_for('webapp.welcome'))
     else:

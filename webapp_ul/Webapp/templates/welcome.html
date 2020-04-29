@@ -56,6 +56,14 @@ border: 0px;
 height: 470px
 }
 
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 500px;
+}
+
 .carousel-caption{
 padding: 25px;
 background-color: rgba(0,0,0,0.5);
@@ -178,8 +186,9 @@ top: 10%;
     <!--The first slide-->
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img
-                 src="../../static/category_pics/Template_asia.png"
+            <img id="asia_category"
+                 style="height: 100%;"
+                 src="../../static/category_pics/Asia_169.jpg"
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
@@ -192,8 +201,8 @@ top: 10%;
         </div>
         <!--The second slide-->
         <div class="carousel-item">
-            <img
-                 src="../../static/category_pics/Template_asia.png"
+            <img id="usa_category"
+                 src="../../static/category_pics/USA_1111_472.jpg"
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
@@ -206,8 +215,8 @@ top: 10%;
         </div>
         <!--The third slide-->
         <div class="carousel-item">
-            <img
-                 src="../../static/category_pics/Template_asia.png"
+            <img id= "cartoon_category"
+                 src="../../static/category_pics/Cartoon_2100_1080.png"
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
@@ -657,7 +666,6 @@ top: 10%;
 </div>
 <br/>
 
-
 <!--USA-->
 <a id="USA" class="btn btn-outline-light"
    style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
@@ -1083,6 +1091,31 @@ top: 10%;
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="{{ url_for('static', filename='js/add_favourite_welcome.js')}}"></script>
+
+<script>
+$(function(){
+	//根据不同浏览设备，加载不同图片
+	pic_html();
+	function pic_html(){
+
+
+		if($(window).width()<720){
+			$("#asia_category").attr("src","../../static/category_pics/Asia_1080_1800.jpg");
+            $("#usa_category").attr("src","../../static/category_pics/USA_1080_1800.jpg");
+            $("#cartoon_category").attr("src","../../static/category_pics/Cartoon_1080_1800.jpg");
+
+		}else{
+			$("#asia_category").attr("src","../../static/category_pics/Asia_1111_520.jpg");
+            $("#usa_category").attr("src","../../static/category_pics/USA_1111_520.jpg");
+            $("#cartoon_category").attr("src","../../static/category_pics/Cartoon_1111_520.jpg");
+		}
+	}
+	//当调整浏览器窗口的大小时，发生 resize 事件
+	$(window).resize(function(){
+		pic_html();
+	})
+})
+</script>
 {% endblock content %}
 
 <!--side bar-->

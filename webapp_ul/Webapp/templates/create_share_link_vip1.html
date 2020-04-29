@@ -1,11 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
 <a class="btn btn-outline-light text-left" href="{{url_for('webapp.buy_vip')}}">Buy your VIP</a>
-<h3 class="white-text">你喜欢我们的VIP内容吗？</h3>
-<h3 class="white-text">点击下面的的按钮获得推荐码，并让1个新用户使用你的推荐码注册，你将会获得3天额外的免费VIP1体验哦。</h3>
-    <a class="btn btn-outline-light text-left" href="" id="get_share_link" user_id="{{user.id}}">Get your code</a>
+<h4 class="white-text" style="color:white">你喜欢我们的VIP内容吗？</h4>
+<h4 class="white-text" style="color:white">点击下面的的按钮获得推荐码，并让1个新用户使用你的推荐码注册，你将会获得3天额外的免费VIP1体验哦。</h4>
+<a class="btn btn-outline-light text-left" href="" id="get_share_link" user_id="{{user.id}}">Get your invitation code</a>
 
 <p id="share_link">
 
