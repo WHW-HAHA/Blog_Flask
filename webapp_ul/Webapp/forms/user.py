@@ -57,7 +57,7 @@ class UpdateProfileForm(FlaskForm):
             raise ValidationError('The email is already in use, please take another one!')
 
 class InvitationCodeCheckForm(FlaskForm):
-    code = StringField('Invitation code', validators=[DataRequired(), Length(10)])
+    code = StringField('Invitation code', validators=[DataRequired(), Length(8)])
     submit = SubmitField('Submit')
 
     def validate_code(self, code):
@@ -66,9 +66,6 @@ class InvitationCodeCheckForm(FlaskForm):
             user = User.query.filter_by(invitation_code_vip2=code.data).first()
             if not user:
                 raise ValidationError('No user with this code has been found, please check the code!')
-
-
-
 
 class UpdatePasswordForm(FlaskForm):
     old_password = StringField('Old Password', validators=[DataRequired(), Length(min=1, max=12)])

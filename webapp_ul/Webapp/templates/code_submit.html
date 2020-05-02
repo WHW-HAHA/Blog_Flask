@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<style>
+.form-check{
+color:white;
+}
+.form-group{
+color: white
+}
+
+.form-signin{
+color: white
+}
+
+.text-muted{
+color: white
+}
+
+.internal-link{
+color:white}
+
+.text{
+color:white}
+
+</style>
+<div class="container container-form">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+
+        <fieldset class="form-group">
+            <div class="py-5 text-center">
+                <h1 style="color:white">Submit invitation code</h1>
+            </div>
+            <div class="form-group">
+                {{ form.code.label(class="form-control-label") }}
+                {% if form.code.errors %}
+                {{ form.code(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.code.errors %}
+                    <span style="color:white">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.code(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <div class="container container-button">
+            <div class="form-group">
+                {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

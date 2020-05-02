@@ -22,15 +22,14 @@ color:white}
 
 
 <div class="container container-form">
-    <div class="row">
-        <div class="col-md-4 text-right">
+    <div class="row align-items-center">
+        <div class="col-md-4 text-right" style="height:100px">
             <img class="rounded-circle article-img"
                  src="{{ url_for('static', filename='profile_pics/'+current_user.image_file) }}"
-                 style="height:60%; width:auto">
+                 style="height:100%; width:auto">
         </div>
         <div class="col">
             <h2 class="text">{{ current_user.username }}</h2>
-            <p class="text">{{ current_user.email }}</p>
         </div>
     </div>
 

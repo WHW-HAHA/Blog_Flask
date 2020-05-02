@@ -15,22 +15,22 @@ color: white
 color:white}
 .text{
 color:white}
+
 </style>
 
 <div class="container container-form">
     <div class="media">
         <div class="media-body">
-            <div class="row">
-            <div class="col-md-4 text-right">
-            <img class="rounded-circle article-img"
-                 src="{{ url_for('static', filename='profile_pics/'+current_user.image_file) }}"
-                 style="height:60%; width:auto">
-            </div>
-                <div class="col">
-            <h2 class="text">{{ current_user.username }}</h2>
-            <p class="text">{{ current_user.email }}</p>
+            <div class="row align-items-center">
+                <div class="col-md-4 text-right" style="height:100px">
+                    <img class="rounded-circle article-img"
+                         src="{{ url_for('static', filename='profile_pics/'+current_user.image_file) }}"
+                         style="height:100%; width:auto">
                 </div>
-        </div>
+                <div class="col text-left">
+                    <h2 class="text">{{ current_user.username }}</h2>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -81,9 +81,9 @@ color:white}
 
         </fieldset>
         <div class="container container-button">
-        <div class="form-group">
-            {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
-        </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
+            </div>
         </div>
     </form>
 </div>

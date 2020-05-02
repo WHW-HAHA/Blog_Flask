@@ -95,7 +95,7 @@ width:90%
     <div class="row row-cols-2 align-items-center">
         <div class="col-6 text-right" style="height:100px">
             <a href="{{ url_for('user.change_profile_pic') }}">
-                <img class="rounded-circle article-img"
+                <img class="article-img"
                      src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
                      style="height:100%; width:auto">
             </a>
@@ -139,11 +139,12 @@ width:90%
         <div class="col-4 text-center" style="height:40px">
             <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
             <div class="col-md-12 text-center">
-                <a href=""><p class="text">Invitation</p></a>
+                <a href="{{url_for('user.code_submit')}}"><p class="text">Invitation</p></a>
             </div>
         </div>
     </div>
 </div>
+
 <!--Update current picture-->
 <!--<div class="row">-->
 <!--<div class="col-md-2 text-left">-->

@@ -295,14 +295,18 @@ def VIP_check():
         return redirect(url_for("user.login"))
 
 
-
-
-
 @webapp_bp.route("/buy_vip")
 def buy_vip():
     return render_template('price.html')
 
+@webapp_bp.route("/alipay_vip1")
+def alipay_vip1():
+    return render_template('alipay_vip1.html')
 
-@webapp_bp.route("/about")
-def about():
-    return render_template('price.html')
+@webapp_bp.route("alipay_vip1&2")
+def alipay_vip12():
+    return render_template('alipay_vip12.html')
+
+
+
+

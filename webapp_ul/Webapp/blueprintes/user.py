@@ -56,27 +56,27 @@ def register():
         return redirect(url_for('user.login'))
     return render_template('register.html', title = 'Register', form = form)
 
-
-@user_bp.route('/submit_invitation_code')
+@user_bp.route('/submit_invitation_code', methods = ['GET', 'POST'])
 def code_submit():
     form = InvitationCodeCheckForm()
     if form.validate_on_submit():
         code = form.code.data
-        user = User.query.filter_by(invitation_code_vip1=code.data).first()
+        if code == current_user.invitation_code_vip1 or code == current_user.invitation_code_vip2:
+            flash('You can not invite yourself.')
+            return redirect(url_for('user.account'))
+        user = User.query.filter_by(invitation_code_vip1=code).first()
         if user:
-            user.vip1_expire_date + timedelta(days=3)
+            user.vip1_expire_date = user.vip1_expire_date + timedelta(days=3)
             db.session.commit()
             flash('User "{}" has got {}'.format(user.username, '3 days vip1.'))
+            return redirect(url_for('user.account'))
         else:
-            user = User.query.filter_by(invitation_code_vip2=code.data).first()
-            user.vip2_expire_date + timedelta(days=1)
+            user = User.query.filter_by(invitation_code_vip2=code).first()
+            user.vip2_expire_date = user.vip2_expire_date + timedelta(days=1)
             db.session.commit()
             flash('User "{}" has got {}'.format(user.username, '1 day vip2.'))
-        return redirect(url_for('user.account'))
+            return redirect(url_for('user.account'))
     return render_template('code_submit.html', title = 'code-submit', form = form)
-
-
-
 
 
 @user_bp.route('/login', methods = ['GET', 'POST'])
