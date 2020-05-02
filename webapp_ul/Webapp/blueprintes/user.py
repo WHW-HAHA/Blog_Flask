@@ -12,7 +12,7 @@ Naming standard:
 """
 from flask import Blueprint, render_template, redirect, flash, url_for, session, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from Webapp.forms.user import RegistrationForm, LoginForm, UpdateProfileForm, UpdatePasswordForm, UpdateProfilePicForm, RequestResetForm, ResetPasswordForm
+from Webapp.forms.user import RegistrationForm, InvitationCodeCheckForm, LoginForm, UpdateProfileForm, UpdatePasswordForm, UpdateProfilePicForm, RequestResetForm, ResetPasswordForm
 from Webapp.models import User, Deal, Post, Category
 from Webapp import db, bcrypt, mail
 from flask_mail import Message
@@ -57,35 +57,26 @@ def register():
     return render_template('register.html', title = 'Register', form = form)
 
 
-@user_bp.route('get_temporary_vip1/get_share_code', methods=['POST'])
-def get_share_link():
-    if current_user.is_authenticated:
-        if current_user.invitation_code:
-            invitation_code = current_user.invitation_code
-            print(invitation_code)
-            return render_template('invitation_code_section.html', invitation_code = invitation_code)
-        else:
-            invitation_code = generate_verification_code()
-            current_user.invitation_code = invitation_code
+@user_bp.route('/submit_invitation_code')
+def code_submit():
+    form = InvitationCodeCheckForm()
+    if form.validate_on_submit():
+        code = form.code.data
+        user = User.query.filter_by(invitation_code_vip1=code.data).first()
+        if user:
+            user.vip1_expire_date + timedelta(days=3)
             db.session.commit()
-            print(invitation_code)
-            return render_template('invitation_code_section.html', invitation_code = invitation_code)
-    else:
-        flash("You haven't login yet, please login first!", 'warning')
-        return redirect('user.login')
+            flash('User "{}" has got {}'.format(user.username, '3 days vip1.'))
+        else:
+            user = User.query.filter_by(invitation_code_vip2=code.data).first()
+            user.vip2_expire_date + timedelta(days=1)
+            db.session.commit()
+            flash('User "{}" has got {}'.format(user.username, '1 day vip2.'))
+        return redirect(url_for('user.account'))
+    return render_template('code_submit.html', title = 'code-submit', form = form)
 
-def generate_verification_code():
-    code_list = []
-    for i in range(10): # 0-9数字
-        code_list.append(str(i))
-    for i in range(65, 91): # A-Z
-        code_list.append(chr(i))
-    for i in range(97, 123): # a-z
-        code_list.append(chr(i))
 
-    myslice = random.sample(code_list, 12)  # 从list中随机获取12个元素，作为一个片断返回
-    share_code = ''.join(myslice) # list to string
-    return share_code
+
 
 
 @user_bp.route('/login', methods = ['GET', 'POST'])
@@ -318,12 +309,27 @@ def reset_token(token):
         return redirect(url_for('user.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-
 @user_bp.route('/logout', methods = ['GET', 'POST'])
 def logout():
     logout_user()
     flash('You have logged out!', 'success')
     return redirect(url_for('webapp.welcome'))
+
+@user_bp.route('/VIP', methods = ['GET', 'POST'])
+def vip_info():
+    if current_user.vip2 == 'yes':
+        message = 'You are a VIP2 user, your VIP2 service will expire in {}'.format(current_user.vip2_expire_date-datetime.now())
+        flag = 0
+    elif current_user.vip1 == 'yes':
+        message = 'You are a VIP1 user, your VIP1 service will expire in {}'.format(current_user.vip1_expire_date-datetime.now())
+        flag = 0
+    else:
+        message = 'You are not a VIP user.'
+        flag = 1
+    invitation_code_vip1 = current_user.invitation_code_vip1
+    invitation_code_vip2 = current_user.invitation_code_vip2
+    return render_template('account_vip_info.html', flag = flag, user=current_user, message= message, code1=invitation_code_vip1, code2=invitation_code_vip2)
+
 
 @user_bp.route('/weixin-login')
 def weixin_login():

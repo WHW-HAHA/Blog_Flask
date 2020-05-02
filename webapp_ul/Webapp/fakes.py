@@ -110,6 +110,8 @@ def fake_user(count = 50):
                     membership = membership,
                     vip1 = vip1,
                     vip2 = vip2,
+                    invitation_code_vip1 = generate_verification_code(),
+                    invitation_code_vip2 = generate_verification_code()
                     )
 
         for j in range(random.randint(1, 5)):
@@ -118,6 +120,18 @@ def fake_user(count = 50):
                 user.like.append(post)
     db.session.commit()
 
+def generate_verification_code():
+    code_list = []
+    for i in range(10): # 0-9数字
+        code_list.append(str(i))
+    # for i in range(65, 91): # A-Z
+    #     code_list.append(chr(i))
+    # for i in range(97, 123): # a-z
+    #     code_list.append(chr(i))
+
+    myslice = random.sample(code_list, 8)  # 从list中随机获取12个元素，作为一个片断返回
+    share_code = ''.join(myslice) # list to string
+    return share_code
 
 def fake_deal(count = 100):
     for i in range(count):

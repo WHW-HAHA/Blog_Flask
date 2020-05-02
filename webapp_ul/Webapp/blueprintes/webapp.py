@@ -18,6 +18,7 @@ from flask_login import current_user
 from Webapp.extensions import db
 from datetime import datetime, timedelta
 from sqlalchemy.orm import sessionmaker
+import random
 
 webapp_bp = Blueprint('webapp', __name__)
 
@@ -242,39 +243,39 @@ def search():
             else:
                 return render_template('search_nofound.html', title='no results have been found', keyword=keyword)
 
-
 @webapp_bp.route("/get_temporary_vip1")
 def three_days_VIP1():
     if current_user.vip1_try_out == 'yes':
-        current_user.membership_date = datetime.now()
-        expire_date = current_user.membership_date + timedelta(days=3)
-        # update status
+        current_user.vip1_expire_date = datetime.now()
+        expire_date = current_user.vip1_expire_date + timedelta(days=3)
         user = User.query.filter_by(id=current_user.id).first()
         user.vip1_try_out = 'no'
-        user.membership_date = expire_date
+        user.vip1_expire_date = expire_date
         user.vip1 = 'yes'
         db.session.commit()
         flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
         return redirect(url_for('webapp.welcome'))
     else:
-        return render_template('create_share_link_vip1.html', user=current_user)
-
+        invitation_code_vip1 = current_user.invitation_code_vip1
+        invitation_code_vip2 = current_user.invitation_code_vip2
+        return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
 
 @webapp_bp.route("/get_temporary_vip2")
 def one_day_VIP2():
     if current_user.vip2_try_out == 'yes':
-        current_user.membership_date = datetime.now()
-        expire_date = current_user.membership_date + timedelta(days=1)
+        current_user.vip2_expire_date = datetime.now()
+        expire_date = current_user.vip2_expire_date + timedelta(days=1)
         user = User.query.filter_by(id=current_user.id).first()
         user.vip2_try_out = 'no'
-        user.membership_date = expire_date
+        user.vip2_expire_date = expire_date
         user.vip2 = 'yes'
         db.session.commit()
         flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
         return redirect(url_for('webapp.welcome'))
     else:
-        return render_template('create_share_link_vip2.html', user=current_user)
-
+        invitation_code_vip1 = current_user.invitation_code_vip1
+        invitation_code_vip2 = current_user.invitation_code_vip2
+        return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
 
 @webapp_bp.route("/VIP")
 def VIP_check():
@@ -292,6 +293,9 @@ def VIP_check():
     else:
         flash("You haven't login yet, please login first", "warning")
         return redirect(url_for("user.login"))
+
+
+
 
 
 @webapp_bp.route("/buy_vip")

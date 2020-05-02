@@ -89,10 +89,12 @@ class User(db.Model, UserMixin):
     membership_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     vip1 = db.Column(db.String, nullable = False, default='none')
     vip1_try_out = db.Column(db.String, nullable = False, default = 'yes')
+    vip1_expire_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     vip2 = db.Column(db.String, nullable = False, default='none')
     vip2_try_out = db.Column(db.String, nullable = False, default = 'yes')
-    invitation_code = db.Column(db.String(12), nullable = True)
-    # vip_try_out = db.Column(db.Integer, default = 1)
+    vip2_expire_date = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
+    invitation_code_vip1 = db.Column(db.String(8), nullable = True)
+    invitation_code_vip2 = db.Column(db.String(8), nullable = True)
     deals = db.relationship('Deal', backref = 'by')
 
     def get_reset_token(self, expires_sec = 1800):
