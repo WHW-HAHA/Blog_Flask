@@ -31,10 +31,10 @@ color:white}
 
         <fieldset class="form-group">
             <div class="py-5 text-center">
-                <h1 style="color:white">Request Reset</h1>
+                <h1 id="request-reset-title" style="color:white">Request Reset</h1>
             </div>
             <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
+                {{ form.email.label(class="form-control-label email-text") }}
                 {% if form.email.errors %}
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">

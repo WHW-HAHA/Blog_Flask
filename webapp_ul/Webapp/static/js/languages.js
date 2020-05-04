@@ -71,7 +71,7 @@ function translate(tnum){
     $('.password-text').text(trans[24][tnum])
     $('.remember-me').text(trans[25][tnum])
     $('.submitbutton').text(trans[26][tnum])
-    $('.forget-password-text').text(trans[27][tnum])
+    $('.forget-password-text').text(trans[28][tnum])
 //register
     $('#register-title').text(trans[29][tnum])
     $('.username-text').text(trans[30][tnum])
@@ -94,6 +94,26 @@ function translate(tnum){
     $('.old-password').text(trans[43][tnum])
         $('.new-password').text(trans[44][tnum])
             $('.confirm-new-password').text(trans[45][tnum])
+            //request reset
+    $('#request-reset-title').text(trans[46][tnum])
+                //reset token
+    $('#reset-password-title').text(trans[47][tnum])
+    // account vip
+    // code submit
+        $('#code-submit-title').text(trans[48][tnum])
+            $('.code-text').text(trans[49][tnum])
+    // temporary vip
+     $('#temporary-vip1-button').text(trans[50][tnum])
+            $('#temporary-vip2-button').text(trans[51][tnum])
+    // vip code
+        $('#vip-text1').text(trans[52][tnum])
+        $('#vip-text2').text(trans[53][tnum])
+        $('#vip1-code-text').text(trans[54][tnum])
+        $('#vip2-code-text').text(trans[55][tnum])
+        $('#buy-vip-link').text(trans[56][tnum])
+        $('.buy-vip-button').text(trans[57][tnum])
+
+
 
 }
 
@@ -236,6 +256,42 @@ var trans = [
     },{
     en:'Confirm New Password',
     cn:'确认新密码'
+    },{
+    en:'Request Reset',
+    cn:'请求重置'
+    },{
+    en:'Reset Password',
+    cn:'重置密码'
+    },{
+    en:'Submit invitation code',
+    cn:'提交邀请码'
+    },{
+    en:'Invitation code',
+    cn:'提交邀请码'
+    },{
+    en:'Get your VIP1 for 3 days',
+    cn:'获得三天免费VIP1体验'
+    },{
+    en:'Get your VIP2 for 1 day',
+    cn:'获得一天免费VIP2体验'
+    },{
+    en:'You already used your free vip service, do you like our content?',
+    cn:'您已经使用过你的免费vip服务了, 您喜欢我们的内容吗?'
+    },{
+    en:'Use your invitation code, let a new submit your invitation code to get additional free vip service.',
+    cn:'让一个新用户提交你的邀请码, 您将可以获得额外的免费VIP体验哦。'
+    },{
+    en:'Your invitation code for VIP1:',
+    cn:'您的VIP1邀请码: '
+    },{
+    en:'Your invitation code for VIP2',
+    cn:'您的VIP2 邀请码: '
+    },{
+    en:'Or buy new VIP service.',
+    cn:'或者您可以购买新的VIP服务。'
+    },{
+    en:'Buy your VIP',
+    cn:'购买VIP'
     }
 
 ];
