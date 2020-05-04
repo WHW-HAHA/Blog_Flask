@@ -22,9 +22,9 @@ transition: all .5s ease-out;
 </style>
 
 
-<h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">Sorry, no content about "{{keyword}}" has been found.</h2>
+<h2 name="keyword message" keyword="{{keyword}}" id="header_search_not_found" style="color:white">Sorry, no content about "{{keyword}}" has been found.</h2>
 
-<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.welcome') }}" style="background-color:rgba(0,0,0,0.2)">Back to home page</a>
+<a class="btn btn-outline-light text-left back-to-home" href="{{ url_for('webapp.welcome') }}" style="background-color:rgba(0,0,0,0.2)">Back to home page</a>
 
 <script type="text/javascript">
         var Highlight = {
@@ -54,7 +54,7 @@ transition: all .5s ease-out;
             keyword = document.getElementById('header').getAttribute('keyword')
             console.log(keyword)
             lowercase_keyword = keyword.toLowerCase()
-            Highlight.init({id:"header",arr:[keyword, lowercase_keyword]});
+            Highlight.init({id:"header_search_not_found",arr:[keyword, lowercase_keyword]});
         }
 
 </script>

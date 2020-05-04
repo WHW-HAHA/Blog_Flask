@@ -84,7 +84,7 @@ background-color: rgba(0,0,0,0);
 
 </style>
 
-<h2 name="keyword message" keyword="{{keyword}}" id="header" style="color:white">We have found these interesting
+<h2 name="keyword message" keyword="{{keyword}}" id="header_search_found" style="color:white">We have found these interesting
     contents about "{{keyword}}" for you.</h2>
     <div style="text-align:right">
         <div class="btn-group" role="group">
@@ -93,8 +93,8 @@ background-color: rgba(0,0,0,0);
                 Sort
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a class="dropdown-item" href="#" name="popularity" keyword="{{keyword}}" id="dropdown_first">By popularity</a>
-                <a class="dropdown-item" href="#" name="time" keyword="{{keyword}}">By date</a>
+                <a class="dropdown-item sort-1" href="#" name="popularity" keyword="{{keyword}}" id="dropdown_first">By popularity</a>
+                <a class="dropdown-item sort-2" href="#" name="time" keyword="{{keyword}}">By date</a>
             </div>
         </div>
     </div>
@@ -341,13 +341,13 @@ background-color: rgba(0,0,0,0);
             // 使用方法
             // id 必须
             // 默认为id 高亮内容添加class为 Highlight span 标签包裹，直接在style中写样式即可
-            keyword = document.getElementById('header').getAttribute('keyword')
+            keyword = document.getElementById('header_search_found').getAttribute('keyword')
             console.log(keyword)
             lowercase_keyword = keyword.toLowerCase()
             uppercase_keyword = keyword.toUpperCase()
             title_keyword = titleCase(lowercase_keyword)
             Highlight.init({id:"content",arr:[keyword, lowercase_keyword, uppercase_keyword, title_keyword]});
-            Highlight.init({id:"header",arr:[keyword, lowercase_keyword, uppercase_keyword, title_keyword]});
+            Highlight.init({id:"header_search_found",arr:[keyword, lowercase_keyword, uppercase_keyword, title_keyword]});
         }
 </script>
 <script src="http://code.jquery.com/jquery.js"></script>

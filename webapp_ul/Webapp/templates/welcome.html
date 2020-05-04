@@ -192,9 +192,9 @@ top: 10%;
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1 class="white-text">{{category_asia.name}}</h1>
-                    <p class="white-text">{{category_asia.description}}</p>
-                    <p class="white-text"><a class="btn btn-outline-light" href="#Asia" role="button">See more</a>
+                    <h1 class="white-text asia_category_name">{{category_asia.name}}</h1>
+                    <p class="white-text asia_category_description">{{category_asia.description}}</p>
+                    <p class="white-text"><a class="btn btn-outline-light see-more" href="#Asia" role="button">See more</a>
                     </p>
                 </div>
             </div>
@@ -206,9 +206,9 @@ top: 10%;
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1 class="white-text">{{category_usa.name}}</h1>
-                    <p class="white-text">{{category_usa.description}}</p>
-                    <p class="white-text"><a class="btn btn-outline-light" href="#USA" role="button">See more</a>
+                    <h1 class="white-text usa_category_name">{{category_usa.name}}</h1>
+                    <p class="white-text usa_category_description">{{category_usa.description}}</p>
+                    <p class="white-text "><a class="btn btn-outline-light see-more" href="#USA" role="button">See more</a>
                     </p>
                 </div>
             </div>
@@ -220,9 +220,9 @@ top: 10%;
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1 class="white-text">{{category_cartoon.name}}</h1>
-                    <p class="white-text">{{category_cartoon.description}}</p>
-                    <p class="white-text"><a class="btn btn-outline-light" href="#Cartoon" role="button">See more</a>
+                    <h1 class="white-text cartoon_category_name">{{category_cartoon.name}}</h1>
+                    <p class="white-text cartoon_category_description">{{category_cartoon.description}}</p>
+                    <p class="white-text"><a class="btn btn-outline-light see-more" href="#Cartoon" role="button">See more</a>
                     </p>
                 </div>
             </div>
@@ -249,7 +249,7 @@ top: 10%;
 <div class="album py-5">
     <!-- list1 -->
     <div class="container">
-        <a class="btn btn-outline-light" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+        <a class="btn btn-outline-light latest_button" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='TheLatest')}}">The latest</a>
         <p></p>
         <HR color="white">
@@ -336,7 +336,7 @@ top: 10%;
                 <span class="mask"></span>
                 <div class="toumingzi">
                     <h1 class="fa fa-lock white-text"></h1>
-                    <h4 class="white-text">Only available for VIP1</h4>
+<h4 class="white-text vip1-text">Only available for VIP1</h4>
                 </div>
                 <div class="card-body">
                     <div class="post-title">
@@ -411,7 +411,7 @@ top: 10%;
             <span class="mask"></span>
             <div class="toumingzi">
                 <h1 class="fa fa-lock white-text"></h1>
-                <h4 class="white-text">Only available for VIP2</h4>
+                <h4 class="white-text vip2-text">Only available for VIP2</h4>
             </div>
             <div class="card-body">
                 <div class="post-title">
@@ -448,16 +448,16 @@ top: 10%;
     <div class="col-md-4 text-center">
         <div class="container">
             <p></p>
-            <a class="btn btn-outline-light"
+            <a class="btn btn-outline-light see-more"
                style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
-               href="{{url_for('webapp.go_to_category', name='TheLatest')}}">Explore more...</a>
+               href="{{url_for('webapp.go_to_category', name='TheLatest')}}">Explore more</a>
         </div>
     </div>
 </div>
 <br/>
 
 <!--section asia-->
-<a id="Asia" class="btn btn-outline-light"
+<a id="Asia" class="btn btn-outline-light asia_category_name"
    style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
    href="{{url_for('webapp.go_to_category', name='Asia')}}">Asia</a>
 <p></p>
@@ -544,7 +544,7 @@ top: 10%;
         <span class="mask"></span>
         <div class="toumingzi">
             <h1 class="fa fa-lock white-text"></h1>
-            <h4 class="white-text">Only available for VIP1</h4>
+            <h4 class="white-text vip1-text">Only available for VIP1</h4>
         </div>
         <div class="card-body">
             <div class="post-title">
@@ -619,7 +619,7 @@ top: 10%;
     <span class="mask"></span>
     <div class="toumingzi">
         <h1 class="fa fa-lock white-text"></h1>
-        <h4 class="white-text">Only available for VIP2</h4>
+        <h4 class="white-text vip2-text">Only available for VIP2</h4>
     </div>
     <div class="card-body">
         <div class="post-title">
@@ -658,16 +658,16 @@ top: 10%;
 <div class="col-md-4 text-center">
     <div class="container">
         <p></p>
-        <a class="btn btn-outline-light"
+        <a class="btn btn-outline-light see-more"
            style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
-           href="{{url_for('webapp.go_to_category', name='Asia')}}">Explore more...</a>
+           href="{{url_for('webapp.go_to_category', name='Asia')}}">Explore more</a>
     </div>
 </div>
 </div>
 <br/>
 
 <!--USA-->
-<a id="USA" class="btn btn-outline-light"
+<a id="USA" class="btn btn-outline-light usa_category_name"
    style="font-size:xx-large;font-weight:bold;background-color: rgba(0,0,0,0.2)"
    href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Europe & USA</a>
 <p></p>
@@ -754,7 +754,7 @@ top: 10%;
         <span class="mask"></span>
         <div class="toumingzi">
             <h1 class="fa fa-lock white-text"></h1>
-            <h4 class="white-text">Only available for VIP1</h4>
+            <h4 class="white-text vip1-text">Only available for VIP1</h4>
         </div>
         <div class="card-body">
             <div class="post-title">
@@ -830,7 +830,7 @@ top: 10%;
     <span class="mask"></span>
     <div class="toumingzi">
         <h1 class="fa fa-lock white-text"></h1>
-        <h4 class="white-text">Only available for VIP2</h4>
+        <h4 class="white-text vip2-text">Only available for VIP2</h4>
     </div>
     <div class="card-body">
         <div class="post-title">
@@ -868,17 +868,17 @@ top: 10%;
 <div class="col-md-4 text-center">
     <div class="container">
         <p></p>
-        <a class="btn btn-outline-light"
+        <a class="btn btn-outline-light see-more"
            style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Europe&USA')}}">Explore
-            more...</a>
+            more</a>
     </div>
 </div>
 </div>
 <br/>
 
 <!--Cartoon section-->
-<a id="Cartoon" class="btn btn-outline-light"
+<a id="Cartoon" class="btn btn-outline-light cartoon_category_name"
    style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
    href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Cartoon</a>
 <p></p>
@@ -965,7 +965,7 @@ top: 10%;
         <span class="mask"></span>
         <div class="toumingzi">
             <h1 class="fa fa-lock white-text"></h1>
-            <h4 class="white-text">Only available for VIP1</h4>
+            <h4 class="white-text vip1-text">Only available for VIP1</h4>
         </div>
         <div class="card-body">
             <div class="post-title">
@@ -1040,7 +1040,7 @@ top: 10%;
     <span class="mask"></span>
     <div class="toumingzi">
         <h1 class="fa fa-lock white-text"></h1>
-        <h4 class="white-text">Only available for VIP2</h4>
+        <h4 class="white-text vip2-text">Only available for VIP2</h4>
     </div>
     <div class="card-body">
         <div class="post-title">
@@ -1078,10 +1078,10 @@ top: 10%;
 <div class="col-md-4 text-center">
     <div class="container">
         <p></p>
-        <a class="btn btn-outline-light"
+        <a class="btn btn-outline-light see-more"
            style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='Cartoon')}}">Explore
-            more...</a>
+            more</a>
     </div>
 </div>
 </div>
