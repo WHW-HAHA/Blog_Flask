@@ -22,14 +22,14 @@
 </head>
 <style>
 .translate_wrapper{
-  position:fixed;
-  z-index:1;
-  top:20px;
-  left:20px;
-  font-size:16px;
-  background:#fff;
-  border-radius:4px;
-}
+  <!--position:fixed;-->
+  <!--z-index:1;-->
+  <!--top:20px;-->
+  <!--left:20px;-->
+  <!--font-size:16px;-->
+  <!--background:#fff;-->
+  border-radius:10px;
+  }
 
 .current_lang{
   cursor:pointer;
@@ -50,7 +50,7 @@
   display:inline-block;
   margin-left:5px;
   vertical-align:middle;
-  color: #444444;
+  color: white;
 }
 
 .lang span.lang-txt{
@@ -124,6 +124,7 @@
   border-bottom:1px solid #eaeaea;
 }
 
+
 </style>
 
 <body style="background: linear-gradient(to left, #8942a8, #bd382d);">
@@ -155,7 +156,8 @@
                 </div>
                 <div class="navbar-nav" style="position: absol; left: 45%;">
                     <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
-                        <input id="search_welcome" class="form-control mr-sm-2" type="text" placeholder="Type to search..."
+                        <input id="search_welcome" class="form-control mr-sm-2" type="text"
+                               placeholder="Type to search..."
                                aria-label="Search"
                                name="keyword" style="border-radius:10px;">
                     </form>
@@ -170,29 +172,13 @@
                     <!--</form>-->
                     <a id="account_button" class="btn btn-outline-light text-left" href="{{ url_for('user.account') }}">Account</a>
                     <a id="logout_button" class="btn btn-outline-light text-left" href="{{ url_for('user.logout') }}">Logout</a>
-                    <div class="translate_wrapper">
-                        <div class="current_lang">
-                            <div class="lang">
-                                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                <span class="lang-txt">EN</span>
-                                <span class="fa fa-chevron-down chevron"></span>
-                            </div>
-                        </div>
-                        <div class="more_lang">
-                            <div class="lang" data-value='cn'>
-                                <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
-                                <span class="lang-txt">简体中文</span>
-                            </div>
-
-                            <div class="lang selected" data-value='en'>
-                                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                <span class="lang-txt">English<span> (US)</span></span>
-                            </div>
-                        </div>
-                    </div>
                     {% else %}
                     <a id="login_button" class="btn btn-outline-light text-left" href="{{ url_for('user.login') }}">Login</a>
-                    <a id="register_button" class="btn btn-outline-light text-left" href="{{ url_for('user.register') }}">Register</a>
+                    <a id="register_button" class="btn btn-outline-light text-left"
+                       href="{{ url_for('user.register') }}">Register</a>
+                    {% endif %}
+                </div>
+                <div class="navbar-nav">
                     <div class="translate_wrapper">
                         <div class="current_lang">
                             <div class="lang">
@@ -213,7 +199,6 @@
                             </div>
                         </div>
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -256,6 +241,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-	<script  src="{{ url_for('static', filename='js/languages.js')}}"></script>
+<script src="{{ url_for('static', filename='js/languages.js')}}"></script>
 </body>
 </html>
