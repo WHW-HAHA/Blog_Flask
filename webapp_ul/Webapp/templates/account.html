@@ -105,15 +105,15 @@ width:90%
             <div class="row">
             <h2 class="text">{{ current_user.username }}</h2>
             <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" class="btn btn-secondary dropdown-toggle text-center" style="height:30px"
+                <button id="btnGroupDrop" class="btn btn-secondary dropdown-toggle text-center" style="height:30px"
                         data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="true">
                     <img class="icon" src="../../static/setting.svg" style="height: 120%;">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
-                    <a class="dropdown-item" href="{{ url_for('user.change_profile_pic')}}">Change Avater</a>
-                    <a class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
+                    <a id="update-profile-text" class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
+                    <a id="change-profile-pic-text" class="dropdown-item" href="{{ url_for('user.change_profile_pic')}}">Change Avater</a>
+                    <a id="change-password-text" class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
                 </div>
             </div>
         </div>
@@ -139,7 +139,7 @@ width:90%
         <div class="col-4 text-center" style="height:40px">
             <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
             <div class="col-md-12 text-center">
-                <a href="{{url_for('user.code_submit')}}"><p class="text">Invitation</p></a>
+                <a href="{{url_for('user.code_submit')}}"><p id="invitation-text" class="white-text">Invitation</p></a>
             </div>
         </div>
     </div>

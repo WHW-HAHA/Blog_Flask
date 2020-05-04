@@ -33,10 +33,10 @@ color:white}
         <!-- User name field -->
         <fieldset class="form-group">
             <div class="py-5 text-center">
-                <h1 style="color:white">Join today</h1>
+                <h1 id="register-title" style="color:white">Join today</h1>
             </div>
             <div class="form-group">
-                {{ form.username.label(class="d-flex justify-content-between align-items-center mb-3") }}
+                {{ form.username.label(class="d-flex justify-content-between align-items-center mb-3 username-text") }}
                 {% if form.username.errors %}
                 {{ form.username(class="form-control form-control-lg is-invalid" ) }}
                 <div class="invalid-feedback">
@@ -50,7 +50,7 @@ color:white}
             </div>
             <!-- Email field -->
             <div class="form-group">
-                {{ form.email.label(class="d-flex justify-content-between align-items-center mb-3") }}
+                {{ form.email.label(class="d-flex justify-content-between align-items-center mb-3 email-text") }}
                 {% if form.email.errors %}
                 {{ form.email(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -64,7 +64,7 @@ color:white}
             </div>
             <!-- Password field -->
             <div class="form-group">
-                {{ form.password.label(class="d-flex justify-content-between align-items-center mb-3") }}
+                {{ form.password.label(class="d-flex justify-content-between align-items-center mb-3 password-text") }}
                 {% if form.password.errors %}
                 {{ form.password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -78,7 +78,7 @@ color:white}
             </div>
             <!-- Confirm password field -->
             <div class="form-group" style="plceholder='confirm password' ">
-                {{ form.confirm_password.label(class="d-flex justify-content-between align-items-center mb-3") }}
+                {{ form.confirm_password.label(class="d-flex justify-content-between align-items-center mb-3 confirm-password-text") }}
                 {% if form.confirm_password.errors %}
                 {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -98,12 +98,10 @@ color:white}
             </div>
         </div>
     </form>
-    <div class="border-top pt-3">
-        <small class="text">
-            Already Have An Account? <a class="internal-link" href="{{ url_for('user.login') }}">Sign In</a>
-        </small>
+    <div>
+        <h class="text" id="register-bottom-text">Already Have An Account?</h>
+        <a id="register-sign-in" class="internal-link" href="{{ url_for('user.login') }}">Sign In</a>
     </div>
 </div>
-<p class="text">&copy; 2019-2020</p>
 </body>
 {% endblock content %}

@@ -73,12 +73,27 @@ function translate(tnum){
     $('.submitbutton').text(trans[26][tnum])
     $('.forget-password-text').text(trans[27][tnum])
 //register
-    $('#login_title').text(trans[22][tnum])
-    $('.email-text').text(trans[23][tnum])
-    $('.password-text').text(trans[24][tnum])
-    $('.remember-me').text(trans[25][tnum])
-    $('.submitbutton').text(trans[26][tnum])
-    $('.forget-password-text').text(trans[27][tnum])
+    $('#register-title').text(trans[29][tnum])
+    $('.username-text').text(trans[30][tnum])
+    $('.confirm-password-text').text(trans[31][tnum])
+    $('#register-bottom-text').text(trans[32][tnum])
+    $('#register-sign-in').text(trans[33][tnum])
+//account
+    $('#update-profile-text').text(trans[34][tnum])
+    $('#change-profile-pic-text').text(trans[35][tnum])
+    $('#change-password-text').text(trans[36][tnum])
+    $('#invitation-text').text(trans[37][tnum])
+    $('#likes').text(trans[38][tnum])
+    $('#similar').text(trans[39][tnum])
+//edit profile
+    $('.new-email-text').text(trans[40][tnum])
+    $('.confirm-new-email-text').text(trans[41][tnum])
+//edit avater
+    $('.avater-text').text(trans[42][tnum])
+//change password
+    $('.old-password').text(trans[43][tnum])
+        $('.new-password').text(trans[44][tnum])
+            $('.confirm-new-password').text(trans[45][tnum])
 
 }
 
@@ -170,6 +185,57 @@ var trans = [
     },{
     en:'Forget password?',
     cn:'忘记密码?'
+    },{
+    en:'Join today',
+    cn:'注册'
+    },{
+    en:'User name',
+    cn:'用户名'
+    },{
+    en:'Confirm password',
+    cn:'确认密码'
+    },{
+    en:'Already have an account?',
+    cn:'已经拥有账户?'
+    },{
+    en:'Sign in',
+    cn:'登录'
+    },{
+    en:'Edit Profile',
+    cn:'编辑账户'
+    },{
+    en:'Change Avater',
+    cn:'更改头像'
+    },{
+    en:'Change Password',
+    cn:'更改密码'
+    },{
+    en:'Invitation code',
+    cn:'填写邀请码'
+    },{
+    en:'Your favourite',
+    cn:'你的收藏'
+    },{
+    en:'You may like',
+    cn:'你可能喜欢的'
+    },{
+    en:'New Email',
+    cn:'新邮箱'
+    },{
+    en:'Confirm New Email',
+    cn:'确认新邮箱'
+    },{
+    en:'Upload new avater',
+    cn:'上传新头像'
+    },{
+    en:'Old Password',
+    cn:'旧密码'
+    },{
+    en:'New Password',
+    cn:'新密码'
+    },{
+    en:'Confirm New Password',
+    cn:'确认新密码'
     }
 
 ];
