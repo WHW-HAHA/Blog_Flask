@@ -22,10 +22,17 @@ import random
 
 webapp_bp = Blueprint('webapp', __name__)
 
+@webapp_bp.route('/language', methods=['POST'])
+def get_defaulte_language():
+    default_laguage = request.get_json()
+    print('language is')
+    print(default_laguage)
+    return None
 
 @webapp_bp.route('/')
 @webapp_bp.route('/welcome')
 def welcome():
+    get_defaulte_language()
     category2 = Category.query.get(2)
     category3 = Category.query.get(3)
     category4 = Category.query.get(4)

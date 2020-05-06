@@ -22,12 +22,6 @@
 </head>
 <style>
 .translate_wrapper{
-  <!--position:fixed;-->
-  <!--z-index:1;-->
-  <!--top:20px;-->
-  <!--left:20px;-->
-  <!--font-size:16px;-->
-  <!--background:#fff;-->
   border-radius:10px;
   }
 
@@ -37,9 +31,6 @@
   overflow:hidden;
 }
 
-.lang{
-    padding:10px 15px;
-}
 
 .lang.selected{
   display:none;
@@ -54,7 +45,7 @@
 }
 
 .lang span.lang-txt{
-   position:relative;
+  position:relative;
   top:-1px;
   font-weight:700;
 }
@@ -73,7 +64,7 @@
   font-size:12px;
   position:relative;
   top:-1px;
-  margin-left:3px;
+  <!--margin-left:3px;-->
 }
 
 
@@ -117,16 +108,13 @@
 	-o-transition:      all 0.3s cubic-bezier(0,.99,.44,.99);
 	-ms-transition:     all 0.3s cubic-bezier(0,.99,.44,.99);
 	transition:         all 0.3s cubic-bezier(0,.99,.44,.99);
-
 }
 
 .translate_wrapper.active .lang{
   border-bottom:1px solid #eaeaea;
 }
 
-
 </style>
-
 <body style="background: linear-gradient(to left, #8942a8, #bd382d);">
 
 <header class="site-header">
@@ -178,24 +166,31 @@
                        href="{{ url_for('user.register') }}">Register</a>
                     {% endif %}
                 </div>
+
                 <div class="navbar-nav">
                     <div class="translate_wrapper">
                         <div class="current_lang">
                             <div class="lang">
-                                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                <span class="lang-txt">EN</span>
+                                <!--<img src="https://image.flaticon.com/icons/svg/299/299722.svg">-->
+                                <span class="lang-txt">Language/语言</span>
                                 <span class="fa fa-chevron-down chevron"></span>
                             </div>
                         </div>
+
                         <div class="more_lang">
                             <div class="lang" data-value='cn'>
                                 <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
                                 <span class="lang-txt">简体中文</span>
                             </div>
 
+                            <div class="lang" data-value='en'>
+                                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
+                                <span class="lang-txt">English (US)</span>
+                            </div>
+
                             <div class="lang selected" data-value='en'>
                                 <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                <span class="lang-txt">English<span> (US)</span></span>
+                                <span class="lang-txt">English (US)</span>
                             </div>
                         </div>
                     </div>
@@ -241,6 +236,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="{{ url_for('static', filename='js/languages.js')}}"></script>
+<script src="{{ url_for('static', filename='js/languages-mod.js')}}"></script>
+<!--<script src="{{ url_for('static', filename='js/get-default-language.js')}}"></script>-->
 </body>
 </html>

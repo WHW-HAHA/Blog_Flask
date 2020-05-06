@@ -1,7 +1,15 @@
-
-
 $(document).ready(function(){
-    var tnum = $('.current_lang').attr('default')
+    var language = localStorage.getItem('locale') || window.navigator.language.toLowerCase() || 'en'
+    localStorage.setItem('locale', language)
+
+    if (language.indexOf("zh-") !== -1) {
+        var tnum = 'cn'
+    } else if (language.indexOf('en') !== -1) {
+        var tnum = 'en'
+    } else {
+        var tnum = 'en'
+    }
+
   $(document).click( function(e) {
        $('.translate_wrapper, .more_lang').removeClass('active');
   });
@@ -23,12 +31,24 @@ $(document).ready(function(){
     
     var img = $(this).find('img').attr('src');    
     var lang = $(this).attr('data-value');
-    var tnum = lang;
-    translate(tnum);
 
-    $('.current_lang .lang-txt').text(lang);
-    $('.current_lang img').attr('src', img);
-    $('.current_lang').attr('default', lang);
+    if (lang.indexOf("cn") !== -1) {
+        var tnum = 'cn'
+        localStorage.setItem('locale', 'zh-cn')
+        $('.current_lang .lang-txt').text('语言');
+    } else if (lang.indexOf('en') !== -1) {
+        var tnum = 'en'
+        localStorage.setItem('locale', 'en')
+        $('.current_lang .lang-txt').text('Language');
+    } else {
+        var tnum = 'en'
+        localStorage.setItem('locale', 'en')
+        $('.current_lang .lang-txt').text('Language');
+    }
+    var tnum = lang;
+    window.location.reload()
+
+    getdefaultlang()
 
     if(lang == 'ar'){
       $('body').attr('dir', 'rtl');
@@ -38,6 +58,24 @@ $(document).ready(function(){
     
   });
 });
+
+
+function getdefaultlang(){
+var lang = $('.selected').attr('data-value');
+        var data = {'lang': lang}
+
+        console.log(data)
+
+        req = $.ajax({
+            url : '/language',
+            type : 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){},
+            error: function(xhr, type) {}
+        });
+}
+
 
 function translate(tnum){
 // welcome section
