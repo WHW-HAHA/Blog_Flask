@@ -19,20 +19,26 @@ from Webapp.extensions import db
 from datetime import datetime, timedelta
 from sqlalchemy.orm import sessionmaker
 import random
-
 webapp_bp = Blueprint('webapp', __name__)
+
+# default language is English
+
+global lang
+lang = 'en'
 
 @webapp_bp.route('/language', methods=['POST'])
 def get_defaulte_language():
     default_laguage = request.get_json()
-    print('language is')
-    print(default_laguage)
-    return None
+    if default_laguage is not None:
+        print('language is')
+        print(default_laguage)
+        global lang
+        lang = default_laguage['lang']
+    return 'language'
 
 @webapp_bp.route('/')
 @webapp_bp.route('/welcome')
 def welcome():
-    get_defaulte_language()
     category2 = Category.query.get(2)
     category3 = Category.query.get(3)
     category4 = Category.query.get(4)
@@ -40,7 +46,7 @@ def welcome():
     post_list_2 = category2.posts[0:5]
     post_list_3 = category3.posts[0:5]
     post_list_4 = category4.posts[0:5]
-    return render_template('welcome.html', category_asia=category2, category_usa=category3, category_cartoon=category4,
+    return render_template('welcome.html', lang = lang, category_asia=category2, category_usa=category3, category_cartoon=category4,
                            list1=post_list_1, list2=post_list_2, list3=post_list_3, list4=post_list_4)
 
 @webapp_bp.route('/gotocategory/<name>')
@@ -245,7 +251,10 @@ def search():
             post = post_found.order_by(Post.date_posted.desc()).all()
             # highlight the keyword in result page
             if post_found.all():
-                flash('We had found these for you!')
+                if lang == 'en':
+                    flash('We had found these for you!', 'success')
+                elif lang == 'cn':
+                    flash('我们为您找到了这些内容！', 'success')
                 return render_template('search_found.html', title='results of search', posts=post, keyword=keyword)
             else:
                 return render_template('search_nofound.html', title='no results have been found', keyword=keyword)
@@ -260,7 +269,10 @@ def three_days_VIP1():
         user.vip1_expire_date = expire_date
         user.vip1 = 'yes'
         db.session.commit()
-        flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
+        if lang == 'en':
+            flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
+        elif lang == 'cn':
+            flash("您的临时VIP1将在3天内到期, 在此之前请尽情体验我们的内容。")
         return redirect(url_for('webapp.welcome'))
     else:
         invitation_code_vip1 = current_user.invitation_code_vip1
@@ -277,7 +289,10 @@ def one_day_VIP2():
         user.vip2_expire_date = expire_date
         user.vip2 = 'yes'
         db.session.commit()
-        flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
+        if lang == 'en':
+            flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
+        elif lang == 'cn':
+            flash("您的临时VIP1将在3天内到期, 在此之前请尽情体验我们的内容。", 'success')
         return redirect(url_for('webapp.welcome'))
     else:
         invitation_code_vip1 = current_user.invitation_code_vip1
@@ -290,15 +305,27 @@ def VIP_check():
         if current_user.membership_date > datetime.utcnow():
             if current_user.vip1 == 'yes':
                 if current_user.vip2 == 'yes':
-                    flash('You are VIP2 user, we have unlocked VIP2 contents for you!', 'success')
+                    if lang == 'en':
+                        flash('You are VIP2 user, we have unlocked VIP2 contents for you!', 'success')
+                    elif lang == 'cn':
+                        flash('您是VIP2用户, 我们已经为您解锁了全部的VIP2内容！', 'success')
                 else:
-                    flash('You are VIP1 user, we have unlocked VIP1 contents for you!', 'success')
+                    if lang == 'en':
+                        flash('You are VIP1 user, we have unlocked VIP1 contents for you!', 'success')
+                    elif lang =='cn':
+                        flash('您是VIP1用户, 我们已经为您解锁了全部的VIP1内容！,' 'success')
             return render_template('temporary_vip.html')
         else:
-            flash('You are currently not a VIP. Get your temporary VIP here!', 'success')
+            if lang == 'en':
+                flash('You are currently not a VIP. Get your temporary VIP here!', 'success')
+            elif lang == 'cn':
+                flash('您目前还不是VIP用户. 在这里可以获取您的临时VIP!', 'success')
             return render_template('temporary_vip.html')
     else:
-        flash("You haven't login yet, please login first", "warning")
+        if lang == 'en':
+            flash("You haven't login yet, please login first", "warning")
+        elif lang == 'cn':
+            flash('您目前还没有登录，请首先登录或者注册！', 'warning')
         return redirect(url_for("user.login"))
 
 

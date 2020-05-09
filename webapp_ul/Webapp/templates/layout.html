@@ -207,10 +207,8 @@
         {% for message in get_flashed_messages() %}
        
     <div class="alert alert-warning">
-               
         <button type="button" class="close" data-dismiss="alert">&times;</button>
                 {{ message }}
-           
     </div>
         {% endfor %}
 
@@ -237,6 +235,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/languages-mod.js')}}"></script>
+<!--<script src="{{ url_for('static', filename='js/languages-user.js')}}"></script>-->
 <!--<script src="{{ url_for('static', filename='js/get-default-language.js')}}"></script>-->
 </body>
 </html>

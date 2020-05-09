@@ -65,7 +65,7 @@ var lang = $('.selected').attr('data-value');
         var data = {'lang': lang}
         console.log(data)
         req = $.ajax({
-            url : '/language',
+            url : 'user/language',
             type : 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',
