@@ -64,7 +64,6 @@ def go_to_category(name):
     posts = category.posts
     return render_template('category_content.html', category=category, posts=posts)
 
-
 def take_total_like(elem):
     return elem.total_like
 
@@ -238,9 +237,8 @@ def show_category():
     posts = Category.query.filter_by(name='The latest').first().posts
     return render_template('category_content.html', posts=posts, category_name='The latest')
 
-
-@webapp_bp.route("/search", methods=['POST'])
-def search():
+@webapp_bp.route("/en/search", methods=['POST'])
+def search_en():
     if request.method == 'POST':
         # get keyword variable from form in web page
         ## search in user is no need
@@ -255,16 +253,35 @@ def search():
             post = post_found.order_by(Post.date_posted.desc()).all()
             # highlight the keyword in result page
             if post_found.all():
-                if lang == 'en':
-                    flash('We had found these for you!', 'success')
-                elif lang == 'cn':
-                    flash('我们为您找到了这些内容！', 'success')
+                flash('We had found these for you!', 'success')
                 return render_template('search_found.html', title='results of search', posts=post, keyword=keyword)
             else:
                 return render_template('search_nofound.html', title='no results have been found', keyword=keyword)
 
-@webapp_bp.route("/get_temporary_vip1")
-def three_days_VIP1():
+@webapp_bp.route("/cn/search", methods=['POST'])
+def search_cn():
+    if request.method == 'POST':
+        # get keyword variable from form in web page
+        ## search in user is no need
+        keyword = request.form.get('keyword')
+        if keyword == "":
+            return render_template('search_nofound.html', title='no results have been found', keyword=keyword)
+        else:
+            post_found = Post.query.filter(or_(
+                Post.title.like('%' + keyword + '%') if keyword is not None else '',
+                Post.subtitle.like('%' + keyword + '%') if keyword is not None else '',
+                Post.content.like('%' + keyword + '%') if keyword is not None else ''))
+            post = post_found.order_by(Post.date_posted.desc()).all()
+            # highlight the keyword in result page
+            if post_found.all():
+                flash('我们为您找到了这些内容！', 'success')
+                return render_template('search_found.html', title='results of search', posts=post, keyword=keyword)
+            else:
+                return render_template('search_nofound.html', title='no results have been found', keyword=keyword)
+
+
+@webapp_bp.route("/en/get_temporary_vip1")
+def three_days_VIP1_en():
     if current_user.vip1_try_out == 'yes':
         current_user.vip1_expire_date = datetime.now()
         expire_date = current_user.vip1_expire_date + timedelta(days=3)
@@ -273,15 +290,30 @@ def three_days_VIP1():
         user.vip1_expire_date = expire_date
         user.vip1 = 'yes'
         db.session.commit()
-        if lang == 'en':
-            flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
-        elif lang == 'cn':
-            flash("您的临时VIP1将在3天内到期, 在此之前请尽情体验我们的内容。")
+        flash("Enjoy your exploration, your temporary VIP1 will expire in three days.", 'success')
         return redirect(url_for('webapp.welcome'))
     else:
         invitation_code_vip1 = current_user.invitation_code_vip1
         invitation_code_vip2 = current_user.invitation_code_vip2
         return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
+
+@webapp_bp.route("/cn/get_temporary_vip1")
+def three_days_VIP1_cn():
+    if current_user.vip1_try_out == 'yes':
+        current_user.vip1_expire_date = datetime.now()
+        expire_date = current_user.vip1_expire_date + timedelta(days=3)
+        user = User.query.filter_by(id=current_user.id).first()
+        user.vip1_try_out = 'no'
+        user.vip1_expire_date = expire_date
+        user.vip1 = 'yes'
+        db.session.commit()
+        flash("您的临时VIP1将在3天内到期, 在此之前请尽情体验我们的内容。")
+        return redirect(url_for('webapp.welcome'))
+    else:
+        invitation_code_vip1 = current_user.invitation_code_vip1
+        invitation_code_vip2 = current_user.invitation_code_vip2
+        return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
+
 
 @webapp_bp.route("/get_temporary_vip2")
 def one_day_VIP2():
@@ -303,34 +335,41 @@ def one_day_VIP2():
         invitation_code_vip2 = current_user.invitation_code_vip2
         return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
 
-@webapp_bp.route("/VIP")
-def VIP_check():
+
+
+@webapp_bp.route("/en/VIP")
+def VIP_check_en():
     if current_user.is_authenticated:
         if current_user.membership_date > datetime.utcnow():
             if current_user.vip1 == 'yes':
                 if current_user.vip2 == 'yes':
-                    if lang == 'en':
-                        flash('You are VIP2 user, we have unlocked VIP2 contents for you!', 'success')
-                    elif lang == 'cn':
-                        flash('您是VIP2用户, 我们已经为您解锁了全部的VIP2内容！', 'success')
+                    flash('You are VIP2 user, we have unlocked VIP2 contents for you!', 'success')
                 else:
-                    if lang == 'en':
-                        flash('You are VIP1 user, we have unlocked VIP1 contents for you!', 'success')
-                    elif lang =='cn':
-                        flash('您是VIP1用户, 我们已经为您解锁了全部的VIP1内容！,' 'success')
+                    flash('You are VIP1 user, we have unlocked VIP1 contents for you!', 'success')
             return render_template('temporary_vip.html')
         else:
-            if lang == 'en':
-                flash('You are currently not a VIP. Get your temporary VIP here!', 'success')
-            elif lang == 'cn':
-                flash('您目前还不是VIP用户. 在这里可以获取您的临时VIP!', 'success')
+            flash('You are currently not a VIP. Get your temporary VIP here!', 'success')
             return render_template('temporary_vip.html')
     else:
-        if lang == 'en':
-            flash("You haven't login yet, please login first", "warning")
-        elif lang == 'cn':
-            flash('您目前还没有登录，请首先登录或者注册！', 'warning')
-        return redirect(url_for("user.login"))
+        flash("You haven't login yet, please login first", "warning")
+        return redirect(url_for("user.login_en"))
+
+@webapp_bp.route("/cn/VIP")
+def VIP_check_cn():
+    if current_user.is_authenticated:
+        if current_user.membership_date > datetime.utcnow():
+            if current_user.vip1 == 'yes':
+                if current_user.vip2 == 'yes':
+                    flash('您是VIP2用户, 我们已经为您解锁了全部的VIP2内容！', 'success')
+                else:
+                    flash('您是VIP1用户, 我们已经为您解锁了全部的VIP1内容！,' 'success')
+            return render_template('temporary_vip.html')
+        else:
+            flash('您目前还不是VIP用户. 在这里可以获取您的临时VIP!', 'success')
+            return render_template('temporary_vip.html')
+    else:
+        flash('您目前还没有登录，请首先登录或者注册！', 'warning')
+        return redirect(url_for("user.login_cn"))
 
 
 @webapp_bp.route("/buy_vip")

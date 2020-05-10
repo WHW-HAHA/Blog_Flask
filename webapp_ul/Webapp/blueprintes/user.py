@@ -48,7 +48,7 @@ def get_defaulte_language():
         lang = default_laguage['lang']
     return 'language'
 
-@user_bp.route('en/register', methods = ['GET', 'POST'])
+@user_bp.route('/en/register', methods = ['GET', 'POST'])
 def register_en():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
@@ -64,7 +64,7 @@ def register_en():
         return redirect(url_for('user.login_en'))
     return render_template('register.html', title = 'Register', form = form)
 
-@user_bp.route('cn/register', methods = ['GET', 'POST'])
+@user_bp.route('/cn/register', methods = ['GET', 'POST'])
 def register_cn():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
@@ -80,38 +80,51 @@ def register_cn():
         return redirect(url_for('user.login_cn'))
     return render_template('register.html', title = 'Register', form = form)
 
-@user_bp.route('/submit_invitation_code', methods = ['GET', 'POST'])
-def code_submit():
+@user_bp.route('/en/submit_invitation_code', methods = ['GET', 'POST'])
+def code_submit_en():
     form = InvitationCodeCheckForm()
     if form.validate_on_submit():
         code = form.code.data
         if code == current_user.invitation_code_vip1 or code == current_user.invitation_code_vip2:
-            if lang == 'en':
-                flash('You can not invite yourself！', 'warning')
-            elif lang == 'cn':
-                flash('您不能邀请您自己', 'warning')
-            return redirect(url_for('user.account'))
+            flash('You can not invite yourself！', 'warning')
+            return redirect(url_for('user.account_en'))
         user = User.query.filter_by(invitation_code_vip1=code).first()
         if user:
             user.vip1_expire_date = user.vip1_expire_date + timedelta(days=3)
             db.session.commit()
-            if lang == 'en':
-                flash('User "{}" has got {}'.format(user.username, '3 days vip1.'))
-            elif lang == 'cn':
-                flash('用户"{}" 得到了 {}'.format(user.username, '三天的VIP1体验.') )
-            return redirect(url_for('user.account'))
+            flash('User "{}" has got {}'.format(user.username, '3 days vip1.'))
+            return redirect(url_for('user.account_en'))
         else:
             user = User.query.filter_by(invitation_code_vip2=code).first()
             user.vip2_expire_date = user.vip2_expire_date + timedelta(days=1)
             db.session.commit()
-            if lang == 'en':
-                flash('User "{}" has got {}'.format(user.username, '1 day vip2.'))
-            elif lang == 'cn':
-                flash('用户 "{}" 得到了 {}'.format(user.username, '一天的VIP2体验.'))
-            return redirect(url_for('user.account'))
+            flash('User "{}" has got {}'.format(user.username, '1 day vip2.'))
+            return redirect(url_for('user.account_en'))
     return render_template('code_submit.html', title = 'code-submit', form = form)
 
-@user_bp.route('en/login', methods = ['GET', 'POST'])
+@user_bp.route('/cn/submit_invitation_code', methods = ['GET', 'POST'])
+def code_submit_cn():
+    form = InvitationCodeCheckForm()
+    if form.validate_on_submit():
+        code = form.code.data
+        if code == current_user.invitation_code_vip1 or code == current_user.invitation_code_vip2:
+            flash('您不能邀请您自己', 'warning')
+            return redirect(url_for('user.account_cn'))
+        user = User.query.filter_by(invitation_code_vip1=code).first()
+        if user:
+            user.vip1_expire_date = user.vip1_expire_date + timedelta(days=3)
+            db.session.commit()
+            flash('用户"{}" 得到了 {}'.format(user.username, '三天的VIP1体验.') )
+            return redirect(url_for('user.account_cn'))
+        else:
+            user = User.query.filter_by(invitation_code_vip2=code).first()
+            user.vip2_expire_date = user.vip2_expire_date + timedelta(days=1)
+            db.session.commit()
+            flash('用户 "{}" 得到了 {}'.format(user.username, '一天的VIP2体验.'))
+            return redirect(url_for('user.account_cn'))
+    return render_template('code_submit.html', title = 'code-submit', form = form)
+
+@user_bp.route('/en/login', methods = ['GET', 'POST'])
 def login_en():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
@@ -126,7 +139,7 @@ def login_en():
             flash('Login unsuccessful, please check email and password!', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-@user_bp.route('cn/login', methods = ['GET', 'POST'])
+@user_bp.route('/cn/login', methods = ['GET', 'POST'])
 def login_cn():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
@@ -151,7 +164,7 @@ def xml_parser(text):
 
 
 # put the user information and functionality all in account page
-@user_bp.route('en/account')
+@user_bp.route('/en/account')
 @login_required
 def account_en():
     user = current_user
@@ -181,10 +194,11 @@ def account_en():
     total_buys = len(deals_all)
     total_likes = len(likes_all)
 
-    return render_template('account.html', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys,
+    return render_template('account.html', lang = 'en', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys,
                            total_likes = total_likes, membership_message = membership_message)
 
-@user_bp.route('cn/account')
+
+@user_bp.route('/cn/account')
 @login_required
 def account_cn():
     user = current_user
@@ -214,7 +228,7 @@ def account_cn():
     total_buys = len(deals_all)
     total_likes = len(likes_all)
 
-    return render_template('account.html', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys,
+    return render_template('account.html', lang = 'cn', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys,
                            total_likes = total_likes, membership_message = membership_message)
 
 
@@ -268,7 +282,6 @@ def account_update():
             message = ''
     return render_template('account_content_section.html', posts = posts, message = message, category = Category.query.get(1))
 
-
 @user_bp.route('/account/add_favourite', methods = ['POST'])
 def add_favourite_account_page():
     post_title = request.get_json()['post_title']
@@ -294,57 +307,91 @@ def add_favourite_account_page():
     else:
         return render_template('post_content_section_welcome.html', post = post,header = 'Failed', message = "You haven't log in yet, please please login or register!")
 
-@user_bp.route('/user/edit_profile', methods = ['GET', 'POST'])
+
+@user_bp.route('/en/user/edit_profile', methods = ['GET', 'POST'])
 @login_required # the account page only accessible when ...
-def update_profile():
+def update_profile_en():
     form = UpdateProfileForm()
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.new_email.data
         db.session.commit()
-        if lang == 'en':
-           flash('Your profile has been updated!', 'success')
-        elif lang == 'cn':
-            flash('您的个人信息已被更新！', 'success')
-        return redirect(url_for('user.account'))
+        flash('Your profile has been updated!', 'success')
+        return redirect(url_for('user.account_en'))
     return render_template('edit_profile.html', form = form)
 
-@user_bp.route('/user/change_password', methods = ['GET', 'POST'])
+
+@user_bp.route('/cn/user/edit_profile', methods = ['GET', 'POST'])
 @login_required # the account page only accessible when ...
-def change_password():
+def update_profile_cn():
+    form = UpdateProfileForm()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.new_email.data
+        db.session.commit()
+        flash('您的个人信息已被更新！', 'success')
+        return redirect(url_for('user.account_cn'))
+    return render_template('edit_profile.html', form = form)
+
+
+@user_bp.route('/en/user/change_password', methods = ['GET', 'POST'])
+@login_required # the account page only accessible when ...
+def change_password_en():
     form = UpdatePasswordForm()
     if form.validate_on_submit():
         if current_user.password == form.old_password.data:
             current_user.password = form.new_password.data
             db.session.commit()
-            if lang == 'en':
-                flash('Your password has been changed!', 'success')
-            elif lang =='cn':
-                flash('您的密码已更改成功')
-            return redirect(url_for('user.account'))
+            flash('Your password has been changed!', 'success')
+            return redirect(url_for('user.account_en'))
         else:
-            if lang == 'en':
-                flash("The old password doesn't match your current password, please check!", 'danger')
-            elif lang == 'cn':
-                flash('您的旧密码有，请检查！', 'danger')
+            flash("The old password doesn't match your current password, please check!", 'danger')
             return render_template('change_password.html', form = form)
     return render_template('change_password.html', form = form)
 
-@user_bp.route('/user/change_profile_pic', methods = ['GET', 'POST'])
+
+@user_bp.route('/cn/user/change_password', methods = ['GET', 'POST'])
+@login_required # the account page only accessible when ...
+def change_password_cn():
+    form = UpdatePasswordForm()
+    if form.validate_on_submit():
+        if current_user.password == form.old_password.data:
+            current_user.password = form.new_password.data
+            db.session.commit()
+            flash('您的密码已更改成功')
+            return redirect(url_for('user.account_cn'))
+        else:
+            flash('您的旧密码有，请检查！', 'danger')
+            return render_template('change_password.html', form = form)
+    return render_template('change_password.html', form = form)
+
+
+@user_bp.route('/en/user/change_profile_pic', methods = ['GET', 'POST'])
 @login_required
-def change_profile_pic():
+def change_profile_pic_en():
     form = UpdateProfilePicForm()
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
             db.session.commit()
-            if lang == 'en':
-                flash('Your profile picture has been changed!', 'success')
-            elif lang == 'cn':
-                flash('您的头像已更改！', 'success')
-            return redirect(url_for('user.account'))
+            flash('Your profile picture has been changed!', 'success')
+            return redirect(url_for('user.account_en'))
     return render_template('change_profile_pic.html', form = form)
+
+@user_bp.route('/cn/user/change_profile_pic', methods = ['GET', 'POST'])
+@login_required
+def change_profile_pic_cn():
+    form = UpdateProfilePicForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
+            db.session.commit()
+            flash('您的头像已更改！', 'success')
+            return redirect(url_for('user.account_cn'))
+    return render_template('change_profile_pic.html', form = form)
+
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -369,31 +416,37 @@ def send_reset_email(user):
                 '''
     mail.send(msg)
 
-@user_bp.route("/reset_password", methods=['GET', 'POST'])
-def reset_request():
+@user_bp.route("/en/reset_password", methods=['GET', 'POST'])
+def reset_request_en():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.welcome'))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
         send_reset_email(user)
-        if lang == 'en':
-            flash('An email has been sent with instructions to reset your password.', 'info')
-        elif lang =='cn':
-            flash('我们已经向您发送了一封邮件来充值您的密码，请注意查收。', 'info')
+        flash('An email has been sent with instructions to reset your password.', 'info')
+        return redirect(url_for('user.login_en'))
+    return render_template('reset_request.html', title = 'Reset Password', form = form)
+
+@user_bp.route("/cn/reset_password", methods=['GET', 'POST'])
+def reset_request_cn():
+    if current_user.is_authenticated:
+        return redirect(url_for('webapp.welcome'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email = form.email.data).first()
+        send_reset_email(user)
+        flash('我们已经向您发送了一封邮件来充值您的密码，请注意查收。', 'info')
         return redirect(url_for('user.login'))
     return render_template('reset_request.html', title = 'Reset Password', form = form)
 
-@user_bp.route("/reset_password/<token>", methods=['GET', 'POST'])
-def reset_token(token):
+@user_bp.route("/en/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token_en(token):
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('webapp.welcome'))
     user = User.verify_reset_token(token)
     if user is None:
-        if lang == 'en':
-            flash('This is an invalid or expired token!', 'warning')
-        elif lang == 'cn':
-            flash('这是一个无效的连接，或者该连接已过期！', 'warning')
+        flash('This is an invalid or expired token!', 'warning')
         return redirect(url_for('user.reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
@@ -401,28 +454,44 @@ def reset_token(token):
         # user.password = hashed_password
         user.password = form.password.data
         db.session.commit()
-        if lang == 'en':
-            flash('Your password has been updated! You are now able to log in.', 'success')
-        elif lang == 'cn':
-            flash('您的密码已更新！ 请重新登录.', 'success')
-        return redirect(url_for('user.login'))
+        flash('Your password has been updated! You are now able to log in.', 'success')
+        return redirect(url_for('user.login_en'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-@user_bp.route('en/logout', methods = ['GET', 'POST'])
+@user_bp.route("/cn/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token_cn(token):
+    if current_user.is_authenticated:
+        # return redirect(url_for('main.home'))
+        return redirect(url_for('webapp.welcome'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('这是一个无效的连接，或者该连接已过期！', 'warning')
+        return redirect(url_for('user.reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        # hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        # user.password = hashed_password
+        user.password = form.password.data
+        db.session.commit()
+        flash('您的密码已更新！ 请重新登录.', 'success')
+        return redirect(url_for('user.login_cn'))
+    return render_template('reset_token.html', title='Reset Password', form=form)
+
+
+@user_bp.route('/en/logout', methods = ['GET', 'POST'])
 def logout_en():
     logout_user()
     flash('You have logged out!', 'success')
     return redirect(url_for('webapp.welcome'))
 
-@user_bp.route('cn/logout', methods = ['GET', 'POST'])
+@user_bp.route('/cn/logout', methods = ['GET', 'POST'])
 def logout_cn():
     logout_user()
     flash('您已登出。', 'success')
     return redirect(url_for('webapp.welcome'))
 
-
-@user_bp.route('/VIP', methods = ['GET', 'POST'])
-def vip_info():
+@user_bp.route('/en/VIP', methods = ['GET', 'POST'])
+def vip_info_en():
     if current_user.vip2 == 'yes':
         message = 'You are a VIP2 user, your VIP2 service will expire in {}'.format(current_user.vip2_expire_date-datetime.now())
         flag = 0
@@ -436,6 +505,20 @@ def vip_info():
     invitation_code_vip2 = current_user.invitation_code_vip2
     return render_template('account_vip_info.html', flag = flag, user=current_user, message= message, code1=invitation_code_vip1, code2=invitation_code_vip2)
 
+@user_bp.route('/cn/VIP', methods = ['GET', 'POST'])
+def vip_info_cn():
+    if current_user.vip2 == 'yes':
+        message = '您是VIP2用户, 您的VIP2服务将在{}内过期。'.format(current_user.vip2_expire_date-datetime.now())
+        flag = 0
+    elif current_user.vip1 == 'yes':
+        message = '您是VIP1用户, 您的VIP1服务将在{}内过期。'.format(current_user.vip1_expire_date-datetime.now())
+        flag = 0
+    else:
+        message = '您还不是VIP用户'
+        flag = 1
+    invitation_code_vip1 = current_user.invitation_code_vip1
+    invitation_code_vip2 = current_user.invitation_code_vip2
+    return render_template('account_vip_info.html', flag = flag, user=current_user, message= message, code1=invitation_code_vip1, code2=invitation_code_vip2)
 
 @user_bp.route('/weixin-login')
 def weixin_login():

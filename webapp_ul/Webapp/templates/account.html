@@ -94,7 +94,11 @@ width:90%
 <div class="container">
     <div class="row row-cols-2 align-items-center">
         <div class="col-6 text-right" style="height:100px">
-            <a href="{{ url_for('user.change_profile_pic') }}">
+            {% if lang == 'en' %}
+                <a href="{{ url_for('user.change_profile_pic_en') }}">
+            {% else %}
+                <a href="{{ url_for('user.change_profile_pic_cn') }}">
+            {% endif %}
                 <img class="article-img"
                      src="{{ url_for('static', filename='profile_pics/'+user.image_file) }}"
                      style="height:100%; width:auto">
@@ -110,15 +114,22 @@ width:90%
                         aria-haspopup="true" aria-expanded="true">
                     <img class="icon" src="../../static/setting.svg" style="height: 120%;">
                 </button>
+                {% if lang == 'en'%}
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    <a id="update-profile-text" class="dropdown-item" href="{{ url_for('user.update_profile')}}">Edit Profile</a>
-                    <a id="change-profile-pic-text" class="dropdown-item" href="{{ url_for('user.change_profile_pic')}}">Change Avater</a>
-                    <a id="change-password-text" class="dropdown-item" href="{{ url_for('user.change_password') }}">Change Password</a>
+                    <a id="update-profile-text" class="dropdown-item" href="{{ url_for('user.update_profile_en')}}">Edit Profile</a>
+                    <a id="change-profile-pic-text" class="dropdown-item" href="{{ url_for('user.change_profile_pic_en')}}">Change Avater</a>
+                    <a id="change-password-text" class="dropdown-item" href="{{ url_for('user.change_password_en') }}">Change Password</a>
                 </div>
+                {% else %}
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <a id="update-profile-text" class="dropdown-item" href="{{ url_for('user.update_profile_cn')}}">Edit Profile</a>
+                    <a id="change-profile-pic-text" class="dropdown-item" href="{{ url_for('user.change_profile_pic_cn')}}">Change Avater</a>
+                    <a id="change-password-text" class="dropdown-item" href="{{ url_for('user.change_password_cn') }}">Change Password</a>
+                </div>
+                {% endif %}
             </div>
         </div>
         </div>
-
     </div>
     <br/>
     <br/>
@@ -128,38 +139,35 @@ width:90%
             <a href=""><img class="icon" src="../../static/pure_white_heart.svg" style="height:100%">
                 <p class="text">{{total_likes}} likes</p></a>
         </div>
-
+        {% if lang == 'en'%}
         <div class="col-4 text-center" style="height:40px">
             <img class="icon" src="../../static/membership.svg" style="height: 100%;">
             <div class="col-md-12 text-center">
-                <a href="{{url_for('user.vip_info')}}"><p class="text">VIP</p></a>
+                <a href="{{url_for('user.vip_info_en')}}"><p class="text">VIP</p></a>
             </div>
         </div>
-
         <div class="col-4 text-center" style="height:40px">
             <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
             <div class="col-md-12 text-center">
-                <a href="{{url_for('user.code_submit')}}"><p id="invitation-text" class="white-text">Invitation</p></a>
+                <a href="{{url_for('user.code_submit_en')}}"><p id="invitation-text" class="white-text">Invitation</p></a>
             </div>
         </div>
+        {% else %}
+        <div class="col-4 text-center" style="height:40px">
+            <img class="icon" src="../../static/membership.svg" style="height: 100%;">
+            <div class="col-md-12 text-center">
+                <a href="{{url_for('user.vip_info_cn')}}"><p class="text">VIP</p></a>
+            </div>
+        </div>
+        <div class="col-4 text-center" style="height:40px">
+            <img class="icon" src="../../static/invitation_code.svg" style="height: 100%;">
+            <div class="col-md-12 text-center">
+                <a href="{{url_for('user.code_submit_cn')}}"><p id="invitation-text" class="white-text">Invitation</p></a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
-
-<!--Update current picture-->
-<!--<div class="row">-->
-<!--<div class="col-md-2 text-left">-->
-<!--<a class="internal-link" href="{{ url_for('user.change_profile_pic')}}">-->
-<!--<img src="../../static/account.svg" style="width: 30%">Change Profile Picture</a>-->
-<!--</div>-->
-<!--<div class="col-md-2 text-left">-->
-<!--<a class="internal-link" href="{{ url_for('user.update_profile')}}">-->
-<!--<img src="../../static/setting.svg" style="width: 30%">Edit Profile</a>-->
-<!--</div>-->
-<!--<div class="col-md-2 text-left">-->
-<!--<a class="internal-link" href="{{ url_for('user.change_password') }}">-->
-<!--<img src="../../static/password.svg" style="width: 30%">Change Password</a>-->
-<!--</div>-->
-<!--</div>-->
 
 <div class="container">
     <br/>
@@ -381,7 +389,6 @@ width:90%
     </div>
 </div>
 </div>
-
 <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/add_favourite_account.js')}}"></script>
 <script src="{{ url_for('static', filename='js/change_content.js')}}"></script>

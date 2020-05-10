@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
     var tnum = $('.current_lang').attr('default')
   $(document).click( function(e) {

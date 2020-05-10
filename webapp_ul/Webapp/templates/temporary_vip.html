@@ -2,14 +2,26 @@
 
 {% block content %}
 <div class="row">
+    {% if lang == 'en' %}
     <div class="col-md-6 text-center">
-        <a id="temporary-vip1-button" class="btn btn-outline-light" href="{{ url_for('webapp.three_days_VIP1') }}">Get
+        <a id="temporary-vip1-button" class="btn btn-outline-light" href="{{ url_for('webapp.three_days_VIP1_en') }}">Get
             your VIP1 for 3 days</a>
     </div>
     <div class="col-md-6 text-center">
-        <a id="temporary-vip2-button" class="btn btn-outline-light" href="{{ url_for('webapp.one_day_VIP2') }}">Get your
+        <a id="temporary-vip2-button" class="btn btn-outline-light" href="{{ url_for('webapp.one_day_VIP2_en') }}">Get your
             VIP2 for 1 day</a>
     </div>
+    { % else %}
+    <div class="col-md-6 text-center">
+        <a id="temporary-vip1-button" class="btn btn-outline-light" href="{{ url_for('webapp.three_days_VIP1_cn') }}">Get
+            your VIP1 for 3 days</a>
+    </div>
+    <div class="col-md-6 text-center">
+        <a id="temporary-vip2-button" class="btn btn-outline-light" href="{{ url_for('webapp.one_day_VIP2_cn') }}">Get your
+            VIP2 for 1 day</a>
+    </div>
+    {% endif %}
+
 </div>
 <p></p>
 {% endblock content %}

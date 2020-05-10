@@ -134,30 +134,42 @@
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarToggle">
+                {% if lang == 'en'%}
                 <div class="navbar-nav mr-auto">
                     <!--<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.home') }}">Home</a>-->
                     <!--<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.about') }}">Test</a>-->
-                    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.VIP_check') }}">VIP</a>
+                    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.VIP_check_en') }}">VIP</a>
                 </div>
                 <div class="navbar-nav" style="position: absol; left: 45%;">
-                    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search_en')}}">
                         <input id="search_welcome" class="form-control mr-sm-2" type="text"
                                placeholder="Type to search..."
                                aria-label="Search"
                                name="keyword" style="border-radius:10px;">
                     </form>
                 </div>
+                {% else %}
+                <div class="navbar-nav mr-auto">
+                    <!--<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.home') }}">Home</a>-->
+                    <!--<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.about') }}">Test</a>-->
+                    <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.VIP_check_cn') }}">VIP</a>
+                </div>
+                <div class="navbar-nav" style="position: absol; left: 45%;">
+                    <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search_cn')}}">
+                        <input id="search_welcome" class="form-control mr-sm-2" type="text"
+                               placeholder="搜索..."
+                               aria-label="Search"
+                               name="keyword" style="border-radius:10px;">
+                    </form>
+                </div>
+                {% endif %}
+
                 <!-- Navbar Right Side -->
+
                 <div class="navbar-nav">
                     {% if lang == 'en'%}
                         {% if current_user.is_authenticated %}
-                        <!--<form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">-->
-                        <!--<input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"-->
-                        <!--name="keyword" style="border-radius: 10px">-->
-                        <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Search</button>-->
-                        <!--</form>-->
                         <a id="account_button" class="btn btn-outline-light text-left" href="{{ url_for('user.account_en') }}">Account</a>
                         <a id="logout_button" class="btn btn-outline-light text-left" href="{{ url_for('user.logout_en') }}">Logout</a>
                         {% else %}
@@ -176,7 +188,6 @@
                         {% endif %}
                     {% endif %}
                 </div>
-
                 <div class="navbar-nav">
                     <div class="translate_wrapper">
                         <div class="current_lang">
@@ -186,7 +197,6 @@
                                 <span class="fa fa-chevron-down chevron"></span>
                             </div>
                         </div>
-
                         <div class="more_lang">
                             <div class="lang" data-value='cn'>
                                 <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
@@ -197,7 +207,6 @@
                                 <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
                                 <span class="lang-txt">English (US)</span>
                             </div>
-
                             <div class="lang selected" data-value='en'>
                                 <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
                                 <span class="lang-txt">English (US)</span>
