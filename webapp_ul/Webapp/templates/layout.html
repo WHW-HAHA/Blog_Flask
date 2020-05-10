@@ -140,7 +140,6 @@
                     <!--<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.home') }}">Home</a>-->
                     <!--<a class="btn btn-outline-light text-left" href="{{ url_for('webapp.about') }}">Test</a>-->
                     <a class="btn btn-outline-light text-left" href="{{ url_for('webapp.VIP_check') }}">VIP</a>
-
                 </div>
                 <div class="navbar-nav" style="position: absol; left: 45%;">
                     <form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">
@@ -152,18 +151,29 @@
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
-                    {% if current_user.is_authenticated %}
-                    <!--<form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">-->
-                    <!--<input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"-->
-                    <!--name="keyword" style="border-radius: 10px">-->
-                    <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Search</button>-->
-                    <!--</form>-->
-                    <a id="account_button" class="btn btn-outline-light text-left" href="{{ url_for('user.account') }}">Account</a>
-                    <a id="logout_button" class="btn btn-outline-light text-left" href="{{ url_for('user.logout') }}">Logout</a>
+                    {% if lang == 'en'%}
+                        {% if current_user.is_authenticated %}
+                        <!--<form class="form-inline my-2 my-lg-0" method="POST" action="{{url_for('webapp.search')}}">-->
+                        <!--<input class="form-control mr-sm-2" type="text" placeholder="Type to search..." aria-label="Search"-->
+                        <!--name="keyword" style="border-radius: 10px">-->
+                        <!--<button class="btn btn-outline-light my-2 my-sm-0" type="submit" >Search</button>-->
+                        <!--</form>-->
+                        <a id="account_button" class="btn btn-outline-light text-left" href="{{ url_for('user.account_en') }}">Account</a>
+                        <a id="logout_button" class="btn btn-outline-light text-left" href="{{ url_for('user.logout_en') }}">Logout</a>
+                        {% else %}
+                        <a id="login_button" class="btn btn-outline-light text-left" href="{{ url_for('user.login_en') }}">Login</a>
+                        <a id="register_button" class="btn btn-outline-light text-left"
+                           href="{{ url_for('user.register_en') }}">Register</a>
+                        {% endif %}
                     {% else %}
-                    <a id="login_button" class="btn btn-outline-light text-left" href="{{ url_for('user.login') }}">Login</a>
-                    <a id="register_button" class="btn btn-outline-light text-left"
-                       href="{{ url_for('user.register') }}">Register</a>
+                        {% if current_user.is_authenticated %}
+                        <a id="account_button" class="btn btn-outline-light text-left" href="{{ url_for('user.account_cn') }}">Account</a>
+                        <a id="logout_button" class="btn btn-outline-light text-left" href="{{ url_for('user.logout_cn') }}">Logout</a>
+                        {% else %}
+                        <a id="login_button" class="btn btn-outline-light text-left" href="{{ url_for('user.login_cn') }}">Login</a>
+                        <a id="register_button" class="btn btn-outline-light text-left"
+                           href="{{ url_for('user.register_cn') }}">Register</a>
+                        {% endif %}
                     {% endif %}
                 </div>
 

@@ -38,7 +38,6 @@ wx_login = WeixinLogin(app_id, app_secret)
 # render_template 不改变当前的url
 # form.validate_on_submit(), 会自动检查页面内的POST 和 GET 请求的表单是否符合要求
 
-
 @user_bp.route('/language', methods=['POST'])
 def get_defaulte_language():
     default_laguage = request.get_json()
@@ -49,8 +48,8 @@ def get_defaulte_language():
         lang = default_laguage['lang']
     return 'language'
 
-@user_bp.route('/register', methods = ['GET', 'POST'])
-def register():
+@user_bp.route('en/register', methods = ['GET', 'POST'])
+def register_en():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
     form = RegistrationForm()
@@ -61,11 +60,24 @@ def register():
                     password = hashed_password)
         db.session.add(user)
         db.session.commit()
-        if lang == 'en':
-            flash('Your account has been created! You are now able to login in!', 'success')
-        elif lang == 'cn':
-            flash('我们为您创建了账户! 您现在可以登录了！', 'success')
-        return redirect(url_for('user.login'))
+        flash('Your account has been created! You are now able to login in!', 'success')
+        return redirect(url_for('user.login_en'))
+    return render_template('register.html', title = 'Register', form = form)
+
+@user_bp.route('cn/register', methods = ['GET', 'POST'])
+def register_cn():
+    if current_user.is_authenticated:
+        return redirect(url_for('webapp.home'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # hash the original user password
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username = form.username.data, email = form.email.data,
+                    password = hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash('我们为您创建了账户! 您现在可以登录了！', 'success')
+        return redirect(url_for('user.login_cn'))
     return render_template('register.html', title = 'Register', form = form)
 
 @user_bp.route('/submit_invitation_code', methods = ['GET', 'POST'])
@@ -99,9 +111,8 @@ def code_submit():
             return redirect(url_for('user.account'))
     return render_template('code_submit.html', title = 'code-submit', form = form)
 
-
-@user_bp.route('/login', methods = ['GET', 'POST'])
-def login():
+@user_bp.route('en/login', methods = ['GET', 'POST'])
+def login_en():
     if current_user.is_authenticated:
         return redirect(url_for('webapp.home'))
     form = LoginForm()
@@ -112,10 +123,22 @@ def login():
             login_user(user, remember = form.remember.data)
             return redirect(url_for('webapp.welcome'))
         else:
-            if lang == 'en':
-                flash('Login Unsuccessful. Please check email and password!', 'danger')
-            elif lang == 'cn':
-                flash('未成功登陆. 请检查注册邮箱和密码！', 'danger')
+            flash('Login unsuccessful, please check email and password!', 'danger')
+    return render_template('login.html', title='Login', form=form)
+
+@user_bp.route('cn/login', methods = ['GET', 'POST'])
+def login_cn():
+    if current_user.is_authenticated:
+        return redirect(url_for('webapp.home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email = form.email.data).first() # remember to get the first item
+        # here not able to check the hashed user password yet if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and user.password == form.password.data:
+            login_user(user, remember = form.remember.data)
+            return redirect(url_for('webapp.welcome'))
+        else:
+            flash('未成功登陆. 请检查注册邮箱和密码！', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 def xml_parser(text):
@@ -126,10 +149,11 @@ def xml_parser(text):
         dic[item.name] = item.text
     return dic
 
+
 # put the user information and functionality all in account page
-@user_bp.route('/account')
+@user_bp.route('en/account')
 @login_required
-def account():
+def account_en():
     user = current_user
     if user.membership == 'none':
         membership_message = "You are not a member!"
@@ -145,7 +169,6 @@ def account():
         membership_expire = user.membership_date + timedelta(weeks = 52) - datetime.now()
         # membership_expire = membership_expire.strftime("%Y-%m-%d")
         membership_message = 'Expire in {}'.format(membership_expire)
-
     likes_all = user.like # return a query
     deals_all = user.deals
     # deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
@@ -161,6 +184,40 @@ def account():
     return render_template('account.html', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys,
                            total_likes = total_likes, membership_message = membership_message)
 
+@user_bp.route('cn/account')
+@login_required
+def account_cn():
+    user = current_user
+    if user.membership == 'none':
+        membership_message = "您还不是会员！"
+    if user.membership == 'week':
+        membership_expire = user.membership_date + timedelta(weeks = 1) - datetime.now()
+        # membership_expire = membership_expire.strftime("%Y-%m-%d")
+        membership_message = '{}天内到期！'.format(membership_expire)
+    if user.membership == 'month':
+        membership_expire = user.membership_date + timedelta(weeks = 4) - datetime.now()
+        # membership_expire = membership_expire.strftime("%Y-%m-%d")
+        membership_message = '{}天内到期！'.format(membership_expire)
+    if user.membership == 'year':
+        membership_expire = user.membership_date + timedelta(weeks = 52) - datetime.now()
+        # membership_expire = membership_expire.strftime("%Y-%m-%d")
+        membership_message = '{}天内到期！'.format(membership_expire)
+    likes_all = user.like # return a query
+    deals_all = user.deals
+    # deals_all = Deal.query.filter_by(by_id = user.id).order_by(Deal.time.desc()).all() # query.*.all() return a list
+    item_id = []
+    for deal in deals_all:
+        item_id.append(deal.item_id)
+        deal.price = Post.query.get(deal.item_id).price
+        deal.title = Post.query.get(deal.item_id).title
+        deal.image_file = Post.query.get(deal.item_id).image_file
+    total_buys = len(deals_all)
+    total_likes = len(likes_all)
+
+    return render_template('account.html', message = '', title = user.username, user = user, deals = likes_all, total_buys= total_buys,
+                           total_likes = total_likes, membership_message = membership_message)
+
+
 @user_bp.route('/account/update', methods = ['POST'])
 @login_required
 def account_update():
@@ -172,7 +229,6 @@ def account_update():
         else:
             posts = []
             message = "You haven't like anything"
-
     if category == 'buys':
         # get all the posts have been brought by this user
         if current_user.deals:
@@ -184,8 +240,6 @@ def account_update():
         else:
             posts = []
             message = "You haven't brought anything"
-
-
     if category == 'similar':
         # get the category this user may like
         categories = []
@@ -212,8 +266,8 @@ def account_update():
         else:
             posts = Post.query.order_by(Post.date_posted.desc()).all()[:10]
             message = ''
-
     return render_template('account_content_section.html', posts = posts, message = message, category = Category.query.get(1))
+
 
 @user_bp.route('/account/add_favourite', methods = ['POST'])
 def add_favourite_account_page():
@@ -354,14 +408,18 @@ def reset_token(token):
         return redirect(url_for('user.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-@user_bp.route('/logout', methods = ['GET', 'POST'])
-def logout():
+@user_bp.route('en/logout', methods = ['GET', 'POST'])
+def logout_en():
     logout_user()
-    if lang == 'en':
-        flash('You have logged out!', 'success')
-    elif lang == 'cn':
-        flash('您已登出。', 'success')
+    flash('You have logged out!', 'success')
     return redirect(url_for('webapp.welcome'))
+
+@user_bp.route('cn/logout', methods = ['GET', 'POST'])
+def logout_cn():
+    logout_user()
+    flash('您已登出。', 'success')
+    return redirect(url_for('webapp.welcome'))
+
 
 @user_bp.route('/VIP', methods = ['GET', 'POST'])
 def vip_info():

@@ -29,12 +29,10 @@ def create_app(config_name = None):
 
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-
     register_extensions(app)
     register_blueprints(app)
     rigister_commands(app)
     return app
-
 
 # def create_app(config_name = None):
 #     if config_name is None:
@@ -57,7 +55,6 @@ def register_extensions(app):
     weixin.init_app(app)
     # whoosh initialize app to enable db searchable
     flask_whooshalchemyplus.init_app(app)
-
 
 def register_blueprints(app):
     app.register_blueprint(webapp_bp)

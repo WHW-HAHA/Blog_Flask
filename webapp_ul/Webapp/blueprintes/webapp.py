@@ -11,12 +11,13 @@ Naming standard:
     # 中文的话是需要特别注意的地方以及需要检查的地方
 """
 
-from flask import Blueprint, request, render_template, flash, redirect, url_for
+from flask import Blueprint, request, render_template, flash, redirect, url_for, flash, session, jsonify, request
 from Webapp.models import Post, User, Category
 from sqlalchemy import and_, or_
-from flask_login import current_user
+from flask_login import current_user, login_user
 from Webapp.extensions import db
 from datetime import datetime, timedelta
+import json
 from sqlalchemy.orm import sessionmaker
 import random
 webapp_bp = Blueprint('webapp', __name__)
@@ -34,6 +35,9 @@ def get_defaulte_language():
         print(default_laguage)
         global lang
         lang = default_laguage['lang']
+        with open('language.json', 'w') as f:
+            json.dump({'lang': lang}, f)
+            f.close()
     return 'language'
 
 @webapp_bp.route('/')
