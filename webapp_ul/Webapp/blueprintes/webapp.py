@@ -136,7 +136,8 @@ def add_favourite_welcome_page():
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
             return render_template('post_content_section_welcome.html', post=post, header='Succeed',
-                                   message='have been removed from your favourite list!')
+                                   message_remove='have been removed from your favourite list!')
+
         else:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.append(post)
@@ -145,10 +146,10 @@ def add_favourite_welcome_page():
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
             return render_template('post_content_section_welcome.html', post=post, header='Succeed',
-                                   message='have been added in your favourite list!')
+                                   message_add='have been added in your favourite list!')
     else:
         return render_template('post_content_section_welcome.html', post=post, header='Failed',
-                               message="You haven't log in yet, please please login or register!")
+                               message_failed="You haven't log in yet, please please login or register!")
 
 
 @webapp_bp.route('/gotocategory/<categoryName>/add_favourite', methods=['POST'])
@@ -170,7 +171,7 @@ def add_favourite_content_page(categoryName):
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
             return render_template('post_content_section.html', post=post, header='Succeed',category=category,
-                                   message='have been removed from your favourite list!')
+                                   message_remove='have been removed from your favourite list!')
 
         else:
             user = User.query.filter_by(id=current_user.id).first()
@@ -180,10 +181,10 @@ def add_favourite_content_page(categoryName):
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
             return render_template('post_content_section.html', post=post, header='Succeed',category=category,
-                                   message='have been added in your favourite list!')
+                                   message_add='have been added in your favourite list!')
     else:
         return render_template('post_content_section_welcome.html', post=post, header='Failed', category=category,
-                               message="You haven't log in yet, please please login or register!")
+                               message_failed="You haven't log in yet, please please login or register!")
 
 
 @webapp_bp.route('/search/add_favourite', methods=['POST'])
@@ -237,6 +238,7 @@ def show_category():
     posts = Category.query.filter_by(name='The latest').first().posts
     return render_template('category_content.html', posts=posts, category_name='The latest')
 
+
 @webapp_bp.route("/en/search", methods=['POST'])
 def search_en():
     if request.method == 'POST':
@@ -257,6 +259,7 @@ def search_en():
                 return render_template('search_found.html', title='results of search', posts=post, keyword=keyword)
             else:
                 return render_template('search_nofound.html', title='no results have been found', keyword=keyword)
+
 
 @webapp_bp.route("/cn/search", methods=['POST'])
 def search_cn():
@@ -314,9 +317,8 @@ def three_days_VIP1_cn():
         invitation_code_vip2 = current_user.invitation_code_vip2
         return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
 
-
-@webapp_bp.route("/get_temporary_vip2")
-def one_day_VIP2():
+@webapp_bp.route("/en/get_temporary_vip2")
+def one_day_VIP2_en():
     if current_user.vip2_try_out == 'yes':
         current_user.vip2_expire_date = datetime.now()
         expire_date = current_user.vip2_expire_date + timedelta(days=1)
@@ -325,16 +327,29 @@ def one_day_VIP2():
         user.vip2_expire_date = expire_date
         user.vip2 = 'yes'
         db.session.commit()
-        if lang == 'en':
-            flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
-        elif lang == 'cn':
-            flash("您的临时VIP1将在3天内到期, 在此之前请尽情体验我们的内容。", 'success')
+        flash("Enjoy your exploration, your temporary VIP2 will expire in one day.", 'success')
         return redirect(url_for('webapp.welcome'))
     else:
         invitation_code_vip1 = current_user.invitation_code_vip1
         invitation_code_vip2 = current_user.invitation_code_vip2
         return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
 
+@webapp_bp.route("/cn/get_temporary_vip2")
+def one_day_VIP2_cn():
+    if current_user.vip2_try_out == 'yes':
+        current_user.vip2_expire_date = datetime.now()
+        expire_date = current_user.vip2_expire_date + timedelta(days=1)
+        user = User.query.filter_by(id=current_user.id).first()
+        user.vip2_try_out = 'no'
+        user.vip2_expire_date = expire_date
+        user.vip2 = 'yes'
+        db.session.commit()
+        flash("您的临时VIP1将在3天内到期, 在此之前请尽情体验我们的内容。", 'success')
+        return redirect(url_for('webapp.welcome'))
+    else:
+        invitation_code_vip1 = current_user.invitation_code_vip1
+        invitation_code_vip2 = current_user.invitation_code_vip2
+        return render_template('invitation_code.html', code1=invitation_code_vip1, code2=invitation_code_vip2)
 
 
 @webapp_bp.route("/en/VIP")
@@ -349,10 +364,11 @@ def VIP_check_en():
             return render_template('temporary_vip.html')
         else:
             flash('You are currently not a VIP. Get your temporary VIP here!', 'success')
-            return render_template('temporary_vip.html')
+            return render_template('temporary_vip.html', lang = 'en')
     else:
         flash("You haven't login yet, please login first", "warning")
         return redirect(url_for("user.login_en"))
+
 
 @webapp_bp.route("/cn/VIP")
 def VIP_check_cn():
@@ -366,7 +382,7 @@ def VIP_check_cn():
             return render_template('temporary_vip.html')
         else:
             flash('您目前还不是VIP用户. 在这里可以获取您的临时VIP!', 'success')
-            return render_template('temporary_vip.html')
+            return render_template('temporary_vip.html', lang= 'cn')
     else:
         flash('您目前还没有登录，请首先登录或者注册！', 'warning')
         return redirect(url_for("user.login_cn"))

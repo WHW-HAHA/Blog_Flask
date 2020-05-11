@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var language = localStorage.getItem('locale') || window.navigator.language.toLowerCase() || 'en'
     localStorage.setItem('locale', language)
-//    getdefaultlang()
+    getdefaultlang()
     if (language.indexOf("zh-") !== -1) {
         var tnum = 'cn'
     } else if (language.indexOf('en') !== -1) {
@@ -9,7 +9,6 @@ $(document).ready(function(){
     } else {
         var tnum = 'en'
     }
-
 
   $(document).click( function(e) {
        $('.translate_wrapper, .more_lang').removeClass('active');
@@ -292,8 +291,8 @@ var trans = [
     en:'Confirm New Password',
     cn:'确认新密码'
     },{
-    en:'Request Reset',
-    cn:'请求重置'
+    en:'Request Reset Password',
+    cn:'重置密码'
     },{
     en:'Reset Password',
     cn:'重置密码'
@@ -328,5 +327,4 @@ var trans = [
     en:'Buy your VIP',
     cn:'购买VIP'
     }
-
 ];

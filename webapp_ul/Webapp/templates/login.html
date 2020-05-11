@@ -51,7 +51,11 @@
         <div class="form-group">
             {{ form.submit(class="btn btn-lg btn-primary btn-block") }}
             <small class="text-muted ml-2">
-                <a class="white-text forget-password-text" href="{{ url_for('user.reset_request') }}" >Forgot Password?</a>
+                {% if lang == 'en'%}
+                <a class="white-text forget-password-text" href="{{ url_for('user.reset_request_en') }}" >Forgot Password?</a>
+                {% else %}
+                <a class="white-text forget-password-text" href="{{ url_for('user.reset_request_cn') }}" >Forgot Password?</a>
+                {% endif %}
             </small>
         </div>
         </div>

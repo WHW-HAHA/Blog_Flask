@@ -11,7 +11,8 @@
         <a id="temporary-vip2-button" class="btn btn-outline-light" href="{{ url_for('webapp.one_day_VIP2_en') }}">Get your
             VIP2 for 1 day</a>
     </div>
-    { % else %}
+
+    {% else %}
     <div class="col-md-6 text-center">
         <a id="temporary-vip1-button" class="btn btn-outline-light" href="{{ url_for('webapp.three_days_VIP1_cn') }}">Get
             your VIP1 for 3 days</a>
