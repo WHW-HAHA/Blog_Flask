@@ -104,7 +104,6 @@ def sort_content_TheLatest(categoryName):
     return render_template('category_content_section.html', posts=posts,
                            category=Category.query.filter_by(name=categoryName))
 
-
 @webapp_bp.route('/search/sorted', methods=['POST'])
 def sort_content_search():
     sort_by = request.get_json()['by']
@@ -126,6 +125,7 @@ def sort_content_search():
 @webapp_bp.route('/add_favourite', methods=['POST'])
 def add_favourite_welcome_page():
     post_title = request.get_json()['post_title']
+    lang= request.get_json()['lang']
     post = Post.query.filter_by(title=post_title).first()
     if current_user.is_authenticated:
         if post in current_user.like:
@@ -135,9 +135,12 @@ def add_favourite_welcome_page():
             post.total_like = len(post.likeby)
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
-            return render_template('post_content_section_welcome.html', post=post, header='Succeed',
-                                   message_remove='have been removed from your favourite list!')
-
+            if lang == 'en':
+                return render_template('post_content_section_welcome.html', post=post, header='Succeed',
+                                   message='have been removed from your favourite list!')
+            else:
+                return render_template('post_content_section_welcome.html', post=post, header='成功',
+                                       message='已经从您的收藏列表中移除!')
         else:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.append(post)
@@ -145,17 +148,26 @@ def add_favourite_welcome_page():
             post.total_like = len(post.likeby)
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
-            return render_template('post_content_section_welcome.html', post=post, header='Succeed',
-                                   message_add='have been added in your favourite list!')
+            if lang == 'en':
+                return render_template('post_content_section_welcome.html', post=post, header='Succeed',
+                                   message='have been added in your favourite list!')
+            else:
+                return render_template('post_content_section_welcome.html', post=post, header='成功',
+                                       message='已经添加到您的收藏列表!')
     else:
-        return render_template('post_content_section_welcome.html', post=post, header='Failed',
-                               message_failed="You haven't log in yet, please please login or register!")
+        if lang == 'en':
+            return render_template('post_content_section_welcome.html', post=post, header='Failed',
+                               message="You haven't log in yet, please please login or register!")
+        else:
+            return render_template('post_content_section_welcome.html', post=post, header='失败',
+                                   message="您还没有登录，请先登录或注册！")
 
 
 @webapp_bp.route('/gotocategory/<categoryName>/add_favourite', methods=['POST'])
 def add_favourite_content_page(categoryName):
     post_title = request.get_json()['post_title']
     categoryName = request.get_json()['categoryName']
+    lang = request.get_json()['lang']
     post = Post.query.filter_by(title=post_title).first()
     if categoryName == 'TheLatest':
         categoryName = 'The latest'
@@ -170,8 +182,12 @@ def add_favourite_content_page(categoryName):
             post.total_like = len(post.likeby)
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
-            return render_template('post_content_section.html', post=post, header='Succeed',category=category,
-                                   message_remove='have been removed from your favourite list!')
+            if lang == 'en':
+                return render_template('post_content_section.html', post=post, header='Succeed',category=category,
+                                   message='have been removed from your favourite list!')
+            else:
+                return render_template('post_content_section.html', post=post, header='成功', category=category,
+                                       message='已经从您的收藏列表中移除！')
 
         else:
             user = User.query.filter_by(id=current_user.id).first()
@@ -180,16 +196,25 @@ def add_favourite_content_page(categoryName):
             post.total_like = len(post.likeby)
             db.session.commit()
             post = Post.query.filter_by(title=post_title).first()
-            return render_template('post_content_section.html', post=post, header='Succeed',category=category,
-                                   message_add='have been added in your favourite list!')
-    else:
-        return render_template('post_content_section_welcome.html', post=post, header='Failed', category=category,
-                               message_failed="You haven't log in yet, please please login or register!")
+            if lang == 'en':
+                return render_template('post_content_section.html', post=post, header='Succeed',category=category,
+                                   message='have been added in your favourite list!')
+            else:
+                return render_template('post_content_section.html', post=post, header='成功',category=category,
+                                   message='已经添加到您的收藏列表!')
 
+    else:
+        if lang == 'en':
+            return render_template('post_content_section_welcome.html', post=post, header='Failed', category=category,
+                               message_failed="You haven't log in yet, please please login or register!")
+        else:
+            return render_template('post_content_section_welcome.html', post=post, header='失败',
+                                   category=category,message="您还没有登录，请先登录或注册!")
 
 @webapp_bp.route('/search/add_favourite', methods=['POST'])
 def add_favourite_search_page():
     post_title = request.get_json()['post_title']
+    lang = request.get_json()['lang']
     post = Post.query.filter_by(title=post_title).first()
     if current_user.is_authenticated:
         if post in current_user.like:
@@ -198,19 +223,33 @@ def add_favourite_search_page():
             db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-            return render_template('search_post_content_section.html', post=post, header='Succeed',
+            if lang == 'en':
+                return render_template('search_post_content_section.html', post=post, header='Succeed',
                                    message='have been removed from your favourite list!')
+            else:
+                return render_template('search_post_content_section.html', post=post, header='成功',
+                                   message='已经从您的收藏列表中移除！')
+
         else:
             user = User.query.filter_by(id=current_user.id).first()
             user.like.append(post)
             db.session.commit()
             post.total_like = len(post.likeby)
             db.session.commit()
-            return render_template('search_post_content_section.html', post=post, header='Succeed',
+            if lang == 'en':
+                return render_template('search_post_content_section.html', post=post, header='Succeed',
                                    message='have been removed from your favourite list!')
+            else:
+                return render_template('search_post_content_section.html', post=post, header='成功',
+                                   message='已经添加到您的收藏列表！')
+
     else:
-        return render_template('post_content_section_welcome.html', post=post, header='Failed',
+        if lang == 'en':
+            return render_template('post_content_section_welcome.html', post=post, header='Failed',
                                message="You haven't log in yet, please please login or register!")
+        else:
+            return render_template('post_content_section_welcome.html', post=post, header='失败',
+                               message="您还没有登录，请先登录或注册!")
 
 
 @webapp_bp.route("/home")

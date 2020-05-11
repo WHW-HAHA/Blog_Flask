@@ -232,9 +232,9 @@ def account_cn():
                            total_likes = total_likes, membership_message = membership_message)
 
 
-@user_bp.route('/account/update', methods = ['POST'])
+@user_bp.route('/en/account/update', methods = ['POST'])
 @login_required
-def account_update():
+def account_update_en():
     category = request.get_json()['category']
     if category == 'likes':
         if current_user.like:
@@ -282,9 +282,63 @@ def account_update():
             message = ''
     return render_template('account_content_section.html', posts = posts, message = message, category = Category.query.get(1))
 
-@user_bp.route('/account/add_favourite', methods = ['POST'])
-def add_favourite_account_page():
+@user_bp.route('/cn/account/update', methods = ['POST'])
+@login_required
+def account_update_cn():
+    category = request.get_json()['category']
+    if category == 'likes':
+        if current_user.like:
+            posts = current_user.like
+            message = ''
+        else:
+            posts = []
+            message = "You haven't like anything"
+    if category == 'buys':
+        # get all the posts have been brought by this user
+        if current_user.deals:
+            posts = []
+            for deal in current_user.deals:
+                brought_post = Post.query.get(deal.item_id)
+                posts.append(brought_post)
+            message = ''
+        else:
+            posts = []
+            message = "You haven't brought anything"
+    if category == 'similar':
+        # get the category this user may like
+        categories = []
+        if current_user.like:
+            for post in current_user.like:
+                for category in post.categories:
+                    categories.append(category)
+            top_2_likes = Counter(categories).most_common(2)
+            if len(top_2_likes) == 2:
+                similar_post_1 = top_2_likes[0][0].posts
+                similar_post_2 = top_2_likes[1][0].posts
+                similar_post = similar_post_1 + similar_post_2
+            if len(top_2_likes) ==1:
+                similar_post = top_2_likes[0][0].posts
+            if current_user.deals:
+                for deal in current_user.deals:
+                    brought_post = Post.query.get(deal.item_id)
+                    try:
+                        similar_post.pop(brought_post)
+                    except:
+                        pass
+                posts = similar_post
+                message = ''
+        else:
+            posts = Post.query.order_by(Post.date_posted.desc()).all()[:10]
+            message = ''
+    return render_template('account_content_section.html', posts = posts, message = message, category = Category.query.get(1))
+
+
+
+
+@user_bp.route('/en/account/add_favourite', methods = ['POST'])
+def add_favourite_account_page_en():
     post_title = request.get_json()['post_title']
+    lang= request.get_json('lang')
     post = Post.query.filter_by(title = post_title).first()
     if current_user.is_authenticated:
         if post in current_user.like:
@@ -305,7 +359,35 @@ def add_favourite_account_page():
             return render_template('post_content_section_welcome.html', post=post, header='Succeed',
                                    message='have been added in your favourite list!')
     else:
-        return render_template('post_content_section_welcome.html', post = post,header = 'Failed', message = "You haven't log in yet, please please login or register!")
+        return render_template('post_content_section_welcome.html', post=post, header='Failed',
+                               message="You haven't log in yet, please please login or register!")
+
+@user_bp.route('/cn/account/add_favourite', methods = ['POST'])
+def add_favourite_account_page_cn():
+    post_title = request.get_json()['post_title']
+    lang= request.get_json('lang')
+    post = Post.query.filter_by(title = post_title).first()
+    if current_user.is_authenticated:
+        if post in current_user.like:
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.remove(post)
+            db.session.commit()
+            post.total_like = len(post.likeby)
+            db.session.commit()
+            return render_template('post_content_section_welcome.html', post=post, header='成功',
+                                       message='已经从您的收藏列表中移除!')
+        else:
+            user = User.query.filter_by(id=current_user.id).first()
+            user.like.append(post)
+            db.session.commit()
+            post.total_like = len(post.likeby)
+            db.session.commit()
+            post = Post.query.filter_by(title=post_title).first()
+            return render_template('post_content_section_welcome.html', post=post, header='成功',
+                                       message='已经添加到您的收藏列表!')
+    else:
+        return render_template('post_content_section_welcome.html', post=post, header='失败',
+                                   message="您还没有登录，请先登录或注册！")
 
 
 @user_bp.route('/en/user/edit_profile', methods = ['GET', 'POST'])

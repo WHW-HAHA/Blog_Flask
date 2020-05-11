@@ -171,6 +171,7 @@ top: 10%;
     width: 70%;
   }
 }
+
 </style>
 
 <!--top 3 categories-->
@@ -191,7 +192,8 @@ top: 10%;
                 <div class="carousel-caption">
                     <h1 class="white-text asia_category_name">{{category_asia.name}}</h1>
                     <p class="white-text asia_category_description">{{category_asia.description}}</p>
-                    <p class="white-text"><a class="btn btn-outline-light see-more" href="#Asia" role="button">See more</a>
+                    <p class="white-text"><a class="btn btn-outline-light see-more" href="#Asia" role="button">See
+                        more</a>
                     </p>
                 </div>
             </div>
@@ -205,21 +207,23 @@ top: 10%;
                 <div class="carousel-caption">
                     <h1 class="white-text usa_category_name">{{category_usa.name}}</h1>
                     <p class="white-text usa_category_description">{{category_usa.description}}</p>
-                    <p class="white-text "><a class="btn btn-outline-light see-more" href="#USA" role="button">See more</a>
+                    <p class="white-text "><a class="btn btn-outline-light see-more" href="#USA" role="button">See
+                        more</a>
                     </p>
                 </div>
             </div>
         </div>
         <!--The third slide-->
         <div class="carousel-item">
-            <img id= "cartoon_category"
+            <img id="cartoon_category"
                  src="../../static/category_pics/Cartoon_2100_1080.png"
                  alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
                     <h1 class="white-text cartoon_category_name">{{category_cartoon.name}}</h1>
                     <p class="white-text cartoon_category_description">{{category_cartoon.description}}</p>
-                    <p class="white-text"><a class="btn btn-outline-light see-more" href="#Cartoon" role="button">See more</a>
+                    <p class="white-text"><a class="btn btn-outline-light see-more" href="#Cartoon" role="button">See
+                        more</a>
                     </p>
                 </div>
             </div>
@@ -246,7 +250,8 @@ top: 10%;
 <div class="album py-5">
     <!-- list1 -->
     <div class="container">
-        <a class="btn btn-outline-light latest_button" style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
+        <a class="btn btn-outline-light latest_button"
+           style="font-size:xx-large;font-weight:bold; background-color: rgba(0,0,0,0.2)"
            href="{{url_for('webapp.go_to_category', name='TheLatest')}}">The latest</a>
         <p></p>
         <HR color="white">
@@ -363,7 +368,6 @@ top: 10%;
             </div>
             {% endif %}
             {% endif %}
-
 
             {% if post.classification == 'vip2'%}
             <div class="card mb-4 box-shado_file">
@@ -697,11 +701,11 @@ top: 10%;
                         <span class="badge badge-light"></span>
                     </p>
                     <p>
-                            <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
-                                    post_id="{{post.id}}">
-                                <span class="fa fa-heart" style="color:#8942a8"> </span>
-                                <span class="badge badge-light">{{post.total_like}}</span>
-                            </button>
+                        <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
+                                post_id="{{post.id}}">
+                            <span class="fa fa-heart" style="color:#8942a8"> </span>
+                            <span class="badge badge-light">{{post.total_like}}</span>
+                        </button>
                     </p>
                 </div>
             </div>
@@ -1112,6 +1116,7 @@ $(function(){
 		pic_html();
 	})
 })
+
 </script>
 {% endblock content %}
 
@@ -1130,3 +1135,32 @@ $(function(){
     </div>
 </div>
 {% endblock sidebar %}
+
+{% block languagecontent %}
+<div class="navbar-nav">
+    <div class="translate_wrapper">
+        <div class="current_lang">
+            <div class="lang">
+                <!--<img src="https://image.flaticon.com/icons/svg/299/299722.svg">-->
+                <span class="lang-txt">Language/语言</span>
+                <span class="fa fa-chevron-down chevron"></span>
+            </div>
+        </div>
+        <div class="more_lang">
+            <div class="lang" data-value='cn'>
+                <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
+                <span class="lang-txt">简体中文</span>
+            </div>
+
+            <div class="lang" data-value='en'>
+                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
+                <span class="lang-txt">English (US)</span>
+            </div>
+            <div class="lang selected" data-value='en'>
+                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
+                <span class="lang-txt">English (US)</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

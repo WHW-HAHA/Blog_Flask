@@ -7,8 +7,18 @@ $(document).ready(function() {
             categoryName = 'TheLatest'}
         if (categoryName == 'Europe & USA'){
             categoryName = 'Europe&USA'}
+        var language = localStorage.getItem('locale') || window.navigator.language.toLowerCase() || 'en'
+        if (language.indexOf("zh-") !== -1) {
+        var tnum = 'cn'
+        } else if (language.indexOf('en') !== -1) {
+            var tnum = 'en'
+        } else {
+            var tnum = 'en'
+        }
+
         var data = {'post_title': post_title,
                     'categoryName': categoryName,
+                    'lang': tnum
                     }
 
         console.log(data)

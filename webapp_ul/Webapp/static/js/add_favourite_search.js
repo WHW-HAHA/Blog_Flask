@@ -2,11 +2,22 @@ $(document).ready(function() {
     $(document).on('click', '.aheart', function() {
         var post_title = $(this).attr('post_title')
         var post_id = $(this).attr('post_id')
-        var data = {'post_title': post_title}
+
+        var language = localStorage.getItem('locale') || window.navigator.language.toLowerCase() || 'en'
+        if (language.indexOf("zh-") !== -1) {
+        var tnum = 'cn'
+        } else if (language.indexOf('en') !== -1) {
+            var tnum = 'en'
+        } else {
+            var tnum = 'en'
+        }
+
+        var data = {'post_title': post_title,
+                    'lang': tnum}
         console.log(data)
 
         req = $.ajax({
-            url : 'search' + '/add_favourite',
+            url : '/search' + '/add_favourite',
             type : 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=UTF-8',

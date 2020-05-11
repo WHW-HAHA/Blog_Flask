@@ -3,8 +3,20 @@ $(document).ready(function() {
         var post_title = $(this).attr('post_title')
         var post_id = $(this).attr('post_id')
         var prime_post_id = $('prime_post').attr('post_id')
+        var language = localStorage.getItem('locale') || window.navigator.language.toLowerCase() || 'en'
+        if (language.indexOf("zh-") !== -1) {
+        var tnum = 'cn'
+        } else if (language.indexOf('en') !== -1) {
+            var tnum = 'en'
+        } else {
+            var tnum = 'en'
+        }
+
         var data = {'post_title': post_title,
-                    'prime_post_id': prime_post_id}
+                    'prime_post_id': prime_post_id,
+                    'lang': tnum}
+
+
         console.log(data)
 
         req = $.ajax({

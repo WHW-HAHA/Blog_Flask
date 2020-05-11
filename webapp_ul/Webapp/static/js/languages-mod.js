@@ -126,28 +126,26 @@ function translate(tnum){
     $('.avater-text').text(trans[42][tnum])
 //change password
     $('.old-password').text(trans[43][tnum])
-        $('.new-password').text(trans[44][tnum])
-            $('.confirm-new-password').text(trans[45][tnum])
-            //request reset
+    $('.new-password').text(trans[44][tnum])
+    $('.confirm-new-password').text(trans[45][tnum])
+//request reset
     $('#request-reset-title').text(trans[46][tnum])
-                //reset token
+//reset token
     $('#reset-password-title').text(trans[47][tnum])
     // account vip
     // code submit
-        $('#code-submit-title').text(trans[48][tnum])
-            $('.code-text').text(trans[49][tnum])
+    $('#code-submit-title').text(trans[48][tnum])
+    $('.code-text').text(trans[49][tnum])
     // temporary vip
      $('#temporary-vip1-button').text(trans[50][tnum])
-            $('#temporary-vip2-button').text(trans[51][tnum])
+    $('#temporary-vip2-button').text(trans[51][tnum])
     // vip code
-        $('#vip-text1').text(trans[52][tnum])
-        $('#vip-text2').text(trans[53][tnum])
-        $('#vip1-code-text').text(trans[54][tnum])
-        $('#vip2-code-text').text(trans[55][tnum])
-        $('#buy-vip-link').text(trans[56][tnum])
-        $('.buy-vip-button').text(trans[57][tnum])
-
-
+    $('#vip-text1').text(trans[52][tnum])
+    $('#vip-text2').text(trans[53][tnum])
+    $('#vip1-code-text').text(trans[54][tnum])
+    $('#vip2-code-text').text(trans[55][tnum])
+    $('#buy-vip-link').text(trans[56][tnum])
+    $('.buy-vip-button').text(trans[57][tnum])
 
 }
 

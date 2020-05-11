@@ -2,9 +2,20 @@ $(document).ready(function() {
     $(document).on('click', '.aheart', function() {
         var post_title = $(this).attr('post_title')
         var post_id = $(this).attr('post_id')
-        var data = {'post_title': post_title}
+        var language = localStorage.getItem('locale') || window.navigator.language.toLowerCase() || 'en'
+        if (language.indexOf("zh-") !== -1) {
+        var tnum = 'cn'
+        } else if (language.indexOf('en') !== -1) {
+            var tnum = 'en'
+        } else {
+            var tnum = 'en'
+        }
+
+        var data = {'post_title': post_title,
+                    'lang': tnum}
         console.log(data)
 
+        if (tnum == 'en'){
         req = $.ajax({
             url : 'account/add_favourite',
             type : 'POST',
@@ -12,8 +23,17 @@ $(document).ready(function() {
             contentType: 'application/json; charset=UTF-8',
             success: function(data){},
             error: function(xhr, type) {}
+        });}
+        else if(tnum == 'cn'){
+                req = $.ajax({
+            url : 'account/add_favourite',
+            type : 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=UTF-8',
+            success: function(data){},
+            error: function(xhr, type) {}
         });
-
+        }
         req.done(function(data) {
             $('#post_content_section' + post_id).fadeOut(100).fadeIn(100);
             $('#post_content_section' + post_id).html(data);

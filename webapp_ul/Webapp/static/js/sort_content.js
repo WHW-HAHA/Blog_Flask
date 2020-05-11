@@ -8,8 +8,12 @@ $(document).ready(function() {
             categoryName = 'TheLatest'}
         if (categoryName == 'Europe & USA'){
             categoryName = 'Europe&USA'}
+
+
+
         var data = {'by': by,
                     'categoryName': categoryName}
+
 
         console.log(data)
         req = $.ajax({

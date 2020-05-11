@@ -28,7 +28,6 @@
                 <span><img src="../../static/available.svg" style="width:60%"></span>
                 {% endif %}
             </p>
-
             <p>
                 <button class="btn btn-outline-light aheart" post_title="{{post.title}}"
                                               category="{{category.name}}" post_id="{{post.id}}">
@@ -42,11 +41,11 @@
 
 <div id="popup{{post.id}}" class="overlay text-center">
 	<div class="popup">
-		<h2 style="color:#00CCBC">{{header}}</h2>
+		<h2 class="pop-header" style="color:#00CCBC">{{header}}</h2>
 		<a class="close" href="#popup2">&times;</a>
 		<div class="content internal-text" >
             <span class="internal-text" style="color:#00CCBC">{{post.title}}</span>
-			{{message}}
+            <span class="internal-text">{{message}}</span>
 		</div>
 	</div>
 </div>

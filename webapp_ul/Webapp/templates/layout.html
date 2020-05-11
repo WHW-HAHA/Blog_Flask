@@ -21,99 +21,6 @@
 
 </head>
 <style>
-.translate_wrapper{
-  border-radius:10px;
-  }
-
-.current_lang{
-  cursor:pointer;
-  text-transform:uppercase;
-  overflow:hidden;
-}
-
-
-.lang.selected{
-  display:none;
-}
-
-.lang img,
-.lang span.lang-txt{
-  display:inline-block;
-  margin-left:5px;
-  vertical-align:middle;
-  color: white;
-}
-
-.lang span.lang-txt{
-  position:relative;
-  top:-1px;
-  font-weight:700;
-}
-
-.lang img{
-  width:20px;
-  margin-left:0;
-}
-
-.lang span span{
-  color:#999;
-  font-weight:400;
-}
-
-.lang span.fa{
-  font-size:12px;
-  position:relative;
-  top:-1px;
-  <!--margin-left:3px;-->
-}
-
-
-/*more lang*/
-.more_lang{
-  transform:translateY(-20px);
-  opacity:0;
-  cursor:pointer;
-  display:none;
-   -webkit-transition: all .3s cubic-bezier(.25, 1.15, .35, 1.15);
-	-moz-transition:    all .3s cubic-bezier(.25, 1.15, .35, 1.15);
-	-o-transition:      all .3s cubic-bezier(.25, 1.15, .35, 1.15);
-	-ms-transition:     all .3s cubic-bezier(.25, 1.15, .35, 1.15);
-	transition:         all .3s cubic-bezier(.25, 1.15, .35, 1.15);
-}
-
-.translate_wrapper.active .more_lang{
-  display:block;
-}
-
-.more_lang.active{
-  opacity:1;
-   transform:translateY(-0px);
-}
-
-.more_lang .lang:hover{
-  background:#5766b2;
-  color:#fff;
-}
-
-.more_lang .lang:hover span{
-  color:#fff;
-}
-
-.translate_wrapper:hover,
-.translate_wrapper.active,
-.content a:hover{
-  box-shadow:rgba(0,0,0,0.2) 0 5px 15px;
-  -webkit-transition: all 0.3s cubic-bezier(0,.99,.44,.99);
-	-moz-transition:    all 0.3s cubic-bezier(0,.99,.44,.99);
-	-o-transition:      all 0.3s cubic-bezier(0,.99,.44,.99);
-	-ms-transition:     all 0.3s cubic-bezier(0,.99,.44,.99);
-	transition:         all 0.3s cubic-bezier(0,.99,.44,.99);
-}
-
-.translate_wrapper.active .lang{
-  border-bottom:1px solid #eaeaea;
-}
-
 </style>
 <body style="background: linear-gradient(to left, #8942a8, #bd382d);">
 
@@ -188,32 +95,9 @@
                         {% endif %}
                     {% endif %}
                 </div>
-                <div class="navbar-nav">
-                    <div class="translate_wrapper">
-                        <div class="current_lang">
-                            <div class="lang">
-                                <!--<img src="https://image.flaticon.com/icons/svg/299/299722.svg">-->
-                                <span class="lang-txt">Language/语言</span>
-                                <span class="fa fa-chevron-down chevron"></span>
-                            </div>
-                        </div>
-                        <div class="more_lang">
-                            <div class="lang" data-value='cn'>
-                                <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
-                                <span class="lang-txt">简体中文</span>
-                            </div>
+                {% block languagecontent %}
 
-                            <div class="lang" data-value='en'>
-                                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                <span class="lang-txt">English (US)</span>
-                            </div>
-                            <div class="lang selected" data-value='en'>
-                                <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
-                                <span class="lang-txt">English (US)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endblock %}
             </div>
         </div>
     </div>
